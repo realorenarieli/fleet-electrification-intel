@@ -3865,12 +3865,12 @@ function App() {
 
   var tabs = [
     { id: "tco", label: "💰 TCO Analysis", component: TCOAnalysisTab },
+    { id: "replacement", label: "🔄 Replacement", component: FleetReplacementTab },
     { id: "oem", label: "🚛 OEM Comparison", component: OEMComparisonTab },
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
     { id: "competitive", label: "🏢 Competitive", component: CompetitiveLandscapeTab },
-    { id: "replacement", label: "🔄 Replacement", component: FleetReplacementTab },
     { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
