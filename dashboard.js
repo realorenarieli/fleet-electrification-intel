@@ -2806,7 +2806,7 @@ function CompetitiveLandscapeTab() {
 
     // Competitive Positioning
     createElement("div", { style: { marginTop: "32px" } },
-      createElement("div", { style: styles.sectionTitle }, "⚔️ Competitive Positioning"),
+      createElement("div", { style: styles.sectionTitle }, "🏢 Competitive Positioning"),
       createElement("div", { style: styles.gridWide },
         GREENBAY_POSITIONING.vsCompetitors.map(function(item, i) {
           return createElement(Card, { key: i },
@@ -2954,7 +2954,7 @@ function CompetitiveLandscapeTab() {
           createElement("div", null,
             createElement("div", { style: { fontWeight: "700", color: COLORS.accent, marginBottom: "8px", fontSize: "16px" } }, "Key Insight for Investors"),
             createElement("div", { style: { fontSize: "14px", color: COLORS.text, lineHeight: "1.6" } },
-              "The companies mentioned by Inven (Delta Charge, Decade Energy, Driivz) are ",
+              "Companies like Delta Charge, Decade Energy, and Driivz are ",
               createElement("strong", null, "infrastructure and hardware players"),
               ". They solve pieces of the puzzle. Greenbay sits at the ",
               createElement("strong", { style: { color: COLORS.primary } }, "orchestration layer"),
@@ -3242,7 +3242,7 @@ function App() {
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
-    { id: "competitive", label: "⚔️ Competitive", component: CompetitiveLandscapeTab },
+    { id: "competitive", label: "🏢 Competitive", component: CompetitiveLandscapeTab },
     { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
