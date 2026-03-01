@@ -442,36 +442,19 @@ var REGIONAL_MARKET_DATA = {
     avgIncentive: 120000,
     electricityPrice: 0.25,
     dieselPrice: 1.80
-  },
-  israel: {
-    name: "Israel",
-    flag: "🇮🇱",
-    totalTrucks: 85000,
-    evShare2024: 0.2,
-    evShare2030: 15,
-    evShare2035: 45,
-    regulations: [
-      { name: "Green Taxation Reform", year: 2024, description: "Reduced purchase tax for EVs" },
-      { name: "Clean Air Law", year: 2025, description: "ZEV mandates for urban delivery" },
-      { name: "National EV Plan", year: 2030, description: "Target 30% EV sales by 2030" }
-    ],
-    keyMarkets: ["Tel Aviv Metro", "Haifa Port", "Ashdod Port", "Central District"],
-    avgIncentive: 30000,
-    electricityPrice: 0.14,
-    dieselPrice: 2.10
   }
 };
 
 var REGIONAL_PROJECTIONS = [
-  { year: 2024, us: 12000, eu: 18000, israel: 150 },
-  { year: 2025, us: 28000, eu: 42000, israel: 400 },
-  { year: 2026, us: 55000, eu: 85000, israel: 800 },
-  { year: 2027, us: 100000, eu: 150000, israel: 1500 },
-  { year: 2028, us: 170000, eu: 250000, israel: 2500 },
-  { year: 2029, us: 280000, eu: 380000, israel: 4000 },
-  { year: 2030, us: 420000, eu: 550000, israel: 6000 },
-  { year: 2032, us: 700000, eu: 900000, israel: 12000 },
-  { year: 2035, us: 1100000, eu: 1400000, israel: 25000 }
+  { year: 2024, us: 12000, eu: 18000 },
+  { year: 2025, us: 28000, eu: 42000 },
+  { year: 2026, us: 55000, eu: 85000 },
+  { year: 2027, us: 100000, eu: 150000 },
+  { year: 2028, us: 170000, eu: 250000 },
+  { year: 2029, us: 280000, eu: 380000 },
+  { year: 2030, us: 420000, eu: 550000 },
+  { year: 2032, us: 700000, eu: 900000 },
+  { year: 2035, us: 1100000, eu: 1400000 }
 ];
 
 // ============ DATA: EU-Specific OEMs ============
@@ -549,31 +532,6 @@ var EU_OEM_DATA = [
     availability: "2024"
   }
 ];
-
-// ============ DATA: Israeli Market Specifics ============
-var ISRAEL_MARKET_DATA = {
-  overview: {
-    fleetSize: 85000,
-    annualSales: 8500,
-    evPenetration: 0.2,
-    avgRouteLengthKm: 120,
-    urbanDeliveryShare: 65
-  },
-  challenges: [
-    { title: "Limited OEM Presence", desc: "Few manufacturers have local service networks" },
-    { title: "High Import Costs", desc: "Trucks imported with significant shipping/customs costs" },
-    { title: "Grid Capacity", desc: "Infrastructure upgrades needed for fleet charging" },
-    { title: "Small Market Size", desc: "Lower priority for global OEMs" }
-  ],
-  opportunities: [
-    { title: "High Fuel Costs", desc: "Diesel at $2.10/L makes EVs attractive for TCO" },
-    { title: "Short Routes", desc: "Avg 120km routes ideal for current EV range" },
-    { title: "Tech Innovation Hub", desc: "Strong ecosystem for fleet management software" },
-    { title: "Port Logistics", desc: "Haifa/Ashdod ports ideal for early adoption" }
-  ],
-  activeOEMs: ["BYD", "Volvo Trucks", "Mercedes-Benz"],
-  requiredSources: true
-};
 
 // ============ DATA: Enhanced Geo Comparison ============
 var GEO_COMPARISON_DATA = {
@@ -684,61 +642,6 @@ var GEO_COMPARISON_DATA = {
       { year: 2035, event: "65% CO2 reduction target" },
       { year: 2040, event: "90% CO2 reduction target" }
     ]
-  },
-  israel: {
-    id: "israel",
-    name: "Israel",
-    flag: "🇮🇱",
-    // Market Size
-    totalFleet: 85000,
-    annualSales: 8500,
-    evUnits2024: 150,
-    evPenetration2024: 0.2,
-    evPenetration2030: 15,
-    evPenetration2035: 45,
-    cagr2024_2030: 85,
-    // Economics
-    avgTruckPrice: 140000,
-    avgEvPremium: 180000,
-    dieselPrice: 2.10,
-    dieselUnit: "/L",
-    electricityPrice: 0.14,
-    tcoBreakeven: 5,
-    avgIncentive: 30000,
-    totalIncentiveBudget: "50M",
-    // Infrastructure
-    publicChargersHD: 25,
-    plannedChargers2030: 500,
-    chargingCorridors: "Highway 6, Port corridors",
-    gridReadiness: "Limited",
-    // OEM Landscape
-    modelsAvailable: 3,
-    localManufacturers: [],
-    importedBrands: ["BYD", "Volvo Trucks", "Mercedes-Benz"],
-    serviceNetwork: "Very Limited",
-    // Key Barriers
-    barriers: [
-      { issue: "Limited OEM presence", severity: "High" },
-      { issue: "High import costs", severity: "High" },
-      { issue: "Small market = low priority", severity: "High" }
-    ],
-    // Key Drivers
-    drivers: [
-      { factor: "High fuel costs", impact: "High" },
-      { factor: "Short avg routes (120km)", impact: "High" },
-      { factor: "Port logistics demand", impact: "Medium" }
-    ],
-    // Top Use Cases
-    useCases: ["Port drayage", "Urban delivery", "Short-haul regional", "Supermarket distribution"],
-    // Regulations Timeline
-    regulationsTimeline: [
-      { year: 2024, event: "Green taxation reform" },
-      { year: 2025, event: "Clean Air Law - urban ZEV zones" },
-      { year: 2030, event: "National target: 30% EV sales" }
-    ],
-    // Special Note
-    dataLimited: true,
-    dataNote: "Israeli market data is limited. Figures are estimates based on available sources and require validation."
   }
 };
 
@@ -1357,55 +1260,6 @@ var SOURCES_DATA = [
     type: "Manufacturer",
     region: "EU",
     lastUpdated: "2024"
-  },
-  // Israeli Sources (Limited - Marked as Required)
-  {
-    category: "Israeli Market (Sources Required)",
-    name: "Israel Ministry of Transport",
-    url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety",
-    description: "Official Israeli transportation authority - LIMITED EV TRUCK DATA AVAILABLE",
-    dataUsed: "General transport statistics (EV truck specific data needed)",
-    validity: 6,
-    type: "Government",
-    region: "Israel",
-    lastUpdated: "2024",
-    sourcesRequired: true
-  },
-  {
-    category: "Israeli Market (Sources Required)",
-    name: "Israel Ministry of Environmental Protection",
-    url: "https://www.gov.il/en/departments/ministry_of_environmental_protection",
-    description: "Israeli environmental policy - clean vehicle initiatives",
-    dataUsed: "EV policy direction (specific truck incentives data needed)",
-    validity: 6,
-    type: "Government",
-    region: "Israel",
-    lastUpdated: "2024",
-    sourcesRequired: true
-  },
-  {
-    category: "Israeli Market (Sources Required)",
-    name: "Israel Electric Corporation",
-    url: "https://www.iec.co.il/en",
-    description: "National electricity provider - grid capacity data",
-    dataUsed: "Electricity pricing (commercial fleet charging data needed)",
-    validity: 7,
-    type: "Utility",
-    region: "Israel",
-    lastUpdated: "2024",
-    sourcesRequired: true
-  },
-  {
-    category: "Israeli Market (Sources Required)",
-    name: "Globes Israel Business News",
-    url: "https://en.globes.co.il/",
-    description: "Israeli business news - EV market coverage",
-    dataUsed: "Market news, fleet operator announcements",
-    validity: 6,
-    type: "Media",
-    region: "Israel",
-    lastUpdated: "2024",
-    sourcesRequired: true
   }
 ];
 
@@ -1688,11 +1542,6 @@ var KEY_SOURCES = {
     { name: "BloombergNEF EVO", url: "https://about.bnef.com/electric-vehicle-outlook/" },
     { name: "IEA Global EV Outlook", url: "https://www.iea.org/reports/global-ev-outlook-2024" },
     { name: "ACEA Report", url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf" }
-  ],
-  israel: [
-    { name: "Israel Ministry of Transport", url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety" },
-    { name: "Israel Min. of Environment", url: "https://www.gov.il/en/departments/ministry_of_environmental_protection" },
-    { name: "Israel Electric Corp", url: "https://www.iec.co.il/en" }
   ]
 };
 
@@ -2312,7 +2161,6 @@ function InfrastructureTab() {
 function MarketOutlookTab() {
   var us = REGIONAL_MARKET_DATA.us;
   var eu = REGIONAL_MARKET_DATA.eu;
-  var il = REGIONAL_MARKET_DATA.israel;
 
   return createElement("div", null,
     // Regional Overview Cards
@@ -2330,13 +2178,6 @@ function MarketOutlookTab() {
         value: eu.evShare2030 + "%",
         label: "550K trucks/year projected",
         color: COLORS.primary
-      }),
-      createElement(MetricCard, {
-        icon: "🇮🇱",
-        title: "Israel 2030 EV Share",
-        value: il.evShare2030 + "%",
-        label: "6K trucks/year projected",
-        color: COLORS.accent
       }),
       createElement(MetricCard, {
         icon: "🌍",
@@ -2362,8 +2203,7 @@ function MarketOutlookTab() {
             }),
             createElement(Legend, null),
             createElement(Area, { type: "monotone", dataKey: "eu", name: "🇪🇺 European Union", fill: COLORS.primary + "60", stroke: COLORS.primary, strokeWidth: 2, stackId: "1" }),
-            createElement(Area, { type: "monotone", dataKey: "us", name: "🇺🇸 United States", fill: COLORS.info + "60", stroke: COLORS.info, strokeWidth: 2, stackId: "1" }),
-            createElement(Area, { type: "monotone", dataKey: "israel", name: "🇮🇱 Israel", fill: COLORS.accent + "60", stroke: COLORS.accent, strokeWidth: 2, stackId: "1" })
+            createElement(Area, { type: "monotone", dataKey: "us", name: "🇺🇸 United States", fill: COLORS.info + "60", stroke: COLORS.info, strokeWidth: 2, stackId: "1" })
           )
         )
       )
@@ -2493,103 +2333,6 @@ function MarketOutlookTab() {
       )
     ),
 
-    // Israeli Market Section
-    createElement("div", { style: { marginTop: "32px" } },
-      createElement("div", { style: styles.sectionTitle }, "🇮🇱 Israeli Market"),
-      createElement(Card, { style: { borderColor: COLORS.accent + "60", borderWidth: "2px" } },
-        createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" } },
-          createElement("span", { style: { fontSize: "20px" } }, "⚠️"),
-          createElement("span", { style: { color: COLORS.accent, fontWeight: "600", fontSize: "14px" } }, "LIMITED DATA AVAILABILITY - Additional sources required")
-        ),
-        createElement("div", { style: styles.gridWide },
-          createElement("div", null,
-            createElement("div", { style: styles.cardTitle }, "📊 Market Overview"),
-            createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } },
-              createElement("div", null,
-                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.accent } }, formatNumber(il.totalTrucks)),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Total HD Trucks")
-              ),
-              createElement("div", null,
-                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.primary } }, il.evShare2024 + "%"),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Current EV Share")
-              ),
-              createElement("div", null,
-                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.danger } }, "₪" + (il.dieselPrice * 3.7).toFixed(2) + "/L"),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Diesel Price")
-              ),
-              createElement("div", null,
-                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.success } }, ISRAEL_MARKET_DATA.overview.avgRouteLengthKm + " km"),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Avg Route Length")
-              )
-            ),
-            createElement("div", { style: { marginTop: "16px", fontSize: "12px", color: COLORS.textMuted } },
-              createElement("strong", null, "Key Markets: "), il.keyMarkets.join(", ")
-            ),
-            createElement("div", { style: { marginTop: "12px", fontSize: "12px", color: COLORS.textMuted } },
-              createElement("strong", null, "Active OEMs: "), ISRAEL_MARKET_DATA.activeOEMs.join(", ")
-            )
-          ),
-          createElement("div", null,
-            createElement("div", { style: styles.cardTitle }, "📜 Regulations"),
-            createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
-              il.regulations.map(function(reg, i) {
-                return createElement("div", { key: i, style: { padding: "10px", background: COLORS.background, borderRadius: "6px", fontSize: "13px" } },
-                  createElement("div", { style: { display: "flex", justifyContent: "space-between" } },
-                    createElement("span", { style: { fontWeight: "500" } }, reg.name),
-                    createElement(Badge, { variant: "warning" }, reg.year)
-                  ),
-                  createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginTop: "4px" } }, reg.description)
-                );
-              })
-            )
-          )
-        )
-      ),
-      // Israel Opportunities & Challenges
-      createElement("div", { style: Object.assign({}, styles.gridWide, { marginTop: "24px" }) },
-        createElement(Card, null,
-          createElement("div", { style: styles.cardTitle }, "✅ Opportunities"),
-          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
-            ISRAEL_MARKET_DATA.opportunities.map(function(item, i) {
-              return createElement("div", { key: i, style: { padding: "10px", background: COLORS.success + "10", borderRadius: "6px", borderLeft: "3px solid " + COLORS.success } },
-                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
-              );
-            })
-          )
-        ),
-        createElement(Card, null,
-          createElement("div", { style: styles.cardTitle }, "⚠️ Challenges"),
-          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
-            ISRAEL_MARKET_DATA.challenges.map(function(item, i) {
-              return createElement("div", { key: i, style: { padding: "10px", background: COLORS.danger + "10", borderRadius: "6px", borderLeft: "3px solid " + COLORS.danger } },
-                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
-                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
-              );
-            })
-          )
-        )
-      ),
-      // Israeli Sources Note
-      createElement(Card, { style: { marginTop: "24px", background: COLORS.accent + "10", borderColor: COLORS.accent } },
-        createElement("div", { style: styles.cardTitle }, "📋 Sources Required for Israeli Market Data"),
-        createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted, lineHeight: "1.6" } },
-          "The Israeli market data presented is based on limited publicly available information. ",
-          createElement("strong", { style: { color: COLORS.accent } }, "Additional authoritative sources are needed:"),
-          createElement("ul", { style: { marginTop: "12px", marginLeft: "20px" } },
-            createElement("li", null, "Israel Ministry of Transport - Official fleet statistics"),
-            createElement("li", null, "Israel Ministry of Environmental Protection - EV policy documents"),
-            createElement("li", null, "Israel Electric Corporation - Grid capacity studies"),
-            createElement("li", null, "Local fleet operator surveys and case studies"),
-            createElement("li", null, "Israeli Trucking Association data (if available)")
-          ),
-          createElement("div", { style: { marginTop: "12px", padding: "10px", background: COLORS.card, borderRadius: "6px" } },
-            "⚠️ Israeli market projections should be validated with local government and industry sources before use in investment decisions."
-          )
-        )
-      )
-    ),
-
     // Key Drivers (US & EU Combined)
     createElement("div", { style: { marginTop: "32px" } },
       createElement("div", { style: styles.sectionTitle }, "🚀 Market Drivers (US & EU)"),
@@ -2661,17 +2404,6 @@ function MarketOutlookTab() {
                 return createElement(SourceLink, { key: i, url: source.url, name: source.name });
               })
             )
-          ),
-          createElement("div", null,
-            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.accent } }, "🇮🇱 Israel (Sources Required)"),
-            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
-              KEY_SOURCES.israel.map(function(source, i) {
-                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
-              })
-            ),
-            createElement("div", { style: { marginTop: "8px", fontSize: "11px", color: COLORS.accent } },
-              "⚠️ Limited data - additional validation required"
-            )
           )
         )
       )
@@ -2681,7 +2413,7 @@ function MarketOutlookTab() {
 
 // ============ GEO DEEP-DIVE TAB ============
 function GeoDeepDiveTab() {
-  var regions = [GEO_COMPARISON_DATA.na, GEO_COMPARISON_DATA.eu, GEO_COMPARISON_DATA.israel];
+  var regions = [GEO_COMPARISON_DATA.na, GEO_COMPARISON_DATA.eu];
 
   function getSeverityColor(severity) {
     if (severity === "High") return COLORS.danger;
@@ -2835,17 +2567,6 @@ function GeoDeepDiveTab() {
           region.name + " Deep Dive"
         ),
 
-        // Warning for Israel
-        region.dataLimited && createElement(Card, { style: { marginBottom: "24px", background: COLORS.accent + "10", borderColor: COLORS.accent } },
-          createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px" } },
-            createElement("span", { style: { fontSize: "24px" } }, "⚠️"),
-            createElement("div", null,
-              createElement("div", { style: { fontWeight: "600", color: COLORS.accent } }, "Limited Data Availability"),
-              createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted } }, region.dataNote)
-            )
-          )
-        ),
-
         createElement("div", { style: styles.gridWide },
           // Key Metrics Card
           createElement(Card, null,
@@ -2991,8 +2712,7 @@ function GeoDeepDiveTab() {
         createElement("div", { style: { marginTop: "24px" } },
           createElement(SourceCitation, {
             sources: region.id === "na" ? KEY_SOURCES.regulations_us.concat(KEY_SOURCES.market) :
-                     region.id === "eu" ? KEY_SOURCES.regulations_eu.concat(KEY_SOURCES.market) :
-                     KEY_SOURCES.israel
+                     KEY_SOURCES.regulations_eu.concat(KEY_SOURCES.market)
           })
         )
       );
@@ -3249,7 +2969,7 @@ function CompetitiveLandscapeTab() {
 
 // ============ SOURCES TAB ============
 function SourcesTab() {
-  var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications", "Israeli Market (Sources Required)"];
+  var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications"];
 
   var avgValidity = Math.round(SOURCES_DATA.reduce(function(sum, s) { return sum + s.validity; }, 0) / SOURCES_DATA.length * 10) / 10;
   var govSources = SOURCES_DATA.filter(function(s) { return s.validity === 10; }).length;
@@ -3504,45 +3224,6 @@ function SourcesTab() {
               }
             }, link.icon, " ", link.name, " ↗");
           })
-        )
-      )
-    ),
-
-    // Quick Links - Israel
-    createElement("div", { style: { marginTop: "16px" } },
-      createElement(Card, { style: { borderColor: COLORS.accent + "40" } },
-        createElement("div", { style: styles.cardTitle }, "🇮🇱 Israel Sources (Additional Data Required)"),
-        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
-          [
-            { name: "Ministry of Transport", url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety", icon: "🏛️" },
-            { name: "Ministry of Environment", url: "https://www.gov.il/en/departments/ministry_of_environmental_protection", icon: "🌿" },
-            { name: "Israel Electric Corp", url: "https://www.iec.co.il/en", icon: "⚡" },
-            { name: "Globes Business", url: "https://en.globes.co.il/", icon: "📰" }
-          ].map(function(link) {
-            return createElement("a", {
-              key: link.name,
-              href: link.url,
-              target: "_blank",
-              rel: "noopener noreferrer",
-              style: {
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "12px 16px",
-                background: COLORS.accent + "10",
-                border: "1px solid " + COLORS.accent + "40",
-                borderRadius: "8px",
-                color: COLORS.text,
-                textDecoration: "none",
-                fontSize: "13px",
-                fontWeight: "500",
-                transition: "all 0.2s ease"
-              }
-            }, link.icon, " ", link.name, " ↗");
-          })
-        ),
-        createElement("div", { style: { marginTop: "12px", fontSize: "12px", color: COLORS.accent } },
-          "⚠️ Israeli market data is limited. These sources provide general information but specific EV truck fleet data requires additional research."
         )
       )
     )
