@@ -408,14 +408,15 @@ var INCENTIVES_DATA = [
 ];
 
 // ============ DATA: Regional Market Comparison ============
+// Sources: ATA, ACEA, IEA Global EV Outlook 2025
 var REGIONAL_MARKET_DATA = {
   us: {
     name: "United States",
     flag: "🇺🇸",
-    totalTrucks: 4200000,
-    evShare2024: 0.8,
-    evShare2030: 30,
-    evShare2035: 67,
+    totalTrucks: 3910000,  // ATA: 3.91M Class 8 trucks
+    evShare2024: 0.6,      // IEA: ~1,700 EV trucks / 280K sales
+    evShare2030: 13,       // IEA STEPS scenario
+    evShare2035: 35,       // Conservative projection
     regulations: [
       { name: "EPA GHG Phase 3", year: 2027, description: "52% CO2 reduction by 2032 for heavy-duty" },
       { name: "CA ACF Rule", year: 2024, description: "100% ZEV sales by 2036 (adopted by 8+ states)" },
@@ -429,10 +430,10 @@ var REGIONAL_MARKET_DATA = {
   eu: {
     name: "European Union",
     flag: "🇪🇺",
-    totalTrucks: 6500000,
-    evShare2024: 1.2,
-    evShare2030: 35,
-    evShare2035: 70,
+    totalTrucks: 6400000,  // ACEA: 6.4M medium/heavy trucks
+    evShare2024: 2.3,      // ACEA: 2.3% market share 2024
+    evShare2030: 15,       // IEA projection
+    evShare2035: 45,       // Based on EU CO2 targets
     regulations: [
       { name: "EU CO2 Standards HDV", year: 2025, description: "45% CO2 reduction by 2030, 90% by 2040" },
       { name: "Euro 7", year: 2027, description: "Strictest emission limits globally" },
@@ -445,16 +446,18 @@ var REGIONAL_MARKET_DATA = {
   }
 };
 
+// Electric truck sales projections (Sources: IEA Global EV Outlook 2025, ACEA, industry estimates)
+// Note: 2024 figures are actual; 2025+ are projections based on IEA STEPS scenario
 var REGIONAL_PROJECTIONS = [
-  { year: 2024, us: 12000, eu: 18000 },
-  { year: 2025, us: 28000, eu: 42000 },
-  { year: 2026, us: 55000, eu: 85000 },
-  { year: 2027, us: 100000, eu: 150000 },
-  { year: 2028, us: 170000, eu: 250000 },
-  { year: 2029, us: 280000, eu: 380000 },
-  { year: 2030, us: 420000, eu: 550000 },
-  { year: 2032, us: 700000, eu: 900000 },
-  { year: 2035, us: 1100000, eu: 1400000 }
+  { year: 2024, us: 1700, eu: 10000 },    // IEA actual figures
+  { year: 2025, us: 3000, eu: 15000 },    // ~75% growth (IEA trend)
+  { year: 2026, us: 5500, eu: 23000 },
+  { year: 2027, us: 9000, eu: 34000 },
+  { year: 2028, us: 15000, eu: 48000 },
+  { year: 2029, us: 24000, eu: 65000 },
+  { year: 2030, us: 36000, eu: 85000 },   // ~13% penetration (IEA STEPS)
+  { year: 2032, us: 60000, eu: 130000 },
+  { year: 2035, us: 100000, eu: 200000 }  // Based on regulatory targets
 ];
 
 // ============ DATA: EU-Specific OEMs ============
@@ -539,13 +542,13 @@ var GEO_COMPARISON_DATA = {
     id: "na",
     name: "North America",
     flag: "🇺🇸",
-    // Market Size
-    totalFleet: 4200000,
-    annualSales: 280000,
-    evUnits2024: 12000,
-    evPenetration2024: 0.8,
-    evPenetration2030: 30,
-    evPenetration2035: 67,
+    // Market Size (Sources: ATA, IEA Global EV Outlook 2025)
+    totalFleet: 3910000,  // ATA: 3.91M Class 8 trucks in operation
+    annualSales: 280000,  // Class 8 annual sales
+    evUnits2024: 1700,    // IEA: ~1,700 electric trucks sold in US 2024
+    evPenetration2024: 0.6,  // Calculated from sales data
+    evPenetration2030: 13,   // IEA STEPS scenario: ~13% globally by 2030
+    evPenetration2035: 35,   // Conservative projection
     cagr2024_2030: 78,
     // Economics
     avgTruckPrice: 180000,
@@ -593,13 +596,13 @@ var GEO_COMPARISON_DATA = {
     id: "eu",
     name: "European Union",
     flag: "🇪🇺",
-    // Market Size
-    totalFleet: 6500000,
-    annualSales: 350000,
-    evUnits2024: 18000,
-    evPenetration2024: 1.2,
-    evPenetration2030: 35,
-    evPenetration2035: 70,
+    // Market Size (Sources: ACEA, IEA Global EV Outlook 2025)
+    totalFleet: 6400000,   // ACEA: 6.4M medium and heavy trucks on EU roads
+    annualSales: 328000,   // ACEA: 327,896 new truck registrations in 2024
+    evUnits2024: 10000,    // IEA: 10,000+ electric trucks sold in Europe 2024
+    evPenetration2024: 2.3,  // ACEA: 2.3% market share in 2024
+    evPenetration2030: 15,   // IEA projection with CO2 standards
+    evPenetration2035: 45,   // Based on EU 65% CO2 reduction target
     cagr2024_2030: 75,
     // Economics
     avgTruckPrice: 120000,
@@ -915,17 +918,59 @@ var GREENBAY_POSITIONING = {
     { layer: "Energy/Storage", partners: ["Decade Energy", "Enel X"], value: "Grid services, demand response" },
     { layer: "Autonomous", partners: ["NexDash", "Aurora"], value: "Future: orchestrate AV fleets" }
   ],
+  // Market opportunity (Sources: MarketsandMarkets, Fortune Business Insights, Mordor Intelligence)
   marketOpportunity: {
-    tam: "47B",
-    sam: "9.4B",
-    som: "188M",
+    tam: "70B",      // Global fleet management software market by 2030 (MarketsandMarkets)
+    sam: "32B",      // HD trucking segment (T&L = 45% of market)
+    som: "640M",     // EV fleet orchestration: ~2% of SAM, early adopter segment
+    tamSource: "MarketsandMarkets Fleet Management Market Report 2025-2030",
     description: "Fleet orchestration software for electric commercial vehicles"
   }
 };
 
 // ============ DATA: Sources with Validity Scores ============
 var SOURCES_DATA = [
-  // Research & Analytics (Primary Sources)
+  // Primary Market Data Sources
+  {
+    category: "Research & Analytics",
+    name: "IEA Global EV Outlook 2025",
+    url: "https://www.iea.org/reports/global-ev-outlook-2025",
+    description: "International Energy Agency flagship report on global EV trends including heavy-duty vehicles",
+    dataUsed: "EV truck sales (US: 1,700, EU: 10,000+ in 2024), market projections, TCO analysis",
+    validity: 10,
+    type: "International Agency",
+    lastUpdated: "2025"
+  },
+  {
+    category: "Research & Analytics",
+    name: "ACEA Vehicles in Use Report",
+    url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf",
+    description: "European Automobile Manufacturers' Association fleet statistics",
+    dataUsed: "EU truck fleet size (6.4M), EV market share (2.3%), registration data",
+    validity: 10,
+    type: "Industry Association",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "American Trucking Associations",
+    url: "https://www.trucking.org/economics-and-industry-data",
+    description: "Official US trucking industry statistics and economic data",
+    dataUsed: "US Class 8 fleet size (3.91M), industry economics",
+    validity: 10,
+    type: "Industry Association",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "MarketsandMarkets Fleet Management Report",
+    url: "https://www.marketsandmarkets.com/Market-Reports/fleet-management-systems-market-1020.html",
+    description: "Fleet management software market sizing and forecasts",
+    dataUsed: "TAM projections ($70B by 2030), market segmentation",
+    validity: 8,
+    type: "Market Research",
+    lastUpdated: "2025"
+  },
   {
     category: "Research & Analytics",
     name: "BloombergNEF Electric Vehicle Outlook",
@@ -1264,16 +1309,18 @@ var SOURCES_DATA = [
 ];
 
 // ============ DATA: Market Projections ============
+// US+EU combined market projections (Source: IEA Global EV Outlook 2025, ACEA)
+// Total market = US (~280K) + EU (~328K) annual HD truck sales
 var MARKET_PROJECTIONS = [
-  { year: 2024, ev_sales: 15000, ev_share: 1.2, total_market: 1250000 },
-  { year: 2025, ev_sales: 35000, ev_share: 2.8, total_market: 1250000 },
-  { year: 2026, ev_sales: 75000, ev_share: 5.8, total_market: 1290000 },
-  { year: 2027, ev_sales: 140000, ev_share: 10.5, total_market: 1330000 },
-  { year: 2028, ev_sales: 230000, ev_share: 16.8, total_market: 1370000 },
-  { year: 2029, ev_sales: 350000, ev_share: 24.8, total_market: 1410000 },
-  { year: 2030, ev_sales: 500000, ev_share: 34.5, total_market: 1450000 },
-  { year: 2032, ev_sales: 850000, ev_share: 52.0, total_market: 1635000 },
-  { year: 2035, ev_sales: 1400000, ev_share: 72.0, total_market: 1944000 }
+  { year: 2024, ev_sales: 11700, ev_share: 1.9, total_market: 608000 },   // IEA actuals
+  { year: 2025, ev_sales: 18000, ev_share: 3.0, total_market: 610000 },
+  { year: 2026, ev_sales: 28500, ev_share: 4.6, total_market: 615000 },
+  { year: 2027, ev_sales: 43000, ev_share: 6.9, total_market: 620000 },
+  { year: 2028, ev_sales: 63000, ev_share: 10.0, total_market: 625000 },
+  { year: 2029, ev_sales: 89000, ev_share: 14.1, total_market: 630000 },
+  { year: 2030, ev_sales: 121000, ev_share: 19.0, total_market: 635000 }, // IEA STEPS ~13% global
+  { year: 2032, ev_sales: 190000, ev_share: 29.5, total_market: 645000 },
+  { year: 2035, ev_sales: 300000, ev_share: 45.0, total_market: 665000 }  // Based on regulatory targets
 ];
 
 // ============ STYLES ============
@@ -1539,9 +1586,10 @@ var KEY_SOURCES = {
     { name: "EU AFIR Regulation", url: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en" }
   ],
   market: [
-    { name: "BloombergNEF EVO", url: "https://about.bnef.com/electric-vehicle-outlook/" },
-    { name: "IEA Global EV Outlook", url: "https://www.iea.org/reports/global-ev-outlook-2024" },
-    { name: "ACEA Report", url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf" }
+    { name: "IEA Global EV Outlook 2025", url: "https://www.iea.org/reports/global-ev-outlook-2025" },
+    { name: "ACEA Vehicles in Use", url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf" },
+    { name: "American Trucking Associations", url: "https://www.trucking.org/economics-and-industry-data" },
+    { name: "MarketsandMarkets", url: "https://www.marketsandmarkets.com/Market-Reports/fleet-management-systems-market-1020.html" }
   ]
 };
 
@@ -2169,21 +2217,21 @@ function MarketOutlookTab() {
         icon: "🇺🇸",
         title: "US 2030 EV Share",
         value: us.evShare2030 + "%",
-        label: "420K trucks/year projected",
+        label: "~36K EV trucks/year (IEA STEPS)",
         color: COLORS.info
       }),
       createElement(MetricCard, {
         icon: "🇪🇺",
         title: "EU 2030 EV Share",
         value: eu.evShare2030 + "%",
-        label: "550K trucks/year projected",
+        label: "~85K EV trucks/year (IEA STEPS)",
         color: COLORS.primary
       }),
       createElement(MetricCard, {
         icon: "🌍",
         title: "Combined 2035",
-        value: "2.5M+",
-        label: "Annual EV truck sales globally",
+        value: "300K+",
+        label: "Annual EV truck sales (US+EU)",
         color: COLORS.success
       })
     ),
@@ -2942,6 +2990,9 @@ function CompetitiveLandscapeTab() {
         ),
         createElement("div", { style: { marginTop: "16px", textAlign: "center", fontSize: "13px", color: COLORS.textMuted } },
           GREENBAY_POSITIONING.marketOpportunity.description
+        ),
+        createElement("div", { style: { marginTop: "12px", textAlign: "center", fontSize: "11px", color: COLORS.textMuted, fontStyle: "italic" } },
+          "TAM Source: MarketsandMarkets Fleet Management Market Report 2025-2030"
         )
       )
     ),
