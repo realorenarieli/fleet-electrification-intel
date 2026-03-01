@@ -2971,28 +2971,53 @@ function CompetitiveLandscapeTab() {
       )
     ),
 
-    // TAM/SAM/SOM
+    // TAM/SAM/SOM with Methodology
     createElement("div", { style: { marginTop: "32px" } },
       createElement("div", { style: styles.sectionTitle }, "💰 Market Opportunity"),
       createElement(Card, null,
-        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", textAlign: "center" } },
-          [
-            { label: "TAM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.tam, desc: "Total Addressable Market", color: COLORS.info },
-            { label: "SAM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.sam, desc: "Serviceable Addressable Market", color: COLORS.primary },
-            { label: "SOM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.som, desc: "Serviceable Obtainable Market", color: COLORS.success }
-          ].map(function(item, i) {
-            return createElement("div", { key: i, style: { padding: "24px", background: COLORS.background, borderRadius: "12px" } },
-              createElement("div", { style: { fontSize: "14px", color: COLORS.textMuted, marginBottom: "8px" } }, item.label),
-              createElement("div", { style: { fontSize: "36px", fontWeight: "700", color: item.color, fontFamily: "'DM Mono', monospace" } }, item.value),
-              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginTop: "4px" } }, item.desc)
-            );
-          })
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" } },
+          // TAM
+          createElement("div", { style: { padding: "20px", background: COLORS.background, borderRadius: "12px", borderLeft: "4px solid " + COLORS.info } },
+            createElement("div", { style: { fontSize: "13px", color: COLORS.info, fontWeight: "600", marginBottom: "4px" } }, "TAM"),
+            createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.info, fontFamily: "'DM Mono', monospace" } }, "$70B"),
+            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginTop: "8px", lineHeight: "1.5" } },
+              "Global fleet management software market by 2030"
+            ),
+            createElement("div", { style: { fontSize: "10px", color: COLORS.textMuted, marginTop: "8px", padding: "8px", background: COLORS.card, borderRadius: "4px" } },
+              createElement("strong", null, "Source: "), "MarketsandMarkets Fleet Management Market Report 2025-2030"
+            )
+          ),
+          // SAM
+          createElement("div", { style: { padding: "20px", background: COLORS.background, borderRadius: "12px", borderLeft: "4px solid " + COLORS.primary } },
+            createElement("div", { style: { fontSize: "13px", color: COLORS.primary, fontWeight: "600", marginBottom: "4px" } }, "SAM"),
+            createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.primary, fontFamily: "'DM Mono', monospace" } }, "$32B"),
+            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginTop: "8px", lineHeight: "1.5" } },
+              "HD trucking segment (T&L = 45% of TAM)"
+            ),
+            createElement("div", { style: { fontSize: "10px", color: COLORS.textMuted, marginTop: "8px", padding: "8px", background: COLORS.card, borderRadius: "4px" } },
+              createElement("strong", null, "Calculation: "), "$70B × 45% = $31.5B"
+            )
+          ),
+          // SOM
+          createElement("div", { style: { padding: "20px", background: COLORS.background, borderRadius: "12px", borderLeft: "4px solid " + COLORS.accent } },
+            createElement("div", { style: { fontSize: "13px", color: COLORS.accent, fontWeight: "600", marginBottom: "4px" } }, "SOM (Estimate)"),
+            createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.accent, fontFamily: "'DM Mono', monospace" } }, "$640M"),
+            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginTop: "8px", lineHeight: "1.5" } },
+              "EV fleet orchestration early adopters (~2% of SAM)"
+            ),
+            createElement("div", { style: { fontSize: "10px", color: COLORS.accent, marginTop: "8px", padding: "8px", background: COLORS.accent + "10", borderRadius: "4px" } },
+              createElement("strong", null, "⚠️ Assumption: "), "2% penetration estimate - requires validation"
+            )
+          )
         ),
-        createElement("div", { style: { marginTop: "16px", textAlign: "center", fontSize: "13px", color: COLORS.textMuted } },
-          GREENBAY_POSITIONING.marketOpportunity.description
-        ),
-        createElement("div", { style: { marginTop: "12px", textAlign: "center", fontSize: "11px", color: COLORS.textMuted, fontStyle: "italic" } },
-          "TAM Source: MarketsandMarkets Fleet Management Market Report 2025-2030"
+        // Methodology Note
+        createElement("div", { style: { marginTop: "20px", padding: "16px", background: COLORS.card, borderRadius: "8px", border: "1px solid " + COLORS.border } },
+          createElement("div", { style: { fontSize: "12px", fontWeight: "600", color: COLORS.text, marginBottom: "8px" } }, "📊 Methodology Notes"),
+          createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, lineHeight: "1.6" } },
+            createElement("div", null, "• ", createElement("strong", null, "TAM: "), "Directly sourced from MarketsandMarkets industry report (CAGR 13.3% through 2030)"),
+            createElement("div", { style: { marginTop: "4px" } }, "• ", createElement("strong", null, "SAM: "), "Derived from TAM using T&L segment share (45%) per same report"),
+            createElement("div", { style: { marginTop: "4px" } }, "• ", createElement("strong", null, "SOM: "), "Estimated at 2% of SAM for EV-specific fleet orchestration. This is an assumption based on current EV truck penetration (~2% in EU) and should be validated with bottom-up analysis (target customers × contract value × win rate)")
+          )
         )
       )
     ),
