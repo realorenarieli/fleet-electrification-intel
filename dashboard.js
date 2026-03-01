@@ -3900,7 +3900,8 @@ function App() {
     ),
     // Footer
     createElement("footer", { style: { textAlign: "center", padding: "24px", color: COLORS.textDim, fontSize: "12px", borderTop: "1px solid " + COLORS.border } },
-      "Fleet Electrification Intelligence Dashboard • Data sources: BloombergNEF, ACT Research, NACFE, RMI, CARB, EPA • Last updated: 2024"
+      createElement("div", null, "Fleet Electrification Intelligence Dashboard • Data sources: IEA, ACEA, ATA, ACT Research, NACFE, RMI"),
+      createElement("div", { style: { marginTop: "8px", color: COLORS.textMuted } }, "© " + new Date().getFullYear() + " Greenbay. All rights reserved.")
     )
   );
 }
