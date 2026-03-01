@@ -2278,73 +2278,6 @@ function SourcesTab() {
   }
 
   return createElement("div", null,
-    // Key Metrics
-    createElement("div", { style: styles.grid },
-      createElement(MetricCard, {
-        icon: "📚",
-        title: "Total Sources",
-        value: SOURCES_DATA.length,
-        label: "Verified data sources",
-        color: COLORS.primary
-      }),
-      createElement(MetricCard, {
-        icon: "✅",
-        title: "Avg Validity Score",
-        value: avgValidity + "/10",
-        label: "Across all sources",
-        color: COLORS.success
-      }),
-      createElement(MetricCard, {
-        icon: "🏛️",
-        title: "Government Sources",
-        value: govSources,
-        label: "Official government data",
-        color: COLORS.info
-      }),
-      createElement(MetricCard, {
-        icon: "🔗",
-        title: "All Links Verified",
-        value: "100%",
-        label: "As of March 2024",
-        color: COLORS.accent
-      })
-    ),
-
-    // Validity Score Legend
-    createElement("div", { style: { marginTop: "32px" } },
-      createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "📊 Validity Score Guide"),
-        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "24px", padding: "8px 0" } },
-          [
-            { score: 10, label: "Authoritative", desc: "Government/official sources" },
-            { score: 9, label: "Highly Reliable", desc: "Major research institutions" },
-            { score: 8, label: "Reliable", desc: "Established industry research" },
-            { score: 7, label: "Generally Reliable", desc: "OEM/manufacturer data" }
-          ].map(function(item) {
-            return createElement("div", { key: item.score, style: { display: "flex", alignItems: "center", gap: "12px" } },
-              createElement("div", { style: {
-                width: "28px",
-                height: "28px",
-                borderRadius: "50%",
-                background: getValidityColor(item.score) + "20",
-                border: "2px solid " + getValidityColor(item.score),
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "700",
-                fontSize: "11px",
-                color: getValidityColor(item.score)
-              }}, item.score),
-              createElement("div", null,
-                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.label),
-                createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, item.desc)
-              )
-            );
-          })
-        )
-      )
-    ),
-
     // Sources by Category
     categories.map(function(category) {
       var categorySources = SOURCES_DATA.filter(function(s) { return s.category === category; });
@@ -2406,8 +2339,44 @@ function SourcesTab() {
       );
     }),
 
-    // Methodology Note
+    // Validity Score Legend (moved below sources)
     createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📊 Validity Score Guide"),
+        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "24px", padding: "8px 0" } },
+          [
+            { score: 10, label: "Authoritative", desc: "Government/official sources" },
+            { score: 9, label: "Highly Reliable", desc: "Major research institutions" },
+            { score: 8, label: "Reliable", desc: "Established industry research" },
+            { score: 7, label: "Generally Reliable", desc: "OEM/manufacturer data" },
+            { score: 6, label: "Limited Data", desc: "Sources requiring validation" }
+          ].map(function(item) {
+            return createElement("div", { key: item.score, style: { display: "flex", alignItems: "center", gap: "12px" } },
+              createElement("div", { style: {
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: getValidityColor(item.score) + "20",
+                border: "2px solid " + getValidityColor(item.score),
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "700",
+                fontSize: "11px",
+                color: getValidityColor(item.score)
+              }}, item.score),
+              createElement("div", null,
+                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.label),
+                createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, item.desc)
+              )
+            );
+          })
+        )
+      )
+    ),
+
+    // Methodology Note
+    createElement("div", { style: { marginTop: "24px" } },
       createElement(Card, { style: { borderColor: COLORS.info + "40" } },
         createElement("div", { style: styles.cardTitle }, "📋 Data Methodology & Notes"),
         createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", fontSize: "13px", color: COLORS.textMuted } },
