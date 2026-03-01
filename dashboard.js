@@ -649,15 +649,27 @@ var GEO_COMPARISON_DATA = {
 };
 
 // ============ DATA: Fleet Replacement ============
-// Sources: NACFE, ACT Research, Fleet Owner surveys, ACEA
+// Sources documented per data point below
 var FLEET_REPLACEMENT_DATA = {
-  // Replacement cycle data
+  // Replacement cycle data with sources
   cycleData: {
-    avgLifespanYears: { us: 12, eu: 14 },  // Average truck lifespan
-    fleetReplacementCycle: { us: 6, eu: 7 },  // Fleet replacement cycle (years)
-    ownerOperatorCycle: { us: 10, eu: 12 },
-    annualReplacementRate: { us: 8.3, eu: 7.1 },  // % of fleet replaced annually
-    avgMilesAtRetirement: { us: 750000, eu: 1200000 }  // km for EU
+    // US: ACT Research reports fleet trade cycle of 3-5 years; owner-operators longer
+    // EU: ACEA Vehicles on European Roads 2025 - trucks avg 14 years old
+    avgLifespanYears: { us: 15, eu: 15 },  // Thunder Said Energy: HD trucks ~15 year lifespan
+    fleetReplacementCycle: { us: 5, eu: 7 },  // ACT Research (US), ACEA data derived (EU)
+    ownerOperatorCycle: { us: 10, eu: 12 },  // Industry estimate - longer hold periods
+    annualReplacementRate: { us: 6.7, eu: 7.1 },  // Calculated: 100% / avg cycle years
+    avgMilesAtRetirement: { us: 500000, eu: 800000 },  // ACT Research: 500K miles trade point
+    avgFleetAge: { us: 13, eu: 14 }  // IBISWorld 2026 (US), ACEA 2025 (EU)
+  },
+  // Data sources for citation
+  sources: {
+    actResearch: { name: "ACT Research", url: "https://www.actresearch.net/", data: "Fleet trade cycles, Class 8 market data" },
+    acea: { name: "ACEA Vehicles on European Roads 2025", url: "https://www.acea.auto/publication/report-vehicles-on-european-roads-2025/", data: "EU truck avg age: 14 years" },
+    ntea: { name: "NTEA Fleet Purchasing Outlook Survey", url: "https://www.ntea.com/", data: "69% of fleets exceeding normal replacement cycle" },
+    nacfe: { name: "NACFE", url: "https://nacfe.org/", data: "Fleet efficiency data, transition guidance" },
+    ibisworld: { name: "IBISWorld", url: "https://www.ibisworld.com/", data: "US vehicle fleet avg age: 13 years (2026)" },
+    bts: { name: "Bureau of Transportation Statistics", url: "https://www.bts.gov/content/average-age-automobiles-and-trucks-operation-united-states", data: "US vehicle age trends" }
   },
   // Fleet age distribution (% of fleet by age bracket)
   ageDistribution: {
@@ -3199,30 +3211,30 @@ function FleetReplacementTab() {
     createElement("div", { style: styles.grid },
       createElement(MetricCard, {
         icon: "🔄",
-        title: "US Replacement Cycle",
+        title: "US Fleet Trade Cycle",
         value: data.cycleData.fleetReplacementCycle.us + " yrs",
-        label: "Average fleet truck replacement",
+        label: "Large fleet replacement (ACT Research)",
         color: COLORS.info
       }),
       createElement(MetricCard, {
-        icon: "🔄",
-        title: "EU Replacement Cycle",
-        value: data.cycleData.fleetReplacementCycle.eu + " yrs",
-        label: "Average fleet truck replacement",
+        icon: "📅",
+        title: "EU Avg Truck Age",
+        value: data.cycleData.avgFleetAge.eu + " yrs",
+        label: "Oldest vehicle type (ACEA 2025)",
         color: COLORS.primary
       }),
       createElement(MetricCard, {
         icon: "📊",
-        title: "Annual Turnover",
-        value: data.cycleData.annualReplacementRate.us + "%",
-        label: "US fleet replaced per year",
+        title: "US Avg Fleet Age",
+        value: data.cycleData.avgFleetAge.us + " yrs",
+        label: "All vehicles (IBISWorld 2026)",
         color: COLORS.accent
       }),
       createElement(MetricCard, {
         icon: "🛣️",
-        title: "Miles at Retirement",
-        value: "750K",
-        label: "Average US truck lifetime miles",
+        title: "Trade Point (Miles)",
+        value: "500K",
+        label: "Typical fleet trade mileage (ACT)",
         color: COLORS.success
       })
     ),
@@ -3522,12 +3534,60 @@ function FleetReplacementTab() {
       )
     ),
 
-    // Sources
+    // Sources with methodology
     createElement("div", { style: { marginTop: "32px" } },
-      createElement(Card, { style: { background: COLORS.background } },
-        createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } },
-          createElement("strong", null, "Sources: "),
-          "NACFE Fleet Transition Guide, ACT Research Fleet Survey, ACEA Vehicles in Use Report, Fleet Owner Industry Survey, RMI Fleet Electrification Toolkit"
+      createElement(Card, { style: { background: COLORS.background, border: "1px solid " + COLORS.border } },
+        createElement("div", { style: styles.cardTitle }, "📚 Data Sources & Methodology"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px", fontSize: "12px" } },
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.primary, marginBottom: "8px" } }, "Replacement Cycle Data"),
+            createElement("div", { style: { color: COLORS.textMuted, lineHeight: "1.6" } },
+              createElement("div", null, "• ", createElement("strong", null, "US Fleet Trade Cycle (5 yrs): "), "ACT Research - large fleets trade every 3-5 years"),
+              createElement("div", null, "• ", createElement("strong", null, "EU Avg Truck Age (14 yrs): "), "ACEA Vehicles on European Roads 2025"),
+              createElement("div", null, "• ", createElement("strong", null, "US Avg Fleet Age (13 yrs): "), "IBISWorld 2026 estimates"),
+              createElement("div", null, "• ", createElement("strong", null, "Trade Mileage (500K): "), "ACT Research industry benchmark")
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.primary, marginBottom: "8px" } }, "Fleet Age Distribution"),
+            createElement("div", { style: { color: COLORS.textMuted, lineHeight: "1.6" } },
+              createElement("div", null, "• ", createElement("strong", null, "US Distribution: "), "ACT Research, Fleet Owner Industry Survey"),
+              createElement("div", null, "• ", createElement("strong", null, "EU Distribution: "), "ACEA Vehicles in Use Report 2023"),
+              createElement("div", null, "• ", createElement("strong", null, "69% exceeding cycle: "), "NTEA Fleet Purchasing Outlook Survey")
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.primary, marginBottom: "8px" } }, "Strategy & Best Practices"),
+            createElement("div", { style: { color: COLORS.textMuted, lineHeight: "1.6" } },
+              createElement("div", null, "• NACFE Fleet Electrification Guidance Reports"),
+              createElement("div", null, "• RMI Fleet Electrification Toolkit"),
+              createElement("div", null, "• Industry interviews and fleet operator surveys")
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.accent, marginBottom: "8px" } }, "⚠️ Methodology Notes"),
+            createElement("div", { style: { color: COLORS.textMuted, lineHeight: "1.6" } },
+              createElement("div", null, "• Age distributions are estimates based on available survey data"),
+              createElement("div", null, "• Transition strategies are framework recommendations, not prescriptive"),
+              createElement("div", null, "• Scenario calculations use industry averages; actual results vary by fleet")
+            )
+          )
+        ),
+        createElement("div", { style: { marginTop: "16px", paddingTop: "12px", borderTop: "1px solid " + COLORS.border, display: "flex", flexWrap: "wrap", gap: "12px" } },
+          [
+            { name: "ACT Research", url: "https://www.actresearch.net/" },
+            { name: "ACEA Reports", url: "https://www.acea.auto/publication/report-vehicles-on-european-roads-2025/" },
+            { name: "NACFE", url: "https://nacfe.org/" },
+            { name: "Bureau of Transportation Statistics", url: "https://www.bts.gov/content/average-age-automobiles-and-trucks-operation-united-states" }
+          ].map(function(source, i) {
+            return createElement("a", {
+              key: i,
+              href: source.url,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              style: { fontSize: "11px", color: COLORS.primary, textDecoration: "none" }
+            }, source.name + " ↗");
+          })
         )
       )
     )
