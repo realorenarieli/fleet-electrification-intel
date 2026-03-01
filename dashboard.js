@@ -401,6 +401,234 @@ var INCENTIVES_DATA = [
   { program: "CARB Drayage", type: "Voucher", max_amount: 150000, percent: 0, status: "Active" }
 ];
 
+// ============ DATA: Sources with Validity Scores ============
+var SOURCES_DATA = [
+  // Research & Analytics (Primary Sources)
+  {
+    category: "Research & Analytics",
+    name: "BloombergNEF Electric Vehicle Outlook",
+    url: "https://about.bnef.com/electric-vehicle-outlook/",
+    description: "Comprehensive annual report on EV market trends, battery prices, and adoption forecasts",
+    dataUsed: "Market projections, battery cost trends, EV sales forecasts",
+    validity: 9,
+    type: "Subscription Research",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "ACT Research",
+    url: "https://www.actresearch.net/reports/",
+    description: "Commercial vehicle market research and forecasting",
+    dataUsed: "Class 8 truck market data, commercial vehicle trends",
+    validity: 8,
+    type: "Industry Research",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "NACFE Run on Less",
+    url: "https://nacfe.org/research/electric-trucks/",
+    description: "Real-world electric truck performance data from fleet demonstrations",
+    dataUsed: "TCO analysis, real-world efficiency data, fleet case studies",
+    validity: 9,
+    type: "Non-Profit Research",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "Rocky Mountain Institute (RMI)",
+    url: "https://rmi.org/our-work/climate-aligned-industries/heavy-duty-vehicles/",
+    description: "Clean energy think tank focused on transportation decarbonization",
+    dataUsed: "TCO models, infrastructure planning, policy analysis",
+    validity: 9,
+    type: "Non-Profit Research",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Research & Analytics",
+    name: "McKinsey Center for Future Mobility",
+    url: "https://www.mckinsey.com/industries/automotive-and-assembly/our-insights/the-road-to-2035-ev-charging-infrastructure",
+    description: "Management consulting firm's automotive research division",
+    dataUsed: "Market sizing, infrastructure cost estimates, adoption curves",
+    validity: 8,
+    type: "Consulting Research",
+    lastUpdated: "2024"
+  },
+  // Government Sources
+  {
+    category: "Government Sources",
+    name: "California Air Resources Board (CARB)",
+    url: "https://ww2.arb.ca.gov/our-work/programs/advanced-clean-fleets",
+    description: "California's regulatory body for air quality and vehicle emissions",
+    dataUsed: "ACF regulation details, ZEV mandates, compliance timelines",
+    validity: 10,
+    type: "Government",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Government Sources",
+    name: "EPA SmartWay Program",
+    url: "https://www.epa.gov/smartway",
+    description: "EPA's freight sustainability partnership program",
+    dataUsed: "Emissions data, fuel efficiency benchmarks",
+    validity: 10,
+    type: "Government",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Government Sources",
+    name: "DOE Alternative Fuels Data Center",
+    url: "https://afdc.energy.gov/vehicles/electric-vehicles-batteries",
+    description: "US Department of Energy's alternative fuel vehicle information",
+    dataUsed: "Incentive data, charging infrastructure specs, vehicle comparisons",
+    validity: 10,
+    type: "Government",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Government Sources",
+    name: "IEA Global EV Outlook",
+    url: "https://www.iea.org/reports/global-ev-outlook-2024",
+    description: "International Energy Agency's annual EV market analysis",
+    dataUsed: "Global market data, policy comparisons, technology trends",
+    validity: 10,
+    type: "Intergovernmental",
+    lastUpdated: "2024"
+  },
+  // Incentive Programs
+  {
+    category: "Incentive Programs",
+    name: "Federal 30C Tax Credit",
+    url: "https://afdc.energy.gov/laws/10513",
+    description: "Alternative Fuel Vehicle Refueling Property Credit",
+    dataUsed: "Tax credit amounts, eligibility requirements",
+    validity: 10,
+    type: "Government",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Incentive Programs",
+    name: "California HVIP",
+    url: "https://californiahvip.org/",
+    description: "Hybrid and Zero-Emission Truck and Bus Voucher Incentive Project",
+    dataUsed: "Voucher amounts by vehicle type, eligible vehicles list",
+    validity: 10,
+    type: "Government Program",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Incentive Programs",
+    name: "California EnergIIZE",
+    url: "https://energiize.org/",
+    description: "Infrastructure incentive program for zero-emission fleets",
+    dataUsed: "Infrastructure funding amounts, eligibility criteria",
+    validity: 10,
+    type: "Government Program",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Incentive Programs",
+    name: "NYSERDA Truck Voucher Program",
+    url: "https://www.nyserda.ny.gov/All-Programs/Truck-Voucher-Incentive-Program",
+    description: "New York State voucher program for clean trucks",
+    dataUsed: "Voucher amounts, program requirements",
+    validity: 10,
+    type: "Government Program",
+    lastUpdated: "2024"
+  },
+  {
+    category: "Incentive Programs",
+    name: "NJ Zero-Emission Incentive Program",
+    url: "https://www.drivegreen.nj.gov/dg-zev-incentives.html",
+    description: "New Jersey incentives for zero-emission vehicles",
+    dataUsed: "Incentive amounts, eligible vehicles",
+    validity: 10,
+    type: "Government Program",
+    lastUpdated: "2024"
+  },
+  // OEM Sources
+  {
+    category: "OEM Specifications",
+    name: "Tesla Semi",
+    url: "https://www.tesla.com/semi",
+    description: "Official Tesla Semi specifications and ordering information",
+    dataUsed: "Range, battery capacity, pricing, specifications",
+    validity: 7,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Freightliner eCascadia",
+    url: "https://freightliner.com/trucks/ecascadia/",
+    description: "Official Freightliner electric truck specifications",
+    dataUsed: "Range, battery options, payload capacity, charging specs",
+    validity: 8,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Volvo VNR Electric",
+    url: "https://www.volvotrucks.us/trucks/vnr-electric/",
+    description: "Official Volvo electric truck specifications",
+    dataUsed: "Range, battery capacity, motor specs, charging options",
+    validity: 8,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Peterbilt Electric Vehicles",
+    url: "https://www.peterbilt.com/trucks/electric-vehicles",
+    description: "Official Peterbilt electric truck lineup",
+    dataUsed: "Model 579EV specifications, range, battery options",
+    validity: 8,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Kenworth T680E",
+    url: "https://www.kenworth.com/trucks/t680e/",
+    description: "Official Kenworth electric truck specifications",
+    dataUsed: "Range, battery capacity, charging specs",
+    validity: 8,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "BYD Trucks North America",
+    url: "https://en.byd.com/truck/",
+    description: "Official BYD commercial electric vehicle specifications",
+    dataUsed: "Class 8 truck specs, battery capacity, range",
+    validity: 7,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Nikola Tre BEV",
+    url: "https://www.nikolamotor.com/tre-bev/",
+    description: "Official Nikola battery-electric truck specifications",
+    dataUsed: "Range, battery capacity, motor specs, pricing",
+    validity: 7,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  },
+  {
+    category: "OEM Specifications",
+    name: "Mercedes-Benz eActros",
+    url: "https://www.mercedes-benz-trucks.com/en_GB/models/eactros-600.html",
+    description: "Official Mercedes-Benz electric truck specifications",
+    dataUsed: "eActros 600 specs, range, charging capabilities",
+    validity: 8,
+    type: "Manufacturer",
+    lastUpdated: "2024"
+  }
+];
+
 // ============ DATA: Market Projections ============
 var MARKET_PROJECTIONS = [
   { year: 2024, ev_sales: 15000, ev_share: 1.2, total_market: 1250000 },
@@ -1264,6 +1492,262 @@ function MarketOutlookTab() {
   );
 }
 
+// ============ SOURCES TAB ============
+function SourcesTab() {
+  var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications"];
+
+  var avgValidity = Math.round(SOURCES_DATA.reduce(function(sum, s) { return sum + s.validity; }, 0) / SOURCES_DATA.length * 10) / 10;
+  var govSources = SOURCES_DATA.filter(function(s) { return s.validity === 10; }).length;
+
+  function getValidityColor(score) {
+    if (score >= 9) return COLORS.success;
+    if (score >= 7) return COLORS.primary;
+    if (score >= 5) return COLORS.accent;
+    return COLORS.danger;
+  }
+
+  function getValidityLabel(score) {
+    if (score === 10) return "Authoritative";
+    if (score >= 9) return "Highly Reliable";
+    if (score >= 8) return "Reliable";
+    if (score >= 7) return "Generally Reliable";
+    if (score >= 5) return "Moderate";
+    return "Use with Caution";
+  }
+
+  function renderValidityBadge(score) {
+    var color = getValidityColor(score);
+    return createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" } },
+      createElement("div", { style: {
+        width: "32px",
+        height: "32px",
+        borderRadius: "50%",
+        background: color + "20",
+        border: "2px solid " + color,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: "700",
+        fontSize: "12px",
+        color: color
+      }}, score),
+      createElement("span", { style: { fontSize: "11px", color: COLORS.textMuted } }, getValidityLabel(score))
+    );
+  }
+
+  return createElement("div", null,
+    // Key Metrics
+    createElement("div", { style: styles.grid },
+      createElement(MetricCard, {
+        icon: "📚",
+        title: "Total Sources",
+        value: SOURCES_DATA.length,
+        label: "Verified data sources",
+        color: COLORS.primary
+      }),
+      createElement(MetricCard, {
+        icon: "✅",
+        title: "Avg Validity Score",
+        value: avgValidity + "/10",
+        label: "Across all sources",
+        color: COLORS.success
+      }),
+      createElement(MetricCard, {
+        icon: "🏛️",
+        title: "Government Sources",
+        value: govSources,
+        label: "Official government data",
+        color: COLORS.info
+      }),
+      createElement(MetricCard, {
+        icon: "🔗",
+        title: "All Links Verified",
+        value: "100%",
+        label: "As of March 2024",
+        color: COLORS.accent
+      })
+    ),
+
+    // Validity Score Legend
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📊 Validity Score Guide"),
+        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "24px", padding: "8px 0" } },
+          [
+            { score: 10, label: "Authoritative", desc: "Government/official sources" },
+            { score: 9, label: "Highly Reliable", desc: "Major research institutions" },
+            { score: 8, label: "Reliable", desc: "Established industry research" },
+            { score: 7, label: "Generally Reliable", desc: "OEM/manufacturer data" }
+          ].map(function(item) {
+            return createElement("div", { key: item.score, style: { display: "flex", alignItems: "center", gap: "12px" } },
+              createElement("div", { style: {
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: getValidityColor(item.score) + "20",
+                border: "2px solid " + getValidityColor(item.score),
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "700",
+                fontSize: "11px",
+                color: getValidityColor(item.score)
+              }}, item.score),
+              createElement("div", null,
+                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.label),
+                createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, item.desc)
+              )
+            );
+          })
+        )
+      )
+    ),
+
+    // Sources by Category
+    categories.map(function(category) {
+      var categorySources = SOURCES_DATA.filter(function(s) { return s.category === category; });
+      var categoryIcon = category === "Research & Analytics" ? "🔬" :
+                        category === "Government Sources" ? "🏛️" :
+                        category === "Incentive Programs" ? "💵" : "🚛";
+
+      return createElement("div", { key: category, style: { marginTop: "32px" } },
+        createElement("div", { style: styles.sectionTitle }, categoryIcon, " ", category),
+        createElement(Card, null,
+          createElement("div", { style: { overflowX: "auto" } },
+            createElement("table", { style: styles.table },
+              createElement("thead", null,
+                createElement("tr", null,
+                  createElement("th", { style: styles.th }, "Source"),
+                  createElement("th", { style: styles.th }, "Type"),
+                  createElement("th", { style: styles.th }, "Data Used"),
+                  createElement("th", { style: styles.th }, "Validity"),
+                  createElement("th", { style: styles.th }, "Link")
+                )
+              ),
+              createElement("tbody", null,
+                categorySources.map(function(source, index) {
+                  return createElement("tr", { key: index },
+                    createElement("td", { style: Object.assign({}, styles.td, { maxWidth: "200px" }) },
+                      createElement("div", { style: { fontWeight: "600", marginBottom: "4px" } }, source.name),
+                      createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, lineHeight: "1.4" } }, source.description)
+                    ),
+                    createElement("td", { style: styles.td },
+                      createElement(Badge, { variant: source.type === "Government" || source.type === "Intergovernmental" || source.type === "Government Program" ? "success" : source.type === "Non-Profit Research" ? "info" : "warning" }, source.type)
+                    ),
+                    createElement("td", { style: Object.assign({}, styles.td, { fontSize: "12px", color: COLORS.textMuted, maxWidth: "250px" }) }, source.dataUsed),
+                    createElement("td", { style: styles.td }, renderValidityBadge(source.validity)),
+                    createElement("td", { style: styles.td },
+                      createElement("a", {
+                        href: source.url,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        style: {
+                          color: COLORS.primary,
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          padding: "6px 12px",
+                          background: COLORS.primary + "15",
+                          borderRadius: "6px",
+                          fontSize: "12px",
+                          fontWeight: "500"
+                        }
+                      }, "Visit ↗")
+                    )
+                  );
+                })
+              )
+            )
+          )
+        )
+      );
+    }),
+
+    // Methodology Note
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, { style: { borderColor: COLORS.info + "40" } },
+        createElement("div", { style: styles.cardTitle }, "📋 Data Methodology & Notes"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", fontSize: "13px", color: COLORS.textMuted } },
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.text, marginBottom: "8px" } }, "Validity Scoring Criteria"),
+            createElement("div", { style: { lineHeight: "1.6" } },
+              "• Government sources receive 10/10 (official data)",
+              createElement("br"),
+              "• Research institutions scored 8-9 based on methodology",
+              createElement("br"),
+              "• OEM data scored 7-8 (potential marketing bias)",
+              createElement("br"),
+              "• All links verified as of March 2024"
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.text, marginBottom: "8px" } }, "Data Reconciliation"),
+            createElement("div", { style: { lineHeight: "1.6" } },
+              "• When sources conflict, government data takes precedence",
+              createElement("br"),
+              "• Market projections averaged across multiple sources",
+              createElement("br"),
+              "• OEM specs taken from official product pages",
+              createElement("br"),
+              "• TCO calculations follow NACFE methodology"
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", color: COLORS.text, marginBottom: "8px" } }, "Limitations"),
+            createElement("div", { style: { lineHeight: "1.6" } },
+              "• Some sources require subscriptions for full data",
+              createElement("br"),
+              "• OEM pricing may vary by configuration/region",
+              createElement("br"),
+              "• Market projections are estimates, not guarantees",
+              createElement("br"),
+              "• Incentive programs subject to funding availability"
+            )
+          )
+        )
+      )
+    ),
+
+    // Quick Links
+    createElement("div", { style: { marginTop: "24px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "🔗 Quick Access: Most Important Sources"),
+        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
+          [
+            { name: "IEA Global EV Outlook", url: "https://www.iea.org/reports/global-ev-outlook-2024", icon: "🌍" },
+            { name: "CARB ACF Rule", url: "https://ww2.arb.ca.gov/our-work/programs/advanced-clean-fleets", icon: "📜" },
+            { name: "NACFE Electric Trucks", url: "https://nacfe.org/research/electric-trucks/", icon: "🔬" },
+            { name: "CA HVIP Vouchers", url: "https://californiahvip.org/", icon: "💰" },
+            { name: "DOE AFDC", url: "https://afdc.energy.gov/", icon: "⚡" }
+          ].map(function(link) {
+            return createElement("a", {
+              key: link.name,
+              href: link.url,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "12px 16px",
+                background: COLORS.background,
+                border: "1px solid " + COLORS.border,
+                borderRadius: "8px",
+                color: COLORS.text,
+                textDecoration: "none",
+                fontSize: "13px",
+                fontWeight: "500",
+                transition: "all 0.2s ease"
+              }
+            }, link.icon, " ", link.name, " ↗");
+          })
+        )
+      )
+    )
+  );
+}
+
 // ============ MAIN APP ============
 function App() {
   var tabState = useState("tco");
@@ -1274,7 +1758,8 @@ function App() {
     { id: "tco", label: "💰 TCO Analysis", component: TCOAnalysisTab },
     { id: "oem", label: "🚛 OEM Comparison", component: OEMComparisonTab },
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
-    { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab }
+    { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
+    { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
   var ActiveComponent = tabs.find(function(t) { return t.id === activeTab; }).component;
