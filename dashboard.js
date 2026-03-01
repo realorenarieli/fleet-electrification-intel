@@ -575,6 +575,173 @@ var ISRAEL_MARKET_DATA = {
   requiredSources: true
 };
 
+// ============ DATA: Enhanced Geo Comparison ============
+var GEO_COMPARISON_DATA = {
+  na: {
+    id: "na",
+    name: "North America",
+    flag: "🇺🇸",
+    // Market Size
+    totalFleet: 4200000,
+    annualSales: 280000,
+    evUnits2024: 12000,
+    evPenetration2024: 0.8,
+    evPenetration2030: 30,
+    evPenetration2035: 67,
+    cagr2024_2030: 78,
+    // Economics
+    avgTruckPrice: 180000,
+    avgEvPremium: 150000,
+    dieselPrice: 4.00,
+    dieselUnit: "/gal",
+    electricityPrice: 0.12,
+    tcoBreakeven: 7,
+    avgIncentive: 150000,
+    totalIncentiveBudget: "8.5B",
+    // Infrastructure
+    publicChargersHD: 850,
+    plannedChargers2030: 15000,
+    chargingCorridors: "NEVI (53,000 mi)",
+    gridReadiness: "Moderate",
+    // OEM Landscape
+    modelsAvailable: 8,
+    localManufacturers: ["Tesla", "Freightliner", "Peterbilt", "Kenworth", "Nikola"],
+    importedBrands: ["Volvo", "BYD", "Mercedes-Benz"],
+    serviceNetwork: "Developing",
+    // Key Barriers
+    barriers: [
+      { issue: "High upfront cost", severity: "High" },
+      { issue: "Limited public charging", severity: "High" },
+      { issue: "Range for long-haul", severity: "Medium" }
+    ],
+    // Key Drivers
+    drivers: [
+      { factor: "CA ACF + multi-state adoption", impact: "High" },
+      { factor: "IRA incentives ($7,500-$40K)", impact: "High" },
+      { factor: "Corporate sustainability goals", impact: "Medium" }
+    ],
+    // Top Use Cases
+    useCases: ["Port drayage", "Regional distribution", "Last-mile delivery", "Yard trucks"],
+    // Regulations Timeline
+    regulationsTimeline: [
+      { year: 2024, event: "CA ACF Rule begins phase-in" },
+      { year: 2027, event: "EPA GHG Phase 3 standards" },
+      { year: 2030, event: "CA: 50% ZEV truck sales required" },
+      { year: 2035, event: "CA: 75% ZEV truck sales required" },
+      { year: 2036, event: "CA: 100% ZEV truck sales required" }
+    ]
+  },
+  eu: {
+    id: "eu",
+    name: "European Union",
+    flag: "🇪🇺",
+    // Market Size
+    totalFleet: 6500000,
+    annualSales: 350000,
+    evUnits2024: 18000,
+    evPenetration2024: 1.2,
+    evPenetration2030: 35,
+    evPenetration2035: 70,
+    cagr2024_2030: 75,
+    // Economics
+    avgTruckPrice: 120000,
+    avgEvPremium: 200000,
+    dieselPrice: 1.80,
+    dieselUnit: "/L",
+    electricityPrice: 0.25,
+    tcoBreakeven: 6,
+    avgIncentive: 120000,
+    totalIncentiveBudget: "12B",
+    // Infrastructure
+    publicChargersHD: 1200,
+    plannedChargers2030: 35000,
+    chargingCorridors: "TEN-T (every 60km)",
+    gridReadiness: "Strong",
+    // OEM Landscape
+    modelsAvailable: 12,
+    localManufacturers: ["DAF", "MAN", "Scania", "IVECO", "Renault Trucks", "Volvo", "Mercedes-Benz"],
+    importedBrands: ["Tesla", "BYD", "Nikola"],
+    serviceNetwork: "Established",
+    // Key Barriers
+    barriers: [
+      { issue: "High electricity prices", severity: "High" },
+      { issue: "Vehicle cost premium", severity: "Medium" },
+      { issue: "Cross-border charging standards", severity: "Medium" }
+    ],
+    // Key Drivers
+    drivers: [
+      { factor: "CO2 Standards (90% by 2040)", impact: "High" },
+      { factor: "AFIR infrastructure mandate", impact: "High" },
+      { factor: "City access restrictions", impact: "High" }
+    ],
+    // Top Use Cases
+    useCases: ["Urban distribution", "Regional transport", "Supermarket logistics", "Construction"],
+    // Regulations Timeline
+    regulationsTimeline: [
+      { year: 2025, event: "AFIR charging requirements begin" },
+      { year: 2027, event: "Euro 7 emission standards" },
+      { year: 2030, event: "45% CO2 reduction target" },
+      { year: 2035, event: "65% CO2 reduction target" },
+      { year: 2040, event: "90% CO2 reduction target" }
+    ]
+  },
+  israel: {
+    id: "israel",
+    name: "Israel",
+    flag: "🇮🇱",
+    // Market Size
+    totalFleet: 85000,
+    annualSales: 8500,
+    evUnits2024: 150,
+    evPenetration2024: 0.2,
+    evPenetration2030: 15,
+    evPenetration2035: 45,
+    cagr2024_2030: 85,
+    // Economics
+    avgTruckPrice: 140000,
+    avgEvPremium: 180000,
+    dieselPrice: 2.10,
+    dieselUnit: "/L",
+    electricityPrice: 0.14,
+    tcoBreakeven: 5,
+    avgIncentive: 30000,
+    totalIncentiveBudget: "50M",
+    // Infrastructure
+    publicChargersHD: 25,
+    plannedChargers2030: 500,
+    chargingCorridors: "Highway 6, Port corridors",
+    gridReadiness: "Limited",
+    // OEM Landscape
+    modelsAvailable: 3,
+    localManufacturers: [],
+    importedBrands: ["BYD", "Volvo Trucks", "Mercedes-Benz"],
+    serviceNetwork: "Very Limited",
+    // Key Barriers
+    barriers: [
+      { issue: "Limited OEM presence", severity: "High" },
+      { issue: "High import costs", severity: "High" },
+      { issue: "Small market = low priority", severity: "High" }
+    ],
+    // Key Drivers
+    drivers: [
+      { factor: "High fuel costs", impact: "High" },
+      { factor: "Short avg routes (120km)", impact: "High" },
+      { factor: "Port logistics demand", impact: "Medium" }
+    ],
+    // Top Use Cases
+    useCases: ["Port drayage", "Urban delivery", "Short-haul regional", "Supermarket distribution"],
+    // Regulations Timeline
+    regulationsTimeline: [
+      { year: 2024, event: "Green taxation reform" },
+      { year: 2025, event: "Clean Air Law - urban ZEV zones" },
+      { year: 2030, event: "National target: 30% EV sales" }
+    ],
+    // Special Note
+    dataLimited: true,
+    dataNote: "Israeli market data is limited. Figures are estimates based on available sources and require validation."
+  }
+};
+
 // ============ DATA: Sources with Validity Scores ============
 var SOURCES_DATA = [
   // Research & Analytics (Primary Sources)
@@ -2234,6 +2401,327 @@ function MarketOutlookTab() {
   );
 }
 
+// ============ GEO DEEP-DIVE TAB ============
+function GeoDeepDiveTab() {
+  var regions = [GEO_COMPARISON_DATA.na, GEO_COMPARISON_DATA.eu, GEO_COMPARISON_DATA.israel];
+
+  function getSeverityColor(severity) {
+    if (severity === "High") return COLORS.danger;
+    if (severity === "Medium") return COLORS.accent;
+    return COLORS.success;
+  }
+
+  function getImpactColor(impact) {
+    if (impact === "High") return COLORS.success;
+    if (impact === "Medium") return COLORS.primary;
+    return COLORS.textMuted;
+  }
+
+  function ComparisonRow(props) {
+    return createElement("tr", null,
+      createElement("td", { style: Object.assign({}, styles.td, { fontWeight: "600", background: COLORS.background }) }, props.label),
+      regions.map(function(region) {
+        var value = props.getValue(region);
+        var cellStyle = Object.assign({}, styles.td, { textAlign: "center" });
+        if (props.highlight && props.highlight(region, value)) {
+          cellStyle.color = COLORS.success;
+          cellStyle.fontWeight = "600";
+        }
+        return createElement("td", { key: region.id, style: cellStyle }, value);
+      })
+    );
+  }
+
+  return createElement("div", null,
+    // Side-by-Side Comparison Table
+    createElement("div", { style: styles.section },
+      createElement("div", { style: styles.sectionTitle }, "📊 Regional Comparison at a Glance"),
+      createElement(Card, null,
+        createElement("div", { style: { overflowX: "auto" } },
+          createElement("table", { style: styles.table },
+            createElement("thead", null,
+              createElement("tr", null,
+                createElement("th", { style: Object.assign({}, styles.th, { width: "200px" }) }, "Metric"),
+                regions.map(function(region) {
+                  return createElement("th", { key: region.id, style: Object.assign({}, styles.th, { textAlign: "center", minWidth: "150px" }) },
+                    createElement("div", { style: { fontSize: "20px", marginBottom: "4px" } }, region.flag),
+                    region.name
+                  );
+                })
+              )
+            ),
+            createElement("tbody", null,
+              // Market Size Section
+              createElement("tr", null,
+                createElement("td", { colSpan: 4, style: { padding: "12px 8px", background: COLORS.primary + "15", fontWeight: "600", color: COLORS.primary } }, "📈 Market Size")
+              ),
+              createElement(ComparisonRow, {
+                label: "Total Fleet",
+                getValue: function(r) { return formatNumber(r.totalFleet); }
+              }),
+              createElement(ComparisonRow, {
+                label: "Annual Sales",
+                getValue: function(r) { return formatNumber(r.annualSales); }
+              }),
+              createElement(ComparisonRow, {
+                label: "EV Units (2024)",
+                getValue: function(r) { return formatNumber(r.evUnits2024); }
+              }),
+              createElement(ComparisonRow, {
+                label: "EV Penetration (2024)",
+                getValue: function(r) { return r.evPenetration2024 + "%"; }
+              }),
+              createElement(ComparisonRow, {
+                label: "EV Penetration (2030)",
+                getValue: function(r) { return r.evPenetration2030 + "%"; },
+                highlight: function(r, v) { return r.evPenetration2030 >= 30; }
+              }),
+              createElement(ComparisonRow, {
+                label: "CAGR (2024-2030)",
+                getValue: function(r) { return r.cagr2024_2030 + "%"; }
+              }),
+
+              // Economics Section
+              createElement("tr", null,
+                createElement("td", { colSpan: 4, style: { padding: "12px 8px", background: COLORS.accent + "15", fontWeight: "600", color: COLORS.accent } }, "💰 Economics")
+              ),
+              createElement(ComparisonRow, {
+                label: "Diesel Price",
+                getValue: function(r) { return "$" + r.dieselPrice.toFixed(2) + r.dieselUnit; }
+              }),
+              createElement(ComparisonRow, {
+                label: "Electricity Price",
+                getValue: function(r) { return "$" + r.electricityPrice.toFixed(2) + "/kWh"; }
+              }),
+              createElement(ComparisonRow, {
+                label: "TCO Break-even",
+                getValue: function(r) { return "Year " + r.tcoBreakeven; },
+                highlight: function(r, v) { return r.tcoBreakeven <= 6; }
+              }),
+              createElement(ComparisonRow, {
+                label: "Avg Incentive",
+                getValue: function(r) { return "$" + formatNumber(r.avgIncentive); }
+              }),
+              createElement(ComparisonRow, {
+                label: "Total Incentive Budget",
+                getValue: function(r) { return "$" + r.totalIncentiveBudget; }
+              }),
+
+              // Infrastructure Section
+              createElement("tr", null,
+                createElement("td", { colSpan: 4, style: { padding: "12px 8px", background: COLORS.info + "15", fontWeight: "600", color: COLORS.info } }, "🔌 Infrastructure")
+              ),
+              createElement(ComparisonRow, {
+                label: "HD Public Chargers",
+                getValue: function(r) { return formatNumber(r.publicChargersHD); }
+              }),
+              createElement(ComparisonRow, {
+                label: "Planned by 2030",
+                getValue: function(r) { return formatNumber(r.plannedChargers2030); }
+              }),
+              createElement(ComparisonRow, {
+                label: "Charging Corridors",
+                getValue: function(r) { return r.chargingCorridors; }
+              }),
+              createElement(ComparisonRow, {
+                label: "Grid Readiness",
+                getValue: function(r) { return r.gridReadiness; }
+              }),
+
+              // OEM Landscape Section
+              createElement("tr", null,
+                createElement("td", { colSpan: 4, style: { padding: "12px 8px", background: COLORS.success + "15", fontWeight: "600", color: COLORS.success } }, "🚛 OEM Landscape")
+              ),
+              createElement(ComparisonRow, {
+                label: "Models Available",
+                getValue: function(r) { return r.modelsAvailable; },
+                highlight: function(r, v) { return r.modelsAvailable >= 8; }
+              }),
+              createElement(ComparisonRow, {
+                label: "Service Network",
+                getValue: function(r) { return r.serviceNetwork; }
+              })
+            )
+          )
+        )
+      )
+    ),
+
+    // Detailed Region Sections
+    regions.map(function(region) {
+      var borderColor = region.id === "na" ? COLORS.info : region.id === "eu" ? COLORS.primary : COLORS.accent;
+
+      return createElement("div", { key: region.id, style: { marginTop: "48px" } },
+        createElement("div", { style: Object.assign({}, styles.sectionTitle, { borderBottom: "3px solid " + borderColor, paddingBottom: "12px" }) },
+          createElement("span", { style: { fontSize: "32px", marginRight: "12px" } }, region.flag),
+          region.name + " Deep Dive"
+        ),
+
+        // Warning for Israel
+        region.dataLimited && createElement(Card, { style: { marginBottom: "24px", background: COLORS.accent + "10", borderColor: COLORS.accent } },
+          createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px" } },
+            createElement("span", { style: { fontSize: "24px" } }, "⚠️"),
+            createElement("div", null,
+              createElement("div", { style: { fontWeight: "600", color: COLORS.accent } }, "Limited Data Availability"),
+              createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted } }, region.dataNote)
+            )
+          )
+        ),
+
+        createElement("div", { style: styles.gridWide },
+          // Key Metrics Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "📊 Key Metrics"),
+            createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px" } },
+              [
+                { label: "Total Fleet", value: formatNumber(region.totalFleet), color: COLORS.text },
+                { label: "Annual Sales", value: formatNumber(region.annualSales), color: COLORS.text },
+                { label: "EV Penetration 2024", value: region.evPenetration2024 + "%", color: COLORS.primary },
+                { label: "EV Penetration 2030", value: region.evPenetration2030 + "%", color: COLORS.success },
+                { label: "Models Available", value: region.modelsAvailable, color: COLORS.info },
+                { label: "TCO Break-even", value: "Year " + region.tcoBreakeven, color: COLORS.accent }
+              ].map(function(metric, i) {
+                return createElement("div", { key: i, style: { padding: "12px", background: COLORS.background, borderRadius: "8px" } },
+                  createElement("div", { style: { fontSize: "20px", fontWeight: "700", color: metric.color } }, metric.value),
+                  createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, metric.label)
+                );
+              })
+            )
+          ),
+
+          // Regulations Timeline Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "📜 Regulatory Timeline"),
+            createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+              region.regulationsTimeline.map(function(item, i) {
+                var isPast = item.year <= 2024;
+                return createElement("div", { key: i, style: { display: "flex", gap: "12px", alignItems: "center" } },
+                  createElement("div", { style: {
+                    width: "50px",
+                    padding: "4px 8px",
+                    background: isPast ? COLORS.success + "20" : COLORS.info + "20",
+                    color: isPast ? COLORS.success : COLORS.info,
+                    borderRadius: "4px",
+                    fontWeight: "600",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}, item.year),
+                  createElement("div", { style: { fontSize: "13px", color: COLORS.text } }, item.event)
+                );
+              })
+            )
+          )
+        ),
+
+        createElement("div", { style: Object.assign({}, styles.gridWide, { marginTop: "24px" }) },
+          // Drivers Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "🚀 Key Drivers"),
+            createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+              region.drivers.map(function(driver, i) {
+                return createElement("div", { key: i, style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: COLORS.background, borderRadius: "6px" } },
+                  createElement("span", { style: { fontSize: "13px" } }, driver.factor),
+                  createElement("span", { style: {
+                    padding: "4px 10px",
+                    borderRadius: "12px",
+                    fontSize: "11px",
+                    fontWeight: "600",
+                    background: getImpactColor(driver.impact) + "20",
+                    color: getImpactColor(driver.impact)
+                  }}, driver.impact + " Impact")
+                );
+              })
+            )
+          ),
+
+          // Barriers Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "⚠️ Key Barriers"),
+            createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+              region.barriers.map(function(barrier, i) {
+                return createElement("div", { key: i, style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: COLORS.background, borderRadius: "6px" } },
+                  createElement("span", { style: { fontSize: "13px" } }, barrier.issue),
+                  createElement("span", { style: {
+                    padding: "4px 10px",
+                    borderRadius: "12px",
+                    fontSize: "11px",
+                    fontWeight: "600",
+                    background: getSeverityColor(barrier.severity) + "20",
+                    color: getSeverityColor(barrier.severity)
+                  }}, barrier.severity)
+                );
+              })
+            )
+          )
+        ),
+
+        createElement("div", { style: Object.assign({}, styles.gridWide, { marginTop: "24px" }) },
+          // OEMs Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "🚛 OEM Landscape"),
+            region.localManufacturers.length > 0 && createElement("div", { style: { marginBottom: "12px" } },
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "6px" } }, "Local/Regional Manufacturers:"),
+              createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } },
+                region.localManufacturers.map(function(oem, i) {
+                  return createElement("span", { key: i, style: {
+                    padding: "4px 10px",
+                    background: COLORS.success + "15",
+                    border: "1px solid " + COLORS.success + "40",
+                    borderRadius: "4px",
+                    fontSize: "12px",
+                    color: COLORS.success
+                  }}, oem);
+                })
+              )
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "6px" } }, "Imported Brands:"),
+              createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } },
+                region.importedBrands.map(function(oem, i) {
+                  return createElement("span", { key: i, style: {
+                    padding: "4px 10px",
+                    background: COLORS.info + "15",
+                    border: "1px solid " + COLORS.info + "40",
+                    borderRadius: "4px",
+                    fontSize: "12px",
+                    color: COLORS.info
+                  }}, oem);
+                })
+              )
+            )
+          ),
+
+          // Use Cases Card
+          createElement(Card, null,
+            createElement("div", { style: styles.cardTitle }, "🎯 Top Use Cases"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              region.useCases.map(function(useCase, i) {
+                return createElement("span", { key: i, style: {
+                  padding: "8px 14px",
+                  background: borderColor + "15",
+                  border: "1px solid " + borderColor + "40",
+                  borderRadius: "20px",
+                  fontSize: "13px",
+                  color: COLORS.text
+                }}, useCase);
+              })
+            )
+          )
+        ),
+
+        // Sources for this region
+        createElement("div", { style: { marginTop: "24px" } },
+          createElement(SourceCitation, {
+            sources: region.id === "na" ? KEY_SOURCES.regulations_us.concat(KEY_SOURCES.market) :
+                     region.id === "eu" ? KEY_SOURCES.regulations_eu.concat(KEY_SOURCES.market) :
+                     KEY_SOURCES.israel
+          })
+        )
+      );
+    })
+  );
+}
+
 // ============ SOURCES TAB ============
 function SourcesTab() {
   var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications", "Israeli Market (Sources Required)"];
@@ -2547,6 +3035,7 @@ function App() {
     { id: "oem", label: "🚛 OEM Comparison", component: OEMComparisonTab },
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
+    { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
     { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
