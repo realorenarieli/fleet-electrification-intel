@@ -1151,6 +1151,106 @@ function formatNumber(value) {
   return value.toLocaleString();
 }
 
+// Source Link Component - clickable reference to sources
+function SourceLink(props) {
+  return createElement("a", {
+    href: props.url,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      color: COLORS.primary,
+      textDecoration: "none",
+      fontSize: props.size || "12px",
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "4px",
+      padding: "2px 8px",
+      background: COLORS.primary + "10",
+      borderRadius: "4px",
+      fontWeight: "500",
+      transition: "all 0.2s ease"
+    }
+  }, props.children || props.name, " ↗");
+}
+
+// Source Citation Box - displays multiple sources with links
+function SourceCitation(props) {
+  return createElement("div", {
+    style: {
+      marginTop: props.marginTop || "16px",
+      padding: "12px 16px",
+      background: COLORS.card,
+      borderRadius: "8px",
+      borderLeft: "3px solid " + COLORS.info,
+      fontSize: "12px"
+    }
+  },
+    createElement("div", { style: { fontWeight: "600", color: COLORS.textMuted, marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" } },
+      "📚 Sources"
+    ),
+    createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+      props.sources.map(function(source, i) {
+        return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+      })
+    )
+  );
+}
+
+// Key Sources Data for quick reference
+var KEY_SOURCES = {
+  tco: [
+    { name: "NACFE Run on Less", url: "https://nacfe.org/research/electric-trucks/" },
+    { name: "RMI Fleet Analysis", url: "https://rmi.org/our-work/climate-aligned-industries/heavy-duty-vehicles/" },
+    { name: "ACT Research", url: "https://www.actresearch.net/reports/" }
+  ],
+  oem_us: [
+    { name: "Tesla Semi", url: "https://www.tesla.com/semi" },
+    { name: "Freightliner eCascadia", url: "https://freightliner.com/trucks/ecascadia/" },
+    { name: "Volvo VNR Electric", url: "https://www.volvotrucks.us/trucks/vnr-electric/" },
+    { name: "Peterbilt 579EV", url: "https://www.peterbilt.com/trucks/electric-vehicles" },
+    { name: "Nikola Tre BEV", url: "https://www.nikolamotor.com/tre-bev/" }
+  ],
+  oem_eu: [
+    { name: "DAF XF Electric", url: "https://www.daf.com/en/trucks/alternative-fuels-and-drivelines/daf-xf-electric" },
+    { name: "MAN eTruck", url: "https://www.man.eu/de/en/trucks/etruck/etruck.html" },
+    { name: "Scania BEV", url: "https://www.scania.com/group/en/home/products-and-services/trucks/battery-electric-trucks.html" },
+    { name: "Volvo FH Electric", url: "https://www.volvotrucks.com/en-en/trucks/trucks/volvo-fh/volvo-fh-electric.html" },
+    { name: "Mercedes eActros", url: "https://www.mercedes-benz-trucks.com/en_GB/models/eactros-600.html" }
+  ],
+  infrastructure: [
+    { name: "DOE AFDC", url: "https://afdc.energy.gov/" },
+    { name: "CA EnergIIZE", url: "https://energiize.org/" },
+    { name: "NEVI Program", url: "https://www.fhwa.dot.gov/environment/nevi/" }
+  ],
+  incentives_us: [
+    { name: "Federal 30C Credit", url: "https://afdc.energy.gov/laws/10513" },
+    { name: "CA HVIP", url: "https://californiahvip.org/" },
+    { name: "NY Truck Voucher", url: "https://www.nyserda.ny.gov/All-Programs/Truck-Voucher-Incentive-Program" }
+  ],
+  incentives_eu: [
+    { name: "Germany KsNI", url: "https://www.klimafreundliche-nutzfahrzeuge.de/" },
+    { name: "EU AFIR", url: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en" }
+  ],
+  regulations_us: [
+    { name: "CARB ACF Rule", url: "https://ww2.arb.ca.gov/our-work/programs/advanced-clean-fleets" },
+    { name: "EPA SmartWay", url: "https://www.epa.gov/smartway" }
+  ],
+  regulations_eu: [
+    { name: "EU CO2 Standards HDV", url: "https://climate.ec.europa.eu/eu-action/transport/road-transport-reducing-co2-emissions-vehicles/reducing-co2-emissions-heavy-duty-vehicles_en" },
+    { name: "EU AFIR Regulation", url: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en" }
+  ],
+  market: [
+    { name: "BloombergNEF EVO", url: "https://about.bnef.com/electric-vehicle-outlook/" },
+    { name: "IEA Global EV Outlook", url: "https://www.iea.org/reports/global-ev-outlook-2024" },
+    { name: "ACEA Report", url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf" }
+  ],
+  israel: [
+    { name: "Israel Ministry of Transport", url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety" },
+    { name: "Israel Min. of Environment", url: "https://www.gov.il/en/departments/ministry_of_environmental_protection" },
+    { name: "Israel Electric Corp", url: "https://www.iec.co.il/en" }
+  ]
+};
+
 // ============ TCO ANALYSIS TAB ============
 function TCOAnalysisTab() {
   return createElement("div", null,
@@ -1299,9 +1399,9 @@ function TCOAnalysisTab() {
           createElement("div", null, "• Diesel efficiency: 6.5 MPG"),
           createElement("div", null, "• Electric efficiency: 2.0 kWh/mile"),
           createElement("div", null, "• Federal incentives not included"),
-          createElement("div", null, "• Residual value not included"),
-          createElement("div", null, "• Source: NACFE, RMI, ACT Research")
-        )
+          createElement("div", null, "• Residual value not included")
+        ),
+        createElement(SourceCitation, { sources: KEY_SOURCES.tco, marginTop: "16px" })
       )
     )
   );
@@ -1482,6 +1582,34 @@ function OEMComparisonTab() {
               })
             )
           )
+        )
+      )
+    ),
+
+    // OEM Sources Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📚 OEM Specification Sources"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" } },
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.info } }, "🇺🇸 US Manufacturers"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.oem_us.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.primary } }, "🇪🇺 EU Manufacturers"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.oem_eu.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          )
+        ),
+        createElement("div", { style: { marginTop: "16px", fontSize: "12px", color: COLORS.textMuted, fontStyle: "italic" } },
+          "All specifications sourced from official manufacturer websites. Prices and specs may vary by region and configuration."
         )
       )
     )
@@ -1694,6 +1822,39 @@ function InfrastructureTab() {
               "• Utility capacity study required",
               createElement("br"),
               "• 9+ MW peak demand"
+            )
+          )
+        )
+      )
+    ),
+
+    // Infrastructure Sources Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📚 Infrastructure & Incentive Sources"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "24px" } },
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.primary } }, "🔌 Infrastructure Data"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.infrastructure.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.info } }, "🇺🇸 US Incentives"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.incentives_us.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.success } }, "🇪🇺 EU Incentives"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.incentives_eu.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
             )
           )
         )
@@ -2025,6 +2186,50 @@ function MarketOutlookTab() {
           )
         )
       )
+    ),
+
+    // Market Data Sources Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📚 Market Data Sources"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" } },
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.primary } }, "📊 Market Research"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.market.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.info } }, "🇺🇸 US Regulations"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.regulations_us.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.success } }, "🇪🇺 EU Regulations"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.regulations_eu.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "600", marginBottom: "12px", color: COLORS.accent } }, "🇮🇱 Israel (Sources Required)"),
+            createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+              KEY_SOURCES.israel.map(function(source, i) {
+                return createElement(SourceLink, { key: i, url: source.url, name: source.name });
+              })
+            ),
+            createElement("div", { style: { marginTop: "8px", fontSize: "11px", color: COLORS.accent } },
+              "⚠️ Limited data - additional validation required"
+            )
+          )
+        )
+      )
     )
   );
 }
@@ -2246,17 +2451,18 @@ function SourcesTab() {
       )
     ),
 
-    // Quick Links
+    // Quick Links - US
     createElement("div", { style: { marginTop: "24px" } },
       createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "🔗 Quick Access: Most Important Sources"),
+        createElement("div", { style: styles.cardTitle }, "🇺🇸 Quick Access: US Sources"),
         createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
           [
             { name: "IEA Global EV Outlook", url: "https://www.iea.org/reports/global-ev-outlook-2024", icon: "🌍" },
             { name: "CARB ACF Rule", url: "https://ww2.arb.ca.gov/our-work/programs/advanced-clean-fleets", icon: "📜" },
             { name: "NACFE Electric Trucks", url: "https://nacfe.org/research/electric-trucks/", icon: "🔬" },
             { name: "CA HVIP Vouchers", url: "https://californiahvip.org/", icon: "💰" },
-            { name: "DOE AFDC", url: "https://afdc.energy.gov/", icon: "⚡" }
+            { name: "DOE AFDC", url: "https://afdc.energy.gov/", icon: "⚡" },
+            { name: "EPA SmartWay", url: "https://www.epa.gov/smartway", icon: "🏛️" }
           ].map(function(link) {
             return createElement("a", {
               key: link.name,
@@ -2279,6 +2485,82 @@ function SourcesTab() {
               }
             }, link.icon, " ", link.name, " ↗");
           })
+        )
+      )
+    ),
+
+    // Quick Links - EU
+    createElement("div", { style: { marginTop: "16px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "🇪🇺 Quick Access: EU Sources"),
+        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
+          [
+            { name: "EU CO2 Standards HDV", url: "https://climate.ec.europa.eu/eu-action/transport/road-transport-reducing-co2-emissions-vehicles/reducing-co2-emissions-heavy-duty-vehicles_en", icon: "📜" },
+            { name: "EU AFIR Regulation", url: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en", icon: "🔌" },
+            { name: "ACEA Fleet Report", url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf", icon: "📊" },
+            { name: "Germany KsNI", url: "https://www.klimafreundliche-nutzfahrzeuge.de/", icon: "💶" },
+            { name: "BloombergNEF", url: "https://about.bnef.com/electric-vehicle-outlook/", icon: "📈" }
+          ].map(function(link) {
+            return createElement("a", {
+              key: link.name,
+              href: link.url,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "12px 16px",
+                background: COLORS.background,
+                border: "1px solid " + COLORS.border,
+                borderRadius: "8px",
+                color: COLORS.text,
+                textDecoration: "none",
+                fontSize: "13px",
+                fontWeight: "500",
+                transition: "all 0.2s ease"
+              }
+            }, link.icon, " ", link.name, " ↗");
+          })
+        )
+      )
+    ),
+
+    // Quick Links - Israel
+    createElement("div", { style: { marginTop: "16px" } },
+      createElement(Card, { style: { borderColor: COLORS.accent + "40" } },
+        createElement("div", { style: styles.cardTitle }, "🇮🇱 Israel Sources (Additional Data Required)"),
+        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
+          [
+            { name: "Ministry of Transport", url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety", icon: "🏛️" },
+            { name: "Ministry of Environment", url: "https://www.gov.il/en/departments/ministry_of_environmental_protection", icon: "🌿" },
+            { name: "Israel Electric Corp", url: "https://www.iec.co.il/en", icon: "⚡" },
+            { name: "Globes Business", url: "https://en.globes.co.il/", icon: "📰" }
+          ].map(function(link) {
+            return createElement("a", {
+              key: link.name,
+              href: link.url,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "12px 16px",
+                background: COLORS.accent + "10",
+                border: "1px solid " + COLORS.accent + "40",
+                borderRadius: "8px",
+                color: COLORS.text,
+                textDecoration: "none",
+                fontSize: "13px",
+                fontWeight: "500",
+                transition: "all 0.2s ease"
+              }
+            }, link.icon, " ", link.name, " ↗");
+          })
+        ),
+        createElement("div", { style: { marginTop: "12px", fontSize: "12px", color: COLORS.accent } },
+          "⚠️ Israeli market data is limited. These sources provide general information but specific EV truck fleet data requires additional research."
         )
       )
     )
