@@ -393,13 +393,187 @@ var DEPOT_SIZING = [
 ];
 
 var INCENTIVES_DATA = [
-  { program: "Federal Tax Credit (30C)", type: "Tax Credit", max_amount: 100000, percent: 30, status: "Active" },
-  { program: "CA HVIP", type: "Voucher", max_amount: 120000, percent: 0, status: "Active" },
-  { program: "CA EnergIIZE", type: "Infrastructure", max_amount: 500000, percent: 50, status: "Active" },
-  { program: "NY Truck Voucher", type: "Voucher", max_amount: 185000, percent: 0, status: "Active" },
-  { program: "NJ ZIP", type: "Voucher", max_amount: 175000, percent: 0, status: "Active" },
-  { program: "CARB Drayage", type: "Voucher", max_amount: 150000, percent: 0, status: "Active" }
+  // US Incentives
+  { program: "Federal Tax Credit (30C)", type: "Tax Credit", max_amount: 100000, percent: 30, status: "Active", region: "US" },
+  { program: "CA HVIP", type: "Voucher", max_amount: 120000, percent: 0, status: "Active", region: "US" },
+  { program: "CA EnergIIZE", type: "Infrastructure", max_amount: 500000, percent: 50, status: "Active", region: "US" },
+  { program: "NY Truck Voucher", type: "Voucher", max_amount: 185000, percent: 0, status: "Active", region: "US" },
+  { program: "NJ ZIP", type: "Voucher", max_amount: 175000, percent: 0, status: "Active", region: "US" },
+  { program: "CARB Drayage", type: "Voucher", max_amount: 150000, percent: 0, status: "Active", region: "US" },
+  // EU Incentives
+  { program: "Germany KsNI", type: "Grant", max_amount: 400000, percent: 80, status: "Active", region: "EU" },
+  { program: "France Bonus Écologique", type: "Grant", max_amount: 50000, percent: 40, status: "Active", region: "EU" },
+  { program: "Netherlands MIA/VAMIL", type: "Tax Benefit", max_amount: 75000, percent: 36, status: "Active", region: "EU" },
+  { program: "UK Plug-in Truck Grant", type: "Grant", max_amount: 25000, percent: 20, status: "Active", region: "EU" }
 ];
+
+// ============ DATA: Regional Market Comparison ============
+var REGIONAL_MARKET_DATA = {
+  us: {
+    name: "United States",
+    flag: "🇺🇸",
+    totalTrucks: 4200000,
+    evShare2024: 0.8,
+    evShare2030: 30,
+    evShare2035: 67,
+    regulations: [
+      { name: "EPA GHG Phase 3", year: 2027, description: "52% CO2 reduction by 2032 for heavy-duty" },
+      { name: "CA ACF Rule", year: 2024, description: "100% ZEV sales by 2036 (adopted by 8+ states)" },
+      { name: "CARB Low NOx", year: 2024, description: "90% NOx reduction for new trucks" }
+    ],
+    keyMarkets: ["California", "Texas", "New York", "Florida", "Illinois"],
+    avgIncentive: 150000,
+    electricityPrice: 0.12,
+    dieselPrice: 4.00
+  },
+  eu: {
+    name: "European Union",
+    flag: "🇪🇺",
+    totalTrucks: 6500000,
+    evShare2024: 1.2,
+    evShare2030: 35,
+    evShare2035: 70,
+    regulations: [
+      { name: "EU CO2 Standards HDV", year: 2025, description: "45% CO2 reduction by 2030, 90% by 2040" },
+      { name: "Euro 7", year: 2027, description: "Strictest emission limits globally" },
+      { name: "AFIR", year: 2025, description: "Mandatory truck charging every 60km on TEN-T" }
+    ],
+    keyMarkets: ["Germany", "France", "Netherlands", "Spain", "Italy"],
+    avgIncentive: 120000,
+    electricityPrice: 0.25,
+    dieselPrice: 1.80
+  },
+  israel: {
+    name: "Israel",
+    flag: "🇮🇱",
+    totalTrucks: 85000,
+    evShare2024: 0.2,
+    evShare2030: 15,
+    evShare2035: 45,
+    regulations: [
+      { name: "Green Taxation Reform", year: 2024, description: "Reduced purchase tax for EVs" },
+      { name: "Clean Air Law", year: 2025, description: "ZEV mandates for urban delivery" },
+      { name: "National EV Plan", year: 2030, description: "Target 30% EV sales by 2030" }
+    ],
+    keyMarkets: ["Tel Aviv Metro", "Haifa Port", "Ashdod Port", "Central District"],
+    avgIncentive: 30000,
+    electricityPrice: 0.14,
+    dieselPrice: 2.10
+  }
+};
+
+var REGIONAL_PROJECTIONS = [
+  { year: 2024, us: 12000, eu: 18000, israel: 150 },
+  { year: 2025, us: 28000, eu: 42000, israel: 400 },
+  { year: 2026, us: 55000, eu: 85000, israel: 800 },
+  { year: 2027, us: 100000, eu: 150000, israel: 1500 },
+  { year: 2028, us: 170000, eu: 250000, israel: 2500 },
+  { year: 2029, us: 280000, eu: 380000, israel: 4000 },
+  { year: 2030, us: 420000, eu: 550000, israel: 6000 },
+  { year: 2032, us: 700000, eu: 900000, israel: 12000 },
+  { year: 2035, us: 1100000, eu: 1400000, israel: 25000 }
+];
+
+// ============ DATA: EU-Specific OEMs ============
+var EU_OEM_DATA = [
+  {
+    id: "daf-xf-electric",
+    manufacturer: "DAF",
+    model: "XF Electric",
+    region: "EU",
+    range_km: 500,
+    battery_kwh: 525,
+    payload_kg: 37000,
+    price_eur: 350000,
+    status: "Production",
+    availability: "2024"
+  },
+  {
+    id: "man-etgx",
+    manufacturer: "MAN",
+    model: "eTGX",
+    region: "EU",
+    range_km: 600,
+    battery_kwh: 480,
+    payload_kg: 37000,
+    price_eur: 400000,
+    status: "Production",
+    availability: "2024"
+  },
+  {
+    id: "scania-bev",
+    manufacturer: "Scania",
+    model: "45 R BEV",
+    region: "EU",
+    range_km: 350,
+    battery_kwh: 624,
+    payload_kg: 36000,
+    price_eur: 380000,
+    status: "Production",
+    availability: "2023"
+  },
+  {
+    id: "iveco-s-eway",
+    manufacturer: "IVECO",
+    model: "S-eWay",
+    region: "EU",
+    range_km: 500,
+    battery_kwh: 738,
+    payload_kg: 34000,
+    price_eur: 420000,
+    status: "Production",
+    availability: "2024"
+  },
+  {
+    id: "renault-e-tech-t",
+    manufacturer: "Renault Trucks",
+    model: "E-Tech T",
+    region: "EU",
+    range_km: 500,
+    battery_kwh: 540,
+    payload_kg: 37000,
+    price_eur: 360000,
+    status: "Production",
+    availability: "2023"
+  },
+  {
+    id: "volvo-fh-electric",
+    manufacturer: "Volvo Trucks",
+    model: "FH Electric",
+    region: "EU",
+    range_km: 600,
+    battery_kwh: 540,
+    payload_kg: 36000,
+    price_eur: 400000,
+    status: "Production",
+    availability: "2024"
+  }
+];
+
+// ============ DATA: Israeli Market Specifics ============
+var ISRAEL_MARKET_DATA = {
+  overview: {
+    fleetSize: 85000,
+    annualSales: 8500,
+    evPenetration: 0.2,
+    avgRouteLengthKm: 120,
+    urbanDeliveryShare: 65
+  },
+  challenges: [
+    { title: "Limited OEM Presence", desc: "Few manufacturers have local service networks" },
+    { title: "High Import Costs", desc: "Trucks imported with significant shipping/customs costs" },
+    { title: "Grid Capacity", desc: "Infrastructure upgrades needed for fleet charging" },
+    { title: "Small Market Size", desc: "Lower priority for global OEMs" }
+  ],
+  opportunities: [
+    { title: "High Fuel Costs", desc: "Diesel at $2.10/L makes EVs attractive for TCO" },
+    { title: "Short Routes", desc: "Avg 120km routes ideal for current EV range" },
+    { title: "Tech Innovation Hub", desc: "Strong ecosystem for fleet management software" },
+    { title: "Port Logistics", desc: "Haifa/Ashdod ports ideal for early adoption" }
+  ],
+  activeOEMs: ["BYD", "Volvo Trucks", "Mercedes-Benz"],
+  requiredSources: true
+};
 
 // ============ DATA: Sources with Validity Scores ============
 var SOURCES_DATA = [
@@ -626,6 +800,167 @@ var SOURCES_DATA = [
     validity: 8,
     type: "Manufacturer",
     lastUpdated: "2024"
+  },
+  // EU Government & Regulatory Sources
+  {
+    category: "EU Government Sources",
+    name: "European Commission CO2 Standards HDV",
+    url: "https://climate.ec.europa.eu/eu-action/transport/road-transport-reducing-co2-emissions-vehicles/reducing-co2-emissions-heavy-duty-vehicles_en",
+    description: "Official EU CO2 emission standards for heavy-duty vehicles",
+    dataUsed: "2030/2040 CO2 reduction targets, compliance requirements",
+    validity: 10,
+    type: "Government",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU Government Sources",
+    name: "EU AFIR Regulation",
+    url: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en",
+    description: "Alternative Fuels Infrastructure Regulation - charging network requirements",
+    dataUsed: "TEN-T charging requirements, infrastructure mandates",
+    validity: 10,
+    type: "Government",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU Government Sources",
+    name: "ACEA European Automobile Manufacturers",
+    url: "https://www.acea.auto/files/ACEA-report-vehicles-in-use-europe-2023.pdf",
+    description: "European vehicle fleet statistics and market data",
+    dataUsed: "EU truck fleet size, registration data, market trends",
+    validity: 9,
+    type: "Industry Association",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU Government Sources",
+    name: "Germany KsNI Program (BMDV)",
+    url: "https://www.klimafreundliche-nutzfahrzeuge.de/",
+    description: "German federal funding program for climate-friendly commercial vehicles",
+    dataUsed: "German incentive amounts, eligibility criteria",
+    validity: 10,
+    type: "Government",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  // EU OEM Sources
+  {
+    category: "EU OEM Specifications",
+    name: "DAF XF Electric",
+    url: "https://www.daf.com/en/trucks/alternative-fuels-and-drivelines/daf-xf-electric",
+    description: "Official DAF electric truck specifications",
+    dataUsed: "Range, battery capacity, payload specifications",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU OEM Specifications",
+    name: "MAN eTruck",
+    url: "https://www.man.eu/de/en/trucks/etruck/etruck.html",
+    description: "Official MAN electric truck lineup",
+    dataUsed: "eTGX/eTGS specifications, range, charging",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU OEM Specifications",
+    name: "Scania Electric Trucks",
+    url: "https://www.scania.com/group/en/home/products-and-services/trucks/battery-electric-trucks.html",
+    description: "Official Scania battery-electric truck specifications",
+    dataUsed: "Range, battery options, charging capabilities",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU OEM Specifications",
+    name: "IVECO S-eWay",
+    url: "https://www.iveco.com/en-us/trucks/pages/iveco-s-eway.aspx",
+    description: "Official IVECO electric heavy-duty truck",
+    dataUsed: "Range, battery capacity, specifications",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU OEM Specifications",
+    name: "Renault Trucks E-Tech",
+    url: "https://www.renault-trucks.com/en/electric-trucks",
+    description: "Official Renault Trucks electric vehicle range",
+    dataUsed: "E-Tech T specifications, range, charging",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  {
+    category: "EU OEM Specifications",
+    name: "Volvo Trucks Europe",
+    url: "https://www.volvotrucks.com/en-en/trucks/trucks/volvo-fh/volvo-fh-electric.html",
+    description: "Official Volvo FH Electric specifications (Europe)",
+    dataUsed: "FH Electric range, battery, specifications",
+    validity: 8,
+    type: "Manufacturer",
+    region: "EU",
+    lastUpdated: "2024"
+  },
+  // Israeli Sources (Limited - Marked as Required)
+  {
+    category: "Israeli Market (Sources Required)",
+    name: "Israel Ministry of Transport",
+    url: "https://www.gov.il/en/departments/ministry_of_transport_and_road_safety",
+    description: "Official Israeli transportation authority - LIMITED EV TRUCK DATA AVAILABLE",
+    dataUsed: "General transport statistics (EV truck specific data needed)",
+    validity: 6,
+    type: "Government",
+    region: "Israel",
+    lastUpdated: "2024",
+    sourcesRequired: true
+  },
+  {
+    category: "Israeli Market (Sources Required)",
+    name: "Israel Ministry of Environmental Protection",
+    url: "https://www.gov.il/en/departments/ministry_of_environmental_protection",
+    description: "Israeli environmental policy - clean vehicle initiatives",
+    dataUsed: "EV policy direction (specific truck incentives data needed)",
+    validity: 6,
+    type: "Government",
+    region: "Israel",
+    lastUpdated: "2024",
+    sourcesRequired: true
+  },
+  {
+    category: "Israeli Market (Sources Required)",
+    name: "Israel Electric Corporation",
+    url: "https://www.iec.co.il/en",
+    description: "National electricity provider - grid capacity data",
+    dataUsed: "Electricity pricing (commercial fleet charging data needed)",
+    validity: 7,
+    type: "Utility",
+    region: "Israel",
+    lastUpdated: "2024",
+    sourcesRequired: true
+  },
+  {
+    category: "Israeli Market (Sources Required)",
+    name: "Globes Israel Business News",
+    url: "https://en.globes.co.il/",
+    description: "Israeli business news - EV market coverage",
+    dataUsed: "Market news, fleet operator announcements",
+    validity: 6,
+    type: "Media",
+    region: "Israel",
+    lastUpdated: "2024",
+    sourcesRequired: true
   }
 ];
 
@@ -1369,123 +1704,325 @@ function InfrastructureTab() {
 
 // ============ MARKET OUTLOOK TAB ============
 function MarketOutlookTab() {
+  var us = REGIONAL_MARKET_DATA.us;
+  var eu = REGIONAL_MARKET_DATA.eu;
+  var il = REGIONAL_MARKET_DATA.israel;
+
   return createElement("div", null,
-    // Key Market Stats
+    // Regional Overview Cards
     createElement("div", { style: styles.grid },
       createElement(MetricCard, {
-        icon: "📈",
-        title: "2030 EV Share",
-        value: "34.5%",
-        label: "Of new Class 8 truck sales",
+        icon: "🇺🇸",
+        title: "US 2030 EV Share",
+        value: us.evShare2030 + "%",
+        label: "420K trucks/year projected",
+        color: COLORS.info
+      }),
+      createElement(MetricCard, {
+        icon: "🇪🇺",
+        title: "EU 2030 EV Share",
+        value: eu.evShare2030 + "%",
+        label: "550K trucks/year projected",
         color: COLORS.primary
       }),
       createElement(MetricCard, {
-        icon: "🚛",
-        title: "2030 EV Sales",
-        value: "500K",
-        label: "Annual electric truck sales",
-        color: COLORS.success
-      }),
-      createElement(MetricCard, {
-        icon: "📊",
-        title: "CAGR",
-        value: "78%",
-        label: "EV truck sales growth 2024-2030",
+        icon: "🇮🇱",
+        title: "Israel 2030 EV Share",
+        value: il.evShare2030 + "%",
+        label: "6K trucks/year projected",
         color: COLORS.accent
       }),
       createElement(MetricCard, {
         icon: "🌍",
-        title: "2035 Projection",
-        value: "72%",
-        label: "EV share of new truck sales",
-        color: COLORS.info
+        title: "Combined 2035",
+        value: "2.5M+",
+        label: "Annual EV truck sales globally",
+        color: COLORS.success
       })
     ),
 
-    // Market Projections Chart
+    // Regional Projections Chart
     createElement("div", { style: { marginTop: "32px" } },
       createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "📊 Electric Truck Market Projections (2024-2035)"),
+        createElement("div", { style: styles.cardTitle }, "📊 Regional EV Truck Sales Projections (2024-2035)"),
         createElement(ResponsiveContainer, { width: "100%", height: 400 },
-          createElement(ComposedChart, { data: MARKET_PROJECTIONS, margin: { top: 20, right: 60, left: 20, bottom: 20 } },
+          createElement(AreaChart, { data: REGIONAL_PROJECTIONS, margin: { top: 20, right: 30, left: 20, bottom: 20 } },
             createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
             createElement(XAxis, { dataKey: "year", stroke: COLORS.textMuted }),
-            createElement(YAxis, { yAxisId: "left", stroke: COLORS.textMuted, tickFormatter: function(v) { return (v/1000) + "K"; } }),
-            createElement(YAxis, { yAxisId: "right", orientation: "right", stroke: COLORS.accent, unit: "%" }),
+            createElement(YAxis, { stroke: COLORS.textMuted, tickFormatter: function(v) { return (v/1000) + "K"; } }),
             createElement(Tooltip, {
-              contentStyle: { background: COLORS.card, border: "1px solid " + COLORS.border, borderRadius: "8px" }
+              contentStyle: { background: COLORS.card, border: "1px solid " + COLORS.border, borderRadius: "8px" },
+              formatter: function(value) { return formatNumber(value) + " units"; }
             }),
             createElement(Legend, null),
-            createElement(Area, { yAxisId: "left", type: "monotone", dataKey: "ev_sales", name: "EV Sales", fill: COLORS.primary + "40", stroke: COLORS.primary, strokeWidth: 2 }),
-            createElement(Line, { yAxisId: "right", type: "monotone", dataKey: "ev_share", name: "EV Market Share %", stroke: COLORS.accent, strokeWidth: 3, dot: { r: 5, fill: COLORS.accent } })
+            createElement(Area, { type: "monotone", dataKey: "eu", name: "🇪🇺 European Union", fill: COLORS.primary + "60", stroke: COLORS.primary, strokeWidth: 2, stackId: "1" }),
+            createElement(Area, { type: "monotone", dataKey: "us", name: "🇺🇸 United States", fill: COLORS.info + "60", stroke: COLORS.info, strokeWidth: 2, stackId: "1" }),
+            createElement(Area, { type: "monotone", dataKey: "israel", name: "🇮🇱 Israel", fill: COLORS.accent + "60", stroke: COLORS.accent, strokeWidth: 2, stackId: "1" })
           )
         )
       )
     ),
 
-    // Key Drivers
-    createElement("div", { style: Object.assign({}, styles.gridWide, { marginTop: "24px" }) },
-      createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "🚀 Market Drivers"),
-        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
-          [
-            { icon: "📜", title: "Regulatory Push", desc: "CA ACF rule mandates 100% ZEV truck sales by 2036; EPA 2027+ standards" },
-            { icon: "💰", title: "TCO Parity", desc: "Electric trucks reaching cost parity with diesel for many use cases" },
-            { icon: "🔋", title: "Battery Improvements", desc: "Battery costs declining 8-10% annually; energy density improving" },
-            { icon: "⚡", title: "Charging Infrastructure", desc: "NEVI funding ($7.5B) accelerating public charging buildout" },
-            { icon: "🌍", title: "Corporate Sustainability", desc: "Major shippers (Amazon, Walmart) demanding zero-emission deliveries" }
-          ].map(function(item, i) {
-            return createElement("div", { key: i, style: { display: "flex", gap: "12px", padding: "12px", background: COLORS.background, borderRadius: "8px" } },
-              createElement("span", { style: { fontSize: "20px" } }, item.icon),
-              createElement("div", null,
-                createElement("div", { style: { fontWeight: "600", marginBottom: "4px" } }, item.title),
-                createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted } }, item.desc)
-              )
-            );
-          })
-        )
-      ),
-      createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "⚠️ Market Challenges"),
-        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
-          [
-            { icon: "💵", title: "High Upfront Costs", desc: "2-3x premium over diesel trucks despite incentives" },
-            { icon: "🔌", title: "Infrastructure Gaps", desc: "Limited public charging for long-haul; depot buildout takes time" },
-            { icon: "📦", title: "Payload Concerns", desc: "Battery weight reduces payload capacity by 2,000-5,000 lbs" },
-            { icon: "⏱️", title: "Charging Time", desc: "Even fast charging slower than diesel refueling for long routes" },
-            { icon: "🔧", title: "Service Network", desc: "Limited trained technicians and parts availability" }
-          ].map(function(item, i) {
-            return createElement("div", { key: i, style: { display: "flex", gap: "12px", padding: "12px", background: COLORS.background, borderRadius: "8px" } },
-              createElement("span", { style: { fontSize: "20px" } }, item.icon),
-              createElement("div", null,
-                createElement("div", { style: { fontWeight: "600", marginBottom: "4px" } }, item.title),
-                createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted } }, item.desc)
-              )
-            );
-          })
+    // US Market Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🇺🇸 United States Market"),
+      createElement("div", { style: styles.gridWide },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📜 Key Regulations"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
+            us.regulations.map(function(reg, i) {
+              return createElement("div", { key: i, style: { padding: "12px", background: COLORS.background, borderRadius: "8px" } },
+                createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: "4px" } },
+                  createElement("span", { style: { fontWeight: "600" } }, reg.name),
+                  createElement(Badge, { variant: "info" }, reg.year)
+                ),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, reg.description)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📊 Market Overview"),
+          createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } },
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.info } }, formatNumber(us.totalTrucks)),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Total HD Trucks")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.success } }, "$" + formatNumber(us.avgIncentive)),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Avg. Incentive Available")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.primary } }, "$" + us.dieselPrice.toFixed(2) + "/gal"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Diesel Price")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.accent } }, "$" + us.electricityPrice.toFixed(2) + "/kWh"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Commercial Electricity")
+            )
+          ),
+          createElement("div", { style: { marginTop: "16px", fontSize: "12px", color: COLORS.textMuted } },
+            createElement("strong", null, "Key Markets: "), us.keyMarkets.join(", ")
+          )
         )
       )
     ),
 
-    // Data Sources
-    createElement("div", { style: { marginTop: "24px" } },
-      createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "📚 Data Sources"),
-        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "12px", fontSize: "13px" } },
-          [
-            "BloombergNEF Electric Vehicle Outlook 2024",
-            "ACT Research Commercial Vehicle Reports",
-            "NACFE Run on Less Electric Studies",
-            "Rocky Mountain Institute (RMI) Fleet Analysis",
-            "California Air Resources Board (CARB)",
-            "EPA SmartWay Program Data",
-            "IEA Global EV Outlook 2024",
-            "McKinsey Center for Future Mobility"
-          ].map(function(source, i) {
-            return createElement("div", { key: i, style: { padding: "8px 12px", background: COLORS.background, borderRadius: "6px", color: COLORS.textMuted } },
-              "• " + source
-            );
-          })
+    // EU Market Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🇪🇺 European Union Market"),
+      createElement("div", { style: styles.gridWide },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📜 Key Regulations"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
+            eu.regulations.map(function(reg, i) {
+              return createElement("div", { key: i, style: { padding: "12px", background: COLORS.background, borderRadius: "8px" } },
+                createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: "4px" } },
+                  createElement("span", { style: { fontWeight: "600" } }, reg.name),
+                  createElement(Badge, { variant: "success" }, reg.year)
+                ),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, reg.description)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📊 Market Overview"),
+          createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } },
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.primary } }, formatNumber(eu.totalTrucks)),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Total HD Trucks")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.success } }, "€" + formatNumber(eu.avgIncentive)),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Avg. Incentive Available")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.danger } }, "€" + eu.dieselPrice.toFixed(2) + "/L"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Diesel Price")
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.accent } }, "€" + eu.electricityPrice.toFixed(2) + "/kWh"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Commercial Electricity")
+            )
+          ),
+          createElement("div", { style: { marginTop: "16px", fontSize: "12px", color: COLORS.textMuted } },
+            createElement("strong", null, "Key Markets: "), eu.keyMarkets.join(", ")
+          )
+        )
+      ),
+      // EU OEMs Table
+      createElement(Card, { style: { marginTop: "24px" } },
+        createElement("div", { style: styles.cardTitle }, "🚛 European Electric Truck OEMs"),
+        createElement("div", { style: { overflowX: "auto" } },
+          createElement("table", { style: styles.table },
+            createElement("thead", null,
+              createElement("tr", null,
+                createElement("th", { style: styles.th }, "Manufacturer"),
+                createElement("th", { style: styles.th }, "Model"),
+                createElement("th", { style: styles.th }, "Range"),
+                createElement("th", { style: styles.th }, "Battery"),
+                createElement("th", { style: styles.th }, "Payload"),
+                createElement("th", { style: styles.th }, "Price"),
+                createElement("th", { style: styles.th }, "Status")
+              )
+            ),
+            createElement("tbody", null,
+              EU_OEM_DATA.map(function(truck) {
+                return createElement("tr", { key: truck.id },
+                  createElement("td", { style: Object.assign({}, styles.td, { fontWeight: "600" }) }, truck.manufacturer),
+                  createElement("td", { style: styles.td }, truck.model),
+                  createElement("td", { style: styles.td }, truck.range_km + " km"),
+                  createElement("td", { style: styles.td }, truck.battery_kwh + " kWh"),
+                  createElement("td", { style: styles.td }, formatNumber(truck.payload_kg) + " kg"),
+                  createElement("td", { style: Object.assign({}, styles.td, { color: COLORS.success }) }, "€" + formatNumber(truck.price_eur)),
+                  createElement("td", { style: styles.td },
+                    createElement(Badge, { variant: "success" }, truck.status)
+                  )
+                );
+              })
+            )
+          )
+        )
+      )
+    ),
+
+    // Israeli Market Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🇮🇱 Israeli Market"),
+      createElement(Card, { style: { borderColor: COLORS.accent + "60", borderWidth: "2px" } },
+        createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" } },
+          createElement("span", { style: { fontSize: "20px" } }, "⚠️"),
+          createElement("span", { style: { color: COLORS.accent, fontWeight: "600", fontSize: "14px" } }, "LIMITED DATA AVAILABILITY - Additional sources required")
+        ),
+        createElement("div", { style: styles.gridWide },
+          createElement("div", null,
+            createElement("div", { style: styles.cardTitle }, "📊 Market Overview"),
+            createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } },
+              createElement("div", null,
+                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.accent } }, formatNumber(il.totalTrucks)),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Total HD Trucks")
+              ),
+              createElement("div", null,
+                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.primary } }, il.evShare2024 + "%"),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Current EV Share")
+              ),
+              createElement("div", null,
+                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.danger } }, "₪" + (il.dieselPrice * 3.7).toFixed(2) + "/L"),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Diesel Price")
+              ),
+              createElement("div", null,
+                createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.success } }, ISRAEL_MARKET_DATA.overview.avgRouteLengthKm + " km"),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Avg Route Length")
+              )
+            ),
+            createElement("div", { style: { marginTop: "16px", fontSize: "12px", color: COLORS.textMuted } },
+              createElement("strong", null, "Key Markets: "), il.keyMarkets.join(", ")
+            ),
+            createElement("div", { style: { marginTop: "12px", fontSize: "12px", color: COLORS.textMuted } },
+              createElement("strong", null, "Active OEMs: "), ISRAEL_MARKET_DATA.activeOEMs.join(", ")
+            )
+          ),
+          createElement("div", null,
+            createElement("div", { style: styles.cardTitle }, "📜 Regulations"),
+            createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+              il.regulations.map(function(reg, i) {
+                return createElement("div", { key: i, style: { padding: "10px", background: COLORS.background, borderRadius: "6px", fontSize: "13px" } },
+                  createElement("div", { style: { display: "flex", justifyContent: "space-between" } },
+                    createElement("span", { style: { fontWeight: "500" } }, reg.name),
+                    createElement(Badge, { variant: "warning" }, reg.year)
+                  ),
+                  createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginTop: "4px" } }, reg.description)
+                );
+              })
+            )
+          )
+        )
+      ),
+      // Israel Opportunities & Challenges
+      createElement("div", { style: Object.assign({}, styles.gridWide, { marginTop: "24px" }) },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "✅ Opportunities"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
+            ISRAEL_MARKET_DATA.opportunities.map(function(item, i) {
+              return createElement("div", { key: i, style: { padding: "10px", background: COLORS.success + "10", borderRadius: "6px", borderLeft: "3px solid " + COLORS.success } },
+                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "⚠️ Challenges"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
+            ISRAEL_MARKET_DATA.challenges.map(function(item, i) {
+              return createElement("div", { key: i, style: { padding: "10px", background: COLORS.danger + "10", borderRadius: "6px", borderLeft: "3px solid " + COLORS.danger } },
+                createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
+                createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
+              );
+            })
+          )
+        )
+      ),
+      // Israeli Sources Note
+      createElement(Card, { style: { marginTop: "24px", background: COLORS.accent + "10", borderColor: COLORS.accent } },
+        createElement("div", { style: styles.cardTitle }, "📋 Sources Required for Israeli Market Data"),
+        createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted, lineHeight: "1.6" } },
+          "The Israeli market data presented is based on limited publicly available information. ",
+          createElement("strong", { style: { color: COLORS.accent } }, "Additional authoritative sources are needed:"),
+          createElement("ul", { style: { marginTop: "12px", marginLeft: "20px" } },
+            createElement("li", null, "Israel Ministry of Transport - Official fleet statistics"),
+            createElement("li", null, "Israel Ministry of Environmental Protection - EV policy documents"),
+            createElement("li", null, "Israel Electric Corporation - Grid capacity studies"),
+            createElement("li", null, "Local fleet operator surveys and case studies"),
+            createElement("li", null, "Israeli Trucking Association data (if available)")
+          ),
+          createElement("div", { style: { marginTop: "12px", padding: "10px", background: COLORS.card, borderRadius: "6px" } },
+            "⚠️ Israeli market projections should be validated with local government and industry sources before use in investment decisions."
+          )
+        )
+      )
+    ),
+
+    // Key Drivers (US & EU Combined)
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🚀 Market Drivers (US & EU)"),
+      createElement("div", { style: styles.gridWide },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🇺🇸 US Drivers"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
+            [
+              { icon: "📜", title: "CA ACF + Multi-State Adoption", desc: "8+ states adopting CA's 100% ZEV sales by 2036 mandate" },
+              { icon: "💰", title: "IRA Incentives", desc: "Up to $40K commercial clean vehicle credit + 30C charging credit" },
+              { icon: "🏭", title: "NEVI Infrastructure", desc: "$7.5B federal investment in charging corridors" }
+            ].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "10px", padding: "10px", background: COLORS.background, borderRadius: "6px" } },
+                createElement("span", null, item.icon),
+                createElement("div", null,
+                  createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
+                  createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
+                )
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🇪🇺 EU Drivers"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
+            [
+              { icon: "📜", title: "CO2 Standards for HDV", desc: "90% CO2 reduction by 2040 - most aggressive globally" },
+              { icon: "🛣️", title: "AFIR Regulation", desc: "Mandatory truck charging every 60km on TEN-T network by 2025" },
+              { icon: "💶", title: "National Incentives", desc: "Germany up to €400K, France €50K, NL tax benefits" }
+            ].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "10px", padding: "10px", background: COLORS.background, borderRadius: "6px" } },
+                createElement("span", null, item.icon),
+                createElement("div", null,
+                  createElement("div", { style: { fontWeight: "600", fontSize: "13px" } }, item.title),
+                  createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
+                )
+              );
+            })
+          )
         )
       )
     )
@@ -1494,7 +2031,7 @@ function MarketOutlookTab() {
 
 // ============ SOURCES TAB ============
 function SourcesTab() {
-  var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications"];
+  var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications", "Israeli Market (Sources Required)"];
 
   var avgValidity = Math.round(SOURCES_DATA.reduce(function(sum, s) { return sum + s.validity; }, 0) / SOURCES_DATA.length * 10) / 10;
   var govSources = SOURCES_DATA.filter(function(s) { return s.validity === 10; }).length;
