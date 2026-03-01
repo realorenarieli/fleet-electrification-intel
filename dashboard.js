@@ -648,6 +648,131 @@ var GEO_COMPARISON_DATA = {
   }
 };
 
+// ============ DATA: Fleet Replacement ============
+// Sources: NACFE, ACT Research, Fleet Owner surveys, ACEA
+var FLEET_REPLACEMENT_DATA = {
+  // Replacement cycle data
+  cycleData: {
+    avgLifespanYears: { us: 12, eu: 14 },  // Average truck lifespan
+    fleetReplacementCycle: { us: 6, eu: 7 },  // Fleet replacement cycle (years)
+    ownerOperatorCycle: { us: 10, eu: 12 },
+    annualReplacementRate: { us: 8.3, eu: 7.1 },  // % of fleet replaced annually
+    avgMilesAtRetirement: { us: 750000, eu: 1200000 }  // km for EU
+  },
+  // Fleet age distribution (% of fleet by age bracket)
+  ageDistribution: {
+    us: [
+      { bracket: "0-3 years", percent: 22, label: "New" },
+      { bracket: "4-6 years", percent: 28, label: "Mid-cycle" },
+      { bracket: "7-10 years", percent: 31, label: "Mature" },
+      { bracket: "11+ years", percent: 19, label: "End-of-life" }
+    ],
+    eu: [
+      { bracket: "0-3 years", percent: 18, label: "New" },
+      { bracket: "4-7 years", percent: 25, label: "Mid-cycle" },
+      { bracket: "8-12 years", percent: 32, label: "Mature" },
+      { bracket: "13+ years", percent: 25, label: "End-of-life" }
+    ]
+  },
+  // Transition strategies
+  strategies: [
+    {
+      id: "end-of-life",
+      name: "End-of-Life Replacement",
+      description: "Replace trucks only at natural retirement",
+      timeline: "10-15 years",
+      riskLevel: "Low",
+      upfrontCost: "Low",
+      tcoImpact: "Neutral",
+      incentiveCapture: "Partial",
+      pros: ["Minimal disruption", "Natural capital cycle", "Lower risk"],
+      cons: ["Slowest transition", "Miss early incentives", "Competitors gain advantage"],
+      bestFor: "Conservative fleets, tight capital"
+    },
+    {
+      id: "high-mileage",
+      name: "Accelerated High-Mileage",
+      description: "Prioritize replacing highest-utilization vehicles first",
+      timeline: "5-8 years",
+      riskLevel: "Medium",
+      upfrontCost: "Medium",
+      tcoImpact: "Positive",
+      incentiveCapture: "Good",
+      pros: ["Best TCO returns", "Maximize fuel savings", "Prove concept on best routes"],
+      cons: ["Moderate capital required", "Resale timing risk"],
+      bestFor: "Data-driven fleets, high fuel costs"
+    },
+    {
+      id: "route-based",
+      name: "Route-Based Phasing",
+      description: "Start with depot-return and short-haul routes",
+      timeline: "3-5 years",
+      riskLevel: "Low-Medium",
+      upfrontCost: "Medium",
+      tcoImpact: "Positive",
+      incentiveCapture: "Good",
+      pros: ["Quick wins", "Proven ROI before scaling", "Minimal infrastructure"],
+      cons: ["Only partial fleet", "May need mixed fleet ops"],
+      bestFor: "Regional distribution, urban delivery"
+    },
+    {
+      id: "full-conversion",
+      name: "Full Fleet Conversion",
+      description: "Aggressive early retirement and full electrification",
+      timeline: "2-4 years",
+      riskLevel: "High",
+      upfrontCost: "Very High",
+      tcoImpact: "Variable",
+      incentiveCapture: "Maximum",
+      pros: ["Max incentive capture", "Brand leadership", "Operational simplicity"],
+      cons: ["Highest capital outlay", "Technology risk", "Infrastructure sprint"],
+      bestFor: "Well-capitalized leaders, sustainability mandates"
+    }
+  ],
+  // Decision factors for route fit
+  routeFitCriteria: [
+    { factor: "Daily miles < 80% of EV range", weight: "Critical", icon: "📏" },
+    { factor: "Return-to-depot operations", weight: "High", icon: "🏠" },
+    { factor: "Overnight dwell time > 8 hours", weight: "High", icon: "🌙" },
+    { factor: "Predictable/consistent routes", weight: "Medium", icon: "🔄" },
+    { factor: "Urban/suburban operation", weight: "Medium", icon: "🏙️" },
+    { factor: "Weight-sensitive cargo", weight: "Low", icon: "⚖️" }
+  ],
+  // Infrastructure readiness checklist
+  infraChecklist: [
+    { item: "Electrical capacity assessment", phase: "Planning", critical: true },
+    { item: "Utility coordination & rate negotiation", phase: "Planning", critical: true },
+    { item: "Charger specification & procurement", phase: "Procurement", critical: true },
+    { item: "Site preparation & permitting", phase: "Construction", critical: false },
+    { item: "Charger installation & commissioning", phase: "Construction", critical: true },
+    { item: "Fleet management software integration", phase: "Operations", critical: true },
+    { item: "Driver training program", phase: "Operations", critical: false },
+    { item: "Maintenance team certification", phase: "Operations", critical: false }
+  ],
+  // Use case prioritization
+  useCasePriority: [
+    { useCase: "Yard trucks / terminal tractors", evFit: 95, reason: "Short distances, predictable, easy charging", priority: 1 },
+    { useCase: "Urban last-mile delivery", evFit: 90, reason: "Short routes, frequent stops favor regen", priority: 2 },
+    { useCase: "Port drayage", evFit: 85, reason: "Short haul, depot-based, incentive focus", priority: 3 },
+    { useCase: "Regional distribution (<150mi)", evFit: 80, reason: "Predictable routes, overnight charging", priority: 4 },
+    { useCase: "Food & beverage delivery", evFit: 75, reason: "Multi-stop, urban focus, brand value", priority: 5 },
+    { useCase: "Construction / vocational", evFit: 60, reason: "Variable duty cycles, power needs", priority: 6 },
+    { useCase: "Long-haul (>300mi)", evFit: 30, reason: "Range limits, charging infrastructure gaps", priority: 7 }
+  ],
+  // 100-truck fleet scenario data
+  fleetScenario: {
+    fleetSize: 100,
+    avgTruckAge: 6,
+    avgAnnualMiles: 80000,
+    currentFuelCostPerMile: 0.58,  // Diesel
+    evFuelCostPerMile: 0.22,  // Electric
+    dieselTruckPrice: 180000,
+    evTruckPrice: 350000,
+    avgIncentive: 120000,
+    maintenanceSavingsPercent: 40
+  }
+};
+
 // ============ DATA: Competitive Landscape ============
 var MARKET_STACK_LAYERS = [
   {
@@ -3043,6 +3168,372 @@ function CompetitiveLandscapeTab() {
   );
 }
 
+// ============ FLEET REPLACEMENT TAB ============
+function FleetReplacementTab() {
+  var data = FLEET_REPLACEMENT_DATA;
+  var scenario = data.fleetScenario;
+
+  // Calculate scenario projections for different strategies
+  function calculateStrategyROI(strategy, years) {
+    var trucksPerYear = Math.ceil(scenario.fleetSize / years);
+    var annualFuelSavings = trucksPerYear * scenario.avgAnnualMiles * (scenario.currentFuelCostPerMile - scenario.evFuelCostPerMile);
+    var netCostPerTruck = scenario.evTruckPrice - scenario.dieselTruckPrice - scenario.avgIncentive;
+    return { trucksPerYear: trucksPerYear, annualFuelSavings: annualFuelSavings, netCostPerTruck: netCostPerTruck };
+  }
+
+  function getRiskColor(risk) {
+    if (risk === "Low") return COLORS.success;
+    if (risk === "Medium" || risk === "Low-Medium") return COLORS.accent;
+    return COLORS.danger;
+  }
+
+  function getPriorityColor(priority) {
+    if (priority <= 2) return COLORS.success;
+    if (priority <= 4) return COLORS.primary;
+    if (priority <= 5) return COLORS.accent;
+    return COLORS.danger;
+  }
+
+  return createElement("div", null,
+    // Key Metrics
+    createElement("div", { style: styles.grid },
+      createElement(MetricCard, {
+        icon: "🔄",
+        title: "US Replacement Cycle",
+        value: data.cycleData.fleetReplacementCycle.us + " yrs",
+        label: "Average fleet truck replacement",
+        color: COLORS.info
+      }),
+      createElement(MetricCard, {
+        icon: "🔄",
+        title: "EU Replacement Cycle",
+        value: data.cycleData.fleetReplacementCycle.eu + " yrs",
+        label: "Average fleet truck replacement",
+        color: COLORS.primary
+      }),
+      createElement(MetricCard, {
+        icon: "📊",
+        title: "Annual Turnover",
+        value: data.cycleData.annualReplacementRate.us + "%",
+        label: "US fleet replaced per year",
+        color: COLORS.accent
+      }),
+      createElement(MetricCard, {
+        icon: "🛣️",
+        title: "Miles at Retirement",
+        value: "750K",
+        label: "Average US truck lifetime miles",
+        color: COLORS.success
+      })
+    ),
+
+    // Fleet Age Distribution
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "📊 Fleet Age Distribution"),
+      createElement("div", { style: styles.gridWide },
+        // US Distribution
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🇺🇸 United States"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
+            data.ageDistribution.us.map(function(item, i) {
+              var barColor = i === 0 ? COLORS.success : i === 1 ? COLORS.primary : i === 2 ? COLORS.accent : COLORS.danger;
+              return createElement("div", { key: i },
+                createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: "4px", fontSize: "13px" } },
+                  createElement("span", null, item.bracket),
+                  createElement("span", { style: { fontWeight: "600" } }, item.percent + "%")
+                ),
+                createElement("div", { style: { height: "24px", background: COLORS.background, borderRadius: "4px", overflow: "hidden" } },
+                  createElement("div", { style: { width: item.percent + "%", height: "100%", background: barColor, borderRadius: "4px", display: "flex", alignItems: "center", paddingLeft: "8px" } },
+                    createElement("span", { style: { fontSize: "11px", color: "#fff", fontWeight: "500" } }, item.label)
+                  )
+                )
+              );
+            })
+          ),
+          createElement("div", { style: { marginTop: "12px", fontSize: "11px", color: COLORS.textMuted } },
+            "Source: ACT Research, Fleet Owner Industry Survey"
+          )
+        ),
+        // EU Distribution
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🇪🇺 European Union"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } },
+            data.ageDistribution.eu.map(function(item, i) {
+              var barColor = i === 0 ? COLORS.success : i === 1 ? COLORS.primary : i === 2 ? COLORS.accent : COLORS.danger;
+              return createElement("div", { key: i },
+                createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: "4px", fontSize: "13px" } },
+                  createElement("span", null, item.bracket),
+                  createElement("span", { style: { fontWeight: "600" } }, item.percent + "%")
+                ),
+                createElement("div", { style: { height: "24px", background: COLORS.background, borderRadius: "4px", overflow: "hidden" } },
+                  createElement("div", { style: { width: item.percent + "%", height: "100%", background: barColor, borderRadius: "4px", display: "flex", alignItems: "center", paddingLeft: "8px" } },
+                    createElement("span", { style: { fontSize: "11px", color: "#fff", fontWeight: "500" } }, item.label)
+                  )
+                )
+              );
+            })
+          ),
+          createElement("div", { style: { marginTop: "12px", fontSize: "11px", color: COLORS.textMuted } },
+            "Source: ACEA Vehicles in Use Report 2023"
+          )
+        )
+      )
+    ),
+
+    // Transition Strategies Comparison
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🔀 Transition Strategies"),
+      createElement(Card, null,
+        createElement("div", { style: { overflowX: "auto" } },
+          createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px" } },
+            createElement("thead", null,
+              createElement("tr", { style: { borderBottom: "2px solid " + COLORS.border } },
+                createElement("th", { style: { padding: "12px 8px", textAlign: "left", color: COLORS.textMuted } }, "Strategy"),
+                createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.textMuted } }, "Timeline"),
+                createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.textMuted } }, "Risk"),
+                createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.textMuted } }, "Upfront Cost"),
+                createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.textMuted } }, "TCO Impact"),
+                createElement("th", { style: { padding: "12px 8px", textAlign: "left", color: COLORS.textMuted } }, "Best For")
+              )
+            ),
+            createElement("tbody", null,
+              data.strategies.map(function(s, i) {
+                return createElement("tr", { key: i, style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "16px 8px" } },
+                    createElement("div", { style: { fontWeight: "600", marginBottom: "4px" } }, s.name),
+                    createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, s.description)
+                  ),
+                  createElement("td", { style: { padding: "16px 8px", textAlign: "center" } },
+                    createElement(Badge, { variant: "info" }, s.timeline)
+                  ),
+                  createElement("td", { style: { padding: "16px 8px", textAlign: "center" } },
+                    createElement("span", { style: { color: getRiskColor(s.riskLevel), fontWeight: "600" } }, s.riskLevel)
+                  ),
+                  createElement("td", { style: { padding: "16px 8px", textAlign: "center" } }, s.upfrontCost),
+                  createElement("td", { style: { padding: "16px 8px", textAlign: "center" } },
+                    createElement("span", { style: { color: s.tcoImpact === "Positive" ? COLORS.success : COLORS.textMuted } }, s.tcoImpact)
+                  ),
+                  createElement("td", { style: { padding: "16px 8px", fontSize: "12px", color: COLORS.textMuted } }, s.bestFor)
+                );
+              })
+            )
+          )
+        )
+      ),
+      // Strategy Details Cards
+      createElement("div", { style: Object.assign({}, styles.grid, { marginTop: "24px", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }) },
+        data.strategies.map(function(s, i) {
+          var borderColor = i === 0 ? COLORS.success : i === 1 ? COLORS.primary : i === 2 ? COLORS.accent : COLORS.danger;
+          return createElement(Card, { key: i, style: { borderTop: "3px solid " + borderColor } },
+            createElement("div", { style: { fontWeight: "600", fontSize: "15px", marginBottom: "12px" } }, s.name),
+            createElement("div", { style: { marginBottom: "12px" } },
+              createElement("div", { style: { fontSize: "11px", color: COLORS.success, fontWeight: "600", marginBottom: "6px" } }, "✓ PROS"),
+              s.pros.map(function(pro, j) {
+                return createElement("div", { key: j, style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "2px" } }, "• " + pro);
+              })
+            ),
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "11px", color: COLORS.danger, fontWeight: "600", marginBottom: "6px" } }, "✗ CONS"),
+              s.cons.map(function(con, j) {
+                return createElement("div", { key: j, style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "2px" } }, "• " + con);
+              })
+            )
+          );
+        })
+      )
+    ),
+
+    // Decision Framework
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🎯 Decision Framework"),
+      createElement("div", { style: styles.gridWide },
+        // Route Fit Criteria
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📏 Route Fit Criteria"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } },
+            data.routeFitCriteria.map(function(item, i) {
+              var weightColor = item.weight === "Critical" ? COLORS.danger : item.weight === "High" ? COLORS.accent : COLORS.textMuted;
+              return createElement("div", { key: i, style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px", background: COLORS.background, borderRadius: "6px" } },
+                createElement("span", { style: { fontSize: "20px" } }, item.icon),
+                createElement("div", { style: { flex: 1 } },
+                  createElement("div", { style: { fontSize: "13px", fontWeight: "500" } }, item.factor)
+                ),
+                createElement(Badge, { variant: item.weight === "Critical" ? "danger" : item.weight === "High" ? "warning" : "secondary" }, item.weight)
+              );
+            })
+          )
+        ),
+        // Infrastructure Readiness
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🔌 Infrastructure Readiness Checklist"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+            data.infraChecklist.map(function(item, i) {
+              var phaseColor = item.phase === "Planning" ? COLORS.info : item.phase === "Procurement" ? COLORS.primary : item.phase === "Construction" ? COLORS.accent : COLORS.success;
+              return createElement("div", { key: i, style: { display: "flex", alignItems: "center", gap: "10px", padding: "8px 10px", background: COLORS.background, borderRadius: "6px", borderLeft: item.critical ? "3px solid " + COLORS.danger : "3px solid " + COLORS.border } },
+                createElement("div", { style: { flex: 1, fontSize: "12px" } }, item.item),
+                createElement("span", { style: { fontSize: "10px", padding: "2px 6px", background: phaseColor + "20", color: phaseColor, borderRadius: "4px" } }, item.phase),
+                item.critical && createElement("span", { style: { fontSize: "10px", color: COLORS.danger } }, "★")
+              );
+            })
+          ),
+          createElement("div", { style: { marginTop: "10px", fontSize: "11px", color: COLORS.textMuted } },
+            "★ = Critical path items"
+          )
+        )
+      )
+    ),
+
+    // Use Case Prioritization
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "📋 Use Case Prioritization"),
+      createElement(Card, null,
+        createElement("div", { style: { fontSize: "13px", color: COLORS.textMuted, marginBottom: "16px" } },
+          "Which trucks to replace first? Prioritize by EV fit score:"
+        ),
+        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+          data.useCasePriority.map(function(item, i) {
+            var fitColor = item.evFit >= 80 ? COLORS.success : item.evFit >= 60 ? COLORS.accent : COLORS.danger;
+            return createElement("div", { key: i, style: { display: "flex", alignItems: "center", gap: "16px", padding: "12px 16px", background: COLORS.background, borderRadius: "8px" } },
+              createElement("div", { style: { width: "28px", height: "28px", borderRadius: "50%", background: getPriorityColor(item.priority), display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: "700", fontSize: "13px" } }, item.priority),
+              createElement("div", { style: { flex: 1 } },
+                createElement("div", { style: { fontWeight: "600", fontSize: "14px", marginBottom: "2px" } }, item.useCase),
+                createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, item.reason)
+              ),
+              createElement("div", { style: { textAlign: "right" } },
+                createElement("div", { style: { fontSize: "20px", fontWeight: "700", color: fitColor } }, item.evFit + "%"),
+                createElement("div", { style: { fontSize: "10px", color: COLORS.textMuted } }, "EV Fit")
+              )
+            );
+          })
+        )
+      )
+    ),
+
+    // 100-Truck Fleet Scenario
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🧮 Fleet Transition Scenario: 100 Trucks"),
+      createElement(Card, { style: { background: COLORS.primary + "08", borderColor: COLORS.primary + "40" } },
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "16px", marginBottom: "24px" } },
+          [
+            { label: "Fleet Size", value: scenario.fleetSize + " trucks" },
+            { label: "Avg Truck Age", value: scenario.avgTruckAge + " years" },
+            { label: "Annual Miles/Truck", value: formatNumber(scenario.avgAnnualMiles) },
+            { label: "Diesel Cost/Mile", value: "$" + scenario.currentFuelCostPerMile.toFixed(2) },
+            { label: "Electric Cost/Mile", value: "$" + scenario.evFuelCostPerMile.toFixed(2) },
+            { label: "Savings/Mile", value: "$" + (scenario.currentFuelCostPerMile - scenario.evFuelCostPerMile).toFixed(2) }
+          ].map(function(item, i) {
+            return createElement("div", { key: i, style: { textAlign: "center", padding: "12px", background: COLORS.card, borderRadius: "8px" } },
+              createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, marginBottom: "4px" } }, item.label),
+              createElement("div", { style: { fontSize: "16px", fontWeight: "600", color: COLORS.primary } }, item.value)
+            );
+          })
+        ),
+        // Scenario comparison table
+        createElement("div", { style: { overflowX: "auto" } },
+          createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px" } },
+            createElement("thead", null,
+              createElement("tr", { style: { borderBottom: "2px solid " + COLORS.border } },
+                createElement("th", { style: { padding: "10px 8px", textAlign: "left", color: COLORS.textMuted } }, "Strategy"),
+                createElement("th", { style: { padding: "10px 8px", textAlign: "center", color: COLORS.textMuted } }, "Years to Complete"),
+                createElement("th", { style: { padding: "10px 8px", textAlign: "center", color: COLORS.textMuted } }, "Trucks/Year"),
+                createElement("th", { style: { padding: "10px 8px", textAlign: "center", color: COLORS.textMuted } }, "Annual Capital"),
+                createElement("th", { style: { padding: "10px 8px", textAlign: "center", color: COLORS.textMuted } }, "Annual Fuel Savings*"),
+                createElement("th", { style: { padding: "10px 8px", textAlign: "center", color: COLORS.textMuted } }, "Net Cost/Truck†")
+              )
+            ),
+            createElement("tbody", null,
+              [
+                { name: "Conservative (10yr)", years: 10 },
+                { name: "Moderate (6yr)", years: 6 },
+                { name: "Aggressive (4yr)", years: 4 },
+                { name: "Sprint (2yr)", years: 2 }
+              ].map(function(strat, i) {
+                var trucksPerYear = Math.ceil(scenario.fleetSize / strat.years);
+                var annualCapital = trucksPerYear * (scenario.evTruckPrice - scenario.avgIncentive);
+                var cumulativeTrucks = Math.min(trucksPerYear * (i + 1), scenario.fleetSize);
+                var annualFuelSavings = trucksPerYear * scenario.avgAnnualMiles * (scenario.currentFuelCostPerMile - scenario.evFuelCostPerMile);
+                var netCostPerTruck = scenario.evTruckPrice - scenario.dieselTruckPrice - scenario.avgIncentive;
+                return createElement("tr", { key: i, style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, strat.name),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center" } }, strat.years),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center" } }, trucksPerYear),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.danger } }, "$" + (annualCapital / 1000000).toFixed(1) + "M"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.success } }, "$" + (annualFuelSavings / 1000).toFixed(0) + "K"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center" } }, "$" + formatNumber(netCostPerTruck))
+                );
+              })
+            )
+          )
+        ),
+        createElement("div", { style: { marginTop: "12px", fontSize: "11px", color: COLORS.textMuted } },
+          "* Fuel savings shown for trucks replaced in year 1 only. † Net cost = EV price - diesel price - incentive ($" + formatNumber(scenario.evTruckPrice) + " - $" + formatNumber(scenario.dieselTruckPrice) + " - $" + formatNumber(scenario.avgIncentive) + ")"
+        )
+      )
+    ),
+
+    // Best Practices
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "✅ Best Practices"),
+      createElement("div", { style: styles.gridWide },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🚛 Vehicle Selection"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px" } },
+            ["Start with highest-utilization vehicles (maximize fuel savings)", "Match EV range to actual route requirements + 20% buffer", "Consider weight-sensitive routes (battery weight impacts payload)", "Pilot with 5-10 vehicles before scaling"].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "8px", alignItems: "flex-start" } },
+                createElement("span", { style: { color: COLORS.success } }, "✓"),
+                createElement("span", { style: { color: COLORS.textMuted } }, item)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🔌 Infrastructure Sequencing"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px" } },
+            ["Engage utility 12-18 months before charger installation", "Right-size electrical capacity for full fleet (not just pilot)", "Install charging management software from day one", "Plan for future DC fast charging needs"].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "8px", alignItems: "flex-start" } },
+                createElement("span", { style: { color: COLORS.success } }, "✓"),
+                createElement("span", { style: { color: COLORS.textMuted } }, item)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "👥 Operations & Training"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px" } },
+            ["Train drivers on regen braking and efficient EV operation", "Certify maintenance staff on high-voltage systems", "Update dispatch systems for charging constraints", "Establish charging SOPs and escalation procedures"].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "8px", alignItems: "flex-start" } },
+                createElement("span", { style: { color: COLORS.success } }, "✓"),
+                createElement("span", { style: { color: COLORS.textMuted } }, item)
+              );
+            })
+          )
+        ),
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "💰 Financial Planning"),
+          createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px" } },
+            ["Model TCO with actual route data, not estimates", "Lock in incentives early (programs have funding limits)", "Consider leasing to reduce technology obsolescence risk", "Track and report emissions reductions for ESG value"].map(function(item, i) {
+              return createElement("div", { key: i, style: { display: "flex", gap: "8px", alignItems: "flex-start" } },
+                createElement("span", { style: { color: COLORS.success } }, "✓"),
+                createElement("span", { style: { color: COLORS.textMuted } }, item)
+              );
+            })
+          )
+        )
+      )
+    ),
+
+    // Sources
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, { style: { background: COLORS.background } },
+        createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } },
+          createElement("strong", null, "Sources: "),
+          "NACFE Fleet Transition Guide, ACT Research Fleet Survey, ACEA Vehicles in Use Report, Fleet Owner Industry Survey, RMI Fleet Electrification Toolkit"
+        )
+      )
+    )
+  );
+}
+
 // ============ SOURCES TAB ============
 function SourcesTab() {
   var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications"];
@@ -3319,6 +3810,7 @@ function App() {
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
     { id: "competitive", label: "🏢 Competitive", component: CompetitiveLandscapeTab },
+    { id: "replacement", label: "🔄 Replacement", component: FleetReplacementTab },
     { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
