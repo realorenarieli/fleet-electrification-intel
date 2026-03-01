@@ -742,6 +742,284 @@ var GEO_COMPARISON_DATA = {
   }
 };
 
+// ============ DATA: Competitive Landscape ============
+var MARKET_STACK_LAYERS = [
+  {
+    id: "autonomous",
+    name: "Autonomous & Logistics",
+    description: "Self-driving trucks and automated logistics networks",
+    color: COLORS.purple,
+    icon: "🤖",
+    maturity: "Emerging",
+    timeline: "2027+"
+  },
+  {
+    id: "orchestration",
+    name: "Fleet Orchestration",
+    description: "End-to-end fleet management, routing, energy optimization, multi-depot coordination",
+    color: COLORS.primary,
+    icon: "🎯",
+    maturity: "Growing",
+    timeline: "NOW",
+    isGreenbay: true
+  },
+  {
+    id: "charging-software",
+    name: "Charging Management",
+    description: "Depot charge scheduling, load balancing, smart charging",
+    color: COLORS.info,
+    icon: "📊",
+    maturity: "Established",
+    timeline: "NOW"
+  },
+  {
+    id: "charging-hardware",
+    name: "Charging Hardware",
+    description: "EVSE equipment, chargers, installation services",
+    color: COLORS.accent,
+    icon: "🔌",
+    maturity: "Established",
+    timeline: "NOW"
+  },
+  {
+    id: "energy-storage",
+    name: "Energy & Storage",
+    description: "Battery storage, grid services, energy management",
+    color: COLORS.success,
+    icon: "🔋",
+    maturity: "Growing",
+    timeline: "NOW"
+  }
+];
+
+var COMPETITORS_DATA = [
+  // Autonomous Layer
+  {
+    name: "NexDash",
+    layer: "autonomous",
+    description: "Autonomous Zero-Emission Logistics Network",
+    hq: "Israel",
+    funding: "Series A",
+    focus: ["Autonomous trucks", "Zero-emission logistics", "Network optimization"],
+    website: "https://www.nexdash.com/",
+    relevance: "Future convergence - AV fleets will need orchestration",
+    threatLevel: "Low (different timeline)",
+    partnerPotential: "High"
+  },
+  {
+    name: "TuSimple",
+    layer: "autonomous",
+    description: "Autonomous trucking technology company",
+    hq: "USA",
+    funding: "Public (delisted)",
+    focus: ["L4 autonomous trucks", "Freight network"],
+    website: "https://www.tusimple.com/",
+    relevance: "AV trucks will need fleet orchestration layer",
+    threatLevel: "Low",
+    partnerPotential: "Medium"
+  },
+  {
+    name: "Aurora",
+    layer: "autonomous",
+    description: "Self-driving technology for trucking",
+    hq: "USA",
+    funding: "Public (AUR)",
+    focus: ["Aurora Driver", "Trucking autonomy"],
+    website: "https://aurora.tech/",
+    relevance: "Major AV player - future orchestration need",
+    threatLevel: "Low",
+    partnerPotential: "Medium"
+  },
+  // Orchestration Layer (Greenbay's space)
+  {
+    name: "Greenbay",
+    layer: "orchestration",
+    description: "Fleet orchestration platform for electric and autonomous vehicles",
+    hq: "Israel",
+    funding: "Seed",
+    focus: ["Fleet orchestration", "Energy optimization", "Multi-depot coordination", "AV-ready"],
+    website: "#",
+    isGreenbay: true,
+    relevance: "Core positioning",
+    threatLevel: "N/A",
+    partnerPotential: "N/A"
+  },
+  {
+    name: "Samsara",
+    layer: "orchestration",
+    description: "Fleet management and IoT platform",
+    hq: "USA",
+    funding: "Public (IOT)",
+    focus: ["Telematics", "Fleet visibility", "Safety"],
+    website: "https://www.samsara.com/",
+    relevance: "Incumbent fleet management - less EV-focused",
+    threatLevel: "Medium",
+    partnerPotential: "Low"
+  },
+  {
+    name: "Geotab",
+    layer: "orchestration",
+    description: "Fleet management and telematics",
+    hq: "Canada",
+    funding: "Private",
+    focus: ["Telematics", "Data analytics", "EV assessment"],
+    website: "https://www.geotab.com/",
+    relevance: "Strong telematics, growing EV tools",
+    threatLevel: "Medium",
+    partnerPotential: "Medium"
+  },
+  {
+    name: "Einride",
+    layer: "orchestration",
+    description: "Electric and autonomous freight",
+    hq: "Sweden",
+    funding: "Series C",
+    focus: ["Electric trucks", "Autonomous pods", "Freight-as-a-Service"],
+    website: "https://www.einride.tech/",
+    relevance: "Vertical integration - trucks + software",
+    threatLevel: "Medium-High",
+    partnerPotential: "Low"
+  },
+  // Charging Management Layer
+  {
+    name: "Driivz",
+    layer: "charging-software",
+    description: "EV charging management platform",
+    hq: "Israel",
+    funding: "Acquired by Vontier",
+    focus: ["Depot charging", "Fleet solutions", "Smart charging"],
+    website: "https://www.driivz.com/",
+    relevance: "Depot charging software - potential integration",
+    threatLevel: "Low (complementary)",
+    partnerPotential: "High"
+  },
+  {
+    name: "ChargePoint",
+    layer: "charging-software",
+    description: "EV charging network and software",
+    hq: "USA",
+    funding: "Public (CHPT)",
+    focus: ["Charging network", "Fleet solutions", "Software"],
+    website: "https://www.chargepoint.com/",
+    relevance: "Large network - fleet charging solutions",
+    threatLevel: "Low (complementary)",
+    partnerPotential: "High"
+  },
+  {
+    name: "bp pulse / Omega)",
+    layer: "charging-software",
+    description: "Fleet charging solutions",
+    hq: "UK",
+    funding: "Corporate (bp)",
+    focus: ["Fleet electrification", "Depot solutions", "Energy"],
+    website: "https://www.bp.com/en/global/bp-pulse-fleet.html",
+    relevance: "End-to-end fleet charging",
+    threatLevel: "Low (complementary)",
+    partnerPotential: "High"
+  },
+  // Charging Hardware Layer
+  {
+    name: "Delta Charge",
+    layer: "charging-hardware",
+    description: "EV charging infrastructure solutions",
+    hq: "Taiwan/Global",
+    funding: "Corporate (Delta Electronics)",
+    focus: ["DC fast chargers", "Fleet charging", "Energy systems"],
+    website: "https://www.delta-emea.com/ev-charging",
+    relevance: "Hardware provider - integration opportunity",
+    threatLevel: "None (different layer)",
+    partnerPotential: "High"
+  },
+  {
+    name: "ABB E-mobility",
+    layer: "charging-hardware",
+    description: "EV charging infrastructure",
+    hq: "Switzerland",
+    funding: "Corporate (ABB)",
+    focus: ["DC chargers", "Fleet solutions", "Grid integration"],
+    website: "https://new.abb.com/ev-charging",
+    relevance: "Major hardware player",
+    threatLevel: "None (different layer)",
+    partnerPotential: "High"
+  },
+  {
+    name: "Kempower",
+    layer: "charging-hardware",
+    description: "Modular EV charging solutions",
+    hq: "Finland",
+    funding: "Public (Helsinki)",
+    focus: ["Modular chargers", "Fleet charging", "Scalable systems"],
+    website: "https://kempower.com/",
+    relevance: "Growing in fleet segment",
+    threatLevel: "None (different layer)",
+    partnerPotential: "High"
+  },
+  // Energy & Storage Layer
+  {
+    name: "Decade Energy",
+    layer: "energy-storage",
+    description: "Make electric your competitive advantage",
+    hq: "USA",
+    funding: "Venture-backed",
+    focus: ["Battery storage", "Fleet energy", "Grid services"],
+    website: "https://www.decade.energy/",
+    relevance: "Energy layer - potential integration",
+    threatLevel: "None (different layer)",
+    partnerPotential: "High"
+  },
+  {
+    name: "Tesla Megapack",
+    layer: "energy-storage",
+    description: "Utility-scale battery storage",
+    hq: "USA",
+    funding: "Corporate (Tesla)",
+    focus: ["Grid storage", "Energy management"],
+    website: "https://www.tesla.com/megapack",
+    relevance: "Battery storage for depots",
+    threatLevel: "None (different layer)",
+    partnerPotential: "Medium"
+  },
+  {
+    name: "Enel X",
+    layer: "energy-storage",
+    description: "Energy services and e-mobility",
+    hq: "Italy",
+    funding: "Corporate (Enel)",
+    focus: ["Demand response", "Fleet charging", "Energy optimization"],
+    website: "https://www.enelx.com/",
+    relevance: "Energy services for fleets",
+    threatLevel: "Low",
+    partnerPotential: "High"
+  }
+];
+
+var GREENBAY_POSITIONING = {
+  tagline: "Fleet Orchestration for the Electric Era",
+  uniqueValue: [
+    { point: "End-to-end orchestration", desc: "Not just charging, not just routing - the full picture" },
+    { point: "Energy-aware optimization", desc: "Routes + charging + grid costs in one system" },
+    { point: "Multi-depot coordination", desc: "Scale across locations, not just single sites" },
+    { point: "AV-ready architecture", desc: "Built for today's EVs, ready for tomorrow's autonomy" }
+  ],
+  vsCompetitors: [
+    { vs: "vs Charging Software (Driivz)", advantage: "We optimize the fleet, they optimize the charger" },
+    { vs: "vs Fleet Telematics (Samsara)", advantage: "We're EV-native, they're adding EV as a feature" },
+    { vs: "vs Vertical Players (Einride)", advantage: "We're hardware-agnostic, work with any truck/charger" }
+  ],
+  partnerStrategy: [
+    { layer: "Charging Hardware", partners: ["Delta Charge", "ABB", "Kempower"], value: "Hardware agnostic - integrate all" },
+    { layer: "Charging Software", partners: ["Driivz", "ChargePoint"], value: "API integration for charge optimization" },
+    { layer: "Energy/Storage", partners: ["Decade Energy", "Enel X"], value: "Grid services, demand response" },
+    { layer: "Autonomous", partners: ["NexDash", "Aurora"], value: "Future: orchestrate AV fleets" }
+  ],
+  marketOpportunity: {
+    tam: "47B",
+    sam: "9.4B",
+    som: "188M",
+    description: "Fleet orchestration software for electric commercial vehicles"
+  }
+};
+
 // ============ DATA: Sources with Validity Scores ============
 var SOURCES_DATA = [
   // Research & Analytics (Primary Sources)
@@ -2722,6 +3000,253 @@ function GeoDeepDiveTab() {
   );
 }
 
+// ============ COMPETITIVE LANDSCAPE TAB ============
+function CompetitiveLandscapeTab() {
+  function getThreatColor(level) {
+    if (level === "None (different layer)" || level === "Low (complementary)" || level === "Low") return COLORS.success;
+    if (level === "Medium" || level === "Low (different timeline)") return COLORS.accent;
+    if (level === "Medium-High" || level === "High") return COLORS.danger;
+    return COLORS.textMuted;
+  }
+
+  function getPartnerColor(potential) {
+    if (potential === "High") return COLORS.success;
+    if (potential === "Medium") return COLORS.accent;
+    return COLORS.textMuted;
+  }
+
+  return createElement("div", null,
+    // Greenbay Positioning Header
+    createElement(Card, { style: { background: "linear-gradient(135deg, " + COLORS.primary + "20 0%, " + COLORS.card + " 100%)", borderColor: COLORS.primary, marginBottom: "32px" } },
+      createElement("div", { style: { display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px" } },
+        createElement("div", { style: { fontSize: "48px" } }, "🎯"),
+        createElement("div", null,
+          createElement("div", { style: { fontSize: "24px", fontWeight: "700", color: COLORS.primary } }, "Greenbay"),
+          createElement("div", { style: { fontSize: "16px", color: COLORS.text } }, GREENBAY_POSITIONING.tagline)
+        )
+      ),
+      createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" } },
+        GREENBAY_POSITIONING.uniqueValue.map(function(item, i) {
+          return createElement("div", { key: i, style: { padding: "16px", background: COLORS.background, borderRadius: "8px", borderLeft: "3px solid " + COLORS.primary } },
+            createElement("div", { style: { fontWeight: "600", marginBottom: "4px", color: COLORS.text } }, item.point),
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.desc)
+          );
+        })
+      )
+    ),
+
+    // Market Stack Visualization
+    createElement("div", { style: styles.section },
+      createElement("div", { style: styles.sectionTitle }, "🏗️ Market Stack - Where Greenbay Fits"),
+      createElement(Card, null,
+        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "4px" } },
+          MARKET_STACK_LAYERS.map(function(layer) {
+            var layerCompetitors = COMPETITORS_DATA.filter(function(c) { return c.layer === layer.id; });
+            return createElement("div", { key: layer.id, style: {
+              padding: "20px",
+              background: layer.isGreenbay ? COLORS.primary + "20" : COLORS.background,
+              borderRadius: "8px",
+              border: layer.isGreenbay ? "2px solid " + COLORS.primary : "1px solid " + COLORS.border,
+              position: "relative"
+            }},
+              createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" } },
+                createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px" } },
+                  createElement("span", { style: { fontSize: "24px" } }, layer.icon),
+                  createElement("div", null,
+                    createElement("div", { style: { fontWeight: "700", fontSize: "16px", color: layer.color, display: "flex", alignItems: "center", gap: "8px" } },
+                      layer.name,
+                      layer.isGreenbay && createElement("span", { style: { padding: "2px 8px", background: COLORS.primary, color: "#000", borderRadius: "4px", fontSize: "10px", fontWeight: "700" } }, "GREENBAY")
+                    ),
+                    createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, layer.description)
+                  )
+                ),
+                createElement("div", { style: { display: "flex", gap: "8px", alignItems: "center" } },
+                  createElement("span", { style: { padding: "4px 10px", background: layer.color + "20", color: layer.color, borderRadius: "12px", fontSize: "11px", fontWeight: "600" } }, layer.maturity),
+                  createElement("span", { style: { padding: "4px 10px", background: COLORS.card, borderRadius: "12px", fontSize: "11px", color: COLORS.textMuted } }, layer.timeline)
+                )
+              ),
+              createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+                layerCompetitors.map(function(comp) {
+                  return createElement("span", { key: comp.name, style: {
+                    padding: "6px 12px",
+                    background: comp.isGreenbay ? COLORS.primary : COLORS.card,
+                    color: comp.isGreenbay ? "#000" : COLORS.text,
+                    borderRadius: "6px",
+                    fontSize: "12px",
+                    fontWeight: comp.isGreenbay ? "700" : "500",
+                    border: comp.isGreenbay ? "none" : "1px solid " + COLORS.border
+                  }}, comp.name);
+                })
+              )
+            );
+          })
+        )
+      )
+    ),
+
+    // Competitive Positioning
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "⚔️ Competitive Positioning"),
+      createElement("div", { style: styles.gridWide },
+        GREENBAY_POSITIONING.vsCompetitors.map(function(item, i) {
+          return createElement(Card, { key: i },
+            createElement("div", { style: { fontWeight: "600", color: COLORS.accent, marginBottom: "8px", fontSize: "14px" } }, item.vs),
+            createElement("div", { style: { fontSize: "15px", color: COLORS.text, lineHeight: "1.5" } }, item.advantage)
+          );
+        })
+      )
+    ),
+
+    // Detailed Player Analysis
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🔍 Player Analysis by Layer"),
+      MARKET_STACK_LAYERS.map(function(layer) {
+        var layerCompetitors = COMPETITORS_DATA.filter(function(c) { return c.layer === layer.id && !c.isGreenbay; });
+        if (layerCompetitors.length === 0) return null;
+
+        return createElement("div", { key: layer.id, style: { marginTop: "24px" } },
+          createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" } },
+            createElement("span", { style: { fontSize: "20px" } }, layer.icon),
+            createElement("span", { style: { fontWeight: "600", color: layer.color } }, layer.name)
+          ),
+          createElement(Card, null,
+            createElement("div", { style: { overflowX: "auto" } },
+              createElement("table", { style: styles.table },
+                createElement("thead", null,
+                  createElement("tr", null,
+                    createElement("th", { style: styles.th }, "Company"),
+                    createElement("th", { style: styles.th }, "Focus"),
+                    createElement("th", { style: styles.th }, "HQ"),
+                    createElement("th", { style: styles.th }, "Funding"),
+                    createElement("th", { style: styles.th }, "Threat Level"),
+                    createElement("th", { style: styles.th }, "Partner Potential"),
+                    createElement("th", { style: styles.th }, "Link")
+                  )
+                ),
+                createElement("tbody", null,
+                  layerCompetitors.map(function(comp) {
+                    return createElement("tr", { key: comp.name },
+                      createElement("td", { style: Object.assign({}, styles.td, { fontWeight: "600" }) },
+                        createElement("div", null, comp.name),
+                        createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted, fontWeight: "400" } }, comp.description)
+                      ),
+                      createElement("td", { style: Object.assign({}, styles.td, { fontSize: "12px" }) },
+                        createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px" } },
+                          comp.focus.slice(0, 2).map(function(f, i) {
+                            return createElement("span", { key: i, style: { padding: "2px 6px", background: COLORS.background, borderRadius: "4px", fontSize: "10px" } }, f);
+                          })
+                        )
+                      ),
+                      createElement("td", { style: styles.td }, comp.hq),
+                      createElement("td", { style: styles.td },
+                        createElement("span", { style: { fontSize: "12px" } }, comp.funding)
+                      ),
+                      createElement("td", { style: styles.td },
+                        createElement("span", { style: {
+                          padding: "4px 8px",
+                          borderRadius: "12px",
+                          fontSize: "11px",
+                          fontWeight: "600",
+                          background: getThreatColor(comp.threatLevel) + "20",
+                          color: getThreatColor(comp.threatLevel)
+                        }}, comp.threatLevel)
+                      ),
+                      createElement("td", { style: styles.td },
+                        createElement("span", { style: {
+                          padding: "4px 8px",
+                          borderRadius: "12px",
+                          fontSize: "11px",
+                          fontWeight: "600",
+                          background: getPartnerColor(comp.partnerPotential) + "20",
+                          color: getPartnerColor(comp.partnerPotential)
+                        }}, comp.partnerPotential)
+                      ),
+                      createElement("td", { style: styles.td },
+                        comp.website !== "#" && createElement("a", {
+                          href: comp.website,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          style: {
+                            color: COLORS.primary,
+                            textDecoration: "none",
+                            fontSize: "12px"
+                          }
+                        }, "Visit ↗")
+                      )
+                    );
+                  })
+                )
+              )
+            )
+          )
+        );
+      })
+    ),
+
+    // Partnership Strategy
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "🤝 Partnership Strategy"),
+      createElement(Card, null,
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" } },
+          GREENBAY_POSITIONING.partnerStrategy.map(function(item, i) {
+            return createElement("div", { key: i, style: { padding: "16px", background: COLORS.background, borderRadius: "8px" } },
+              createElement("div", { style: { fontWeight: "600", color: COLORS.primary, marginBottom: "8px" } }, item.layer),
+              createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" } },
+                item.partners.map(function(p, j) {
+                  return createElement("span", { key: j, style: { padding: "4px 8px", background: COLORS.success + "15", border: "1px solid " + COLORS.success + "40", borderRadius: "4px", fontSize: "11px", color: COLORS.success } }, p);
+                })
+              ),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, item.value)
+            );
+          })
+        )
+      )
+    ),
+
+    // TAM/SAM/SOM
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "💰 Market Opportunity"),
+      createElement(Card, null,
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", textAlign: "center" } },
+          [
+            { label: "TAM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.tam, desc: "Total Addressable Market", color: COLORS.info },
+            { label: "SAM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.sam, desc: "Serviceable Addressable Market", color: COLORS.primary },
+            { label: "SOM", value: "$" + GREENBAY_POSITIONING.marketOpportunity.som, desc: "Serviceable Obtainable Market", color: COLORS.success }
+          ].map(function(item, i) {
+            return createElement("div", { key: i, style: { padding: "24px", background: COLORS.background, borderRadius: "12px" } },
+              createElement("div", { style: { fontSize: "14px", color: COLORS.textMuted, marginBottom: "8px" } }, item.label),
+              createElement("div", { style: { fontSize: "36px", fontWeight: "700", color: item.color, fontFamily: "'DM Mono', monospace" } }, item.value),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginTop: "4px" } }, item.desc)
+            );
+          })
+        ),
+        createElement("div", { style: { marginTop: "16px", textAlign: "center", fontSize: "13px", color: COLORS.textMuted } },
+          GREENBAY_POSITIONING.marketOpportunity.description
+        )
+      )
+    ),
+
+    // Key Insight Box
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement(Card, { style: { background: COLORS.accent + "10", borderColor: COLORS.accent } },
+        createElement("div", { style: { display: "flex", gap: "16px" } },
+          createElement("span", { style: { fontSize: "32px" } }, "💡"),
+          createElement("div", null,
+            createElement("div", { style: { fontWeight: "700", color: COLORS.accent, marginBottom: "8px", fontSize: "16px" } }, "Key Insight for Investors"),
+            createElement("div", { style: { fontSize: "14px", color: COLORS.text, lineHeight: "1.6" } },
+              "The companies mentioned by Inven (Delta Charge, Decade Energy, Driivz) are ",
+              createElement("strong", null, "infrastructure and hardware players"),
+              ". They solve pieces of the puzzle. Greenbay sits at the ",
+              createElement("strong", { style: { color: COLORS.primary } }, "orchestration layer"),
+              " - the software brain that coordinates trucks, routes, charging, and energy across an entire fleet operation. As depots scale and fleets convert, the complexity explodes. That's where Greenbay's value compounds."
+            )
+          )
+        )
+      )
+    )
+  );
+}
+
 // ============ SOURCES TAB ============
 function SourcesTab() {
   var categories = ["Research & Analytics", "Government Sources", "Incentive Programs", "OEM Specifications", "EU Government Sources", "EU OEM Specifications", "Israeli Market (Sources Required)"];
@@ -3036,6 +3561,7 @@ function App() {
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
+    { id: "competitive", label: "⚔️ Competitive", component: CompetitiveLandscapeTab },
     { id: "sources", label: "📚 Sources", component: SourcesTab }
   ];
 
