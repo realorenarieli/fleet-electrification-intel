@@ -460,6 +460,43 @@ var REGIONAL_PROJECTIONS = [
   { year: 2035, us: 100000, eu: 200000 }  // Based on regulatory targets
 ];
 
+// Diesel vs Electric truck market comparison
+// Sources: ACT Research, ACEA, ATA, IEA Global EV Outlook 2025
+var DIESEL_VS_EV_DATA = {
+  // Annual new truck sales by powertrain (US + EU combined, thousands)
+  annualSales: [
+    { year: 2020, diesel: 580, ev: 2, total: 582 },
+    { year: 2021, diesel: 620, ev: 4, total: 624 },
+    { year: 2022, diesel: 640, ev: 8, total: 648 },
+    { year: 2023, diesel: 625, ev: 15, total: 640 },
+    { year: 2024, diesel: 596, ev: 12, total: 608 },     // ACEA: 327K EU + 280K US
+    { year: 2025, diesel: 592, ev: 18, total: 610 },
+    { year: 2026, diesel: 586, ev: 29, total: 615 },
+    { year: 2027, diesel: 577, ev: 43, total: 620 },
+    { year: 2028, diesel: 562, ev: 63, total: 625 },
+    { year: 2029, diesel: 541, ev: 89, total: 630 },
+    { year: 2030, diesel: 514, ev: 121, total: 635 },    // IEA STEPS
+    { year: 2035, diesel: 365, ev: 300, total: 665 }
+  ],
+  // Current market snapshot
+  marketSnapshot: {
+    totalTrucksInUse: { us: 3910000, eu: 6400000 },  // ATA, ACEA
+    dieselShare: { us: 97, eu: 96.3 },               // ACEA: 96.3% diesel in EU
+    evShare: { us: 0.1, eu: 0.3 },                   // ACEA: 0.3% ZEV in EU
+    annualSales2024: { us: 280000, eu: 328000 },
+    evSales2024: { us: 1700, eu: 10000 },
+    avgTruckPrice: { diesel: 180000, ev: 350000 },
+    fuelCostPerMile: { diesel: 0.58, ev: 0.22 }
+  },
+  // Key trends
+  trends: [
+    { metric: "Diesel truck sales (US+EU)", direction: "declining", change: "-5% since 2022", note: "Peak was 2022 at 640K units" },
+    { metric: "EV truck sales (US+EU)", direction: "growing", change: "+500% since 2020", note: "From 2K to 12K units" },
+    { metric: "EV market share", direction: "growing", change: "0.3% → 2% by 2024", note: "EU leads at 2.3%" },
+    { metric: "Diesel share of fleet", direction: "stable", change: "96-97%", note: "Slow fleet turnover" }
+  ]
+};
+
 // ============ DATA: EU-Specific OEMs ============
 var EU_OEM_DATA = [
   {
@@ -2389,6 +2426,143 @@ function MarketOutlookTab() {
             createElement(Legend, null),
             createElement(Area, { type: "monotone", dataKey: "eu", name: "🇪🇺 European Union", fill: COLORS.primary + "60", stroke: COLORS.primary, strokeWidth: 2, stackId: "1" }),
             createElement(Area, { type: "monotone", dataKey: "us", name: "🇺🇸 United States", fill: COLORS.info + "60", stroke: COLORS.info, strokeWidth: 2, stackId: "1" })
+          )
+        )
+      )
+    ),
+
+    // Diesel vs EV Comparison Section
+    createElement("div", { style: { marginTop: "32px" } },
+      createElement("div", { style: styles.sectionTitle }, "⛽ Diesel vs Electric: Market Comparison"),
+
+      // Key comparison metrics
+      createElement("div", { style: styles.grid },
+        createElement(MetricCard, {
+          icon: "⛽",
+          title: "Diesel Fleet Share",
+          value: "96%+",
+          label: "Of trucks in use (US & EU)",
+          color: COLORS.textMuted
+        }),
+        createElement(MetricCard, {
+          icon: "⚡",
+          title: "EV Fleet Share",
+          value: "0.3%",
+          label: "Of trucks in use (growing)",
+          color: COLORS.success
+        }),
+        createElement(MetricCard, {
+          icon: "📉",
+          title: "Diesel Sales Trend",
+          value: "-5%",
+          label: "Since 2022 peak (640K units)",
+          color: COLORS.danger
+        }),
+        createElement(MetricCard, {
+          icon: "📈",
+          title: "EV Sales Growth",
+          value: "+500%",
+          label: "Since 2020 (2K → 12K)",
+          color: COLORS.success
+        })
+      ),
+
+      // Diesel vs EV Sales Chart
+      createElement("div", { style: { marginTop: "24px" } },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📊 Annual New Truck Sales by Powertrain (US + EU Combined)"),
+          createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "16px" } },
+            "Diesel trucks still dominate, but EV share is accelerating. Note the scale difference."
+          ),
+          createElement(ResponsiveContainer, { width: "100%", height: 350 },
+            createElement(ComposedChart, { data: DIESEL_VS_EV_DATA.annualSales, margin: { top: 20, right: 30, left: 20, bottom: 20 } },
+              createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
+              createElement(XAxis, { dataKey: "year", stroke: COLORS.textMuted }),
+              createElement(YAxis, { yAxisId: "left", stroke: COLORS.textMuted, tickFormatter: function(v) { return v + "K"; }, label: { value: "Diesel (thousands)", angle: -90, position: "insideLeft", style: { fill: COLORS.textMuted, fontSize: 11 } } }),
+              createElement(YAxis, { yAxisId: "right", orientation: "right", stroke: COLORS.success, tickFormatter: function(v) { return v + "K"; }, label: { value: "EV (thousands)", angle: 90, position: "insideRight", style: { fill: COLORS.success, fontSize: 11 } } }),
+              createElement(Tooltip, {
+                contentStyle: { background: COLORS.card, border: "1px solid " + COLORS.border, borderRadius: "8px" },
+                formatter: function(value, name) { return [formatNumber(value * 1000) + " units", name]; }
+              }),
+              createElement(Legend, null),
+              createElement(Bar, { yAxisId: "left", dataKey: "diesel", name: "Diesel Trucks", fill: COLORS.textMuted + "80", radius: [4, 4, 0, 0] }),
+              createElement(Line, { yAxisId: "right", type: "monotone", dataKey: "ev", name: "Electric Trucks", stroke: COLORS.success, strokeWidth: 3, dot: { fill: COLORS.success, r: 5 } })
+            )
+          ),
+          createElement("div", { style: { marginTop: "12px", fontSize: "11px", color: COLORS.textMuted } },
+            "Source: ACT Research, ACEA, ATA, IEA Global EV Outlook 2025. 2025+ figures are projections."
+          )
+        )
+      ),
+
+      // Market snapshot comparison table
+      createElement("div", { style: { marginTop: "24px" } },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "📋 Current Market Snapshot (2024)"),
+          createElement("div", { style: { overflowX: "auto" } },
+            createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px" } },
+              createElement("thead", null,
+                createElement("tr", { style: { borderBottom: "2px solid " + COLORS.border } },
+                  createElement("th", { style: { padding: "12px 8px", textAlign: "left", color: COLORS.textMuted } }, "Metric"),
+                  createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.textMuted } }, "⛽ Diesel"),
+                  createElement("th", { style: { padding: "12px 8px", textAlign: "center", color: COLORS.success } }, "⚡ Electric"),
+                  createElement("th", { style: { padding: "12px 8px", textAlign: "left", color: COLORS.textMuted } }, "Notes")
+                )
+              ),
+              createElement("tbody", null,
+                createElement("tr", { style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, "Share of Fleet in Use"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600" } }, "96-97%"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.success } }, "0.1-0.3%"),
+                  createElement("td", { style: { padding: "12px 8px", fontSize: "12px", color: COLORS.textMuted } }, "EU at 0.3%, US at 0.1%")
+                ),
+                createElement("tr", { style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, "2024 New Sales (US+EU)"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600" } }, "~596K"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.success } }, "~12K"),
+                  createElement("td", { style: { padding: "12px 8px", fontSize: "12px", color: COLORS.textMuted } }, "EV = 2% of new sales")
+                ),
+                createElement("tr", { style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, "Average Truck Price"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600" } }, "$180K"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.danger } }, "$350K"),
+                  createElement("td", { style: { padding: "12px 8px", fontSize: "12px", color: COLORS.textMuted } }, "~2x premium for EV")
+                ),
+                createElement("tr", { style: { borderBottom: "1px solid " + COLORS.border } },
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, "Fuel Cost per Mile"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.danger } }, "$0.58"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.success } }, "$0.22"),
+                  createElement("td", { style: { padding: "12px 8px", fontSize: "12px", color: COLORS.textMuted } }, "62% lower for EV")
+                ),
+                createElement("tr", null,
+                  createElement("td", { style: { padding: "12px 8px", fontWeight: "500" } }, "2030 Projected Share"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600" } }, "~81%"),
+                  createElement("td", { style: { padding: "12px 8px", textAlign: "center", fontSize: "16px", fontWeight: "600", color: COLORS.success } }, "~19%"),
+                  createElement("td", { style: { padding: "12px 8px", fontSize: "12px", color: COLORS.textMuted } }, "IEA STEPS scenario")
+                )
+              )
+            )
+          )
+        )
+      ),
+
+      // Key trends
+      createElement("div", { style: { marginTop: "24px" } },
+        createElement(Card, { style: { background: COLORS.background } },
+          createElement("div", { style: styles.cardTitle }, "📈 Key Market Trends"),
+          createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" } },
+            DIESEL_VS_EV_DATA.trends.map(function(trend, i) {
+              var trendColor = trend.direction === "growing" ? COLORS.success : trend.direction === "declining" ? COLORS.danger : COLORS.textMuted;
+              var trendIcon = trend.direction === "growing" ? "📈" : trend.direction === "declining" ? "📉" : "➡️";
+              return createElement("div", { key: i, style: { padding: "16px", background: COLORS.card, borderRadius: "8px", borderLeft: "3px solid " + trendColor } },
+                createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" } },
+                  createElement("span", null, trendIcon),
+                  createElement("span", { style: { fontWeight: "600", fontSize: "13px" } }, trend.metric)
+                ),
+                createElement("div", { style: { fontSize: "20px", fontWeight: "700", color: trendColor, marginBottom: "4px" } }, trend.change),
+                createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, trend.note)
+              );
+            })
           )
         )
       )
