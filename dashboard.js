@@ -70,6 +70,7 @@ var OEM_DATA = [
     manufacturer: "Tesla",
     model: "Semi",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 500,
     range_miles_low: 300,
     battery_kwh: 900,
@@ -91,6 +92,7 @@ var OEM_DATA = [
     manufacturer: "Freightliner",
     model: "eCascadia",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 230,
     range_miles_low: 155,
     battery_kwh: 438,
@@ -112,6 +114,7 @@ var OEM_DATA = [
     manufacturer: "Volvo",
     model: "VNR Electric",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 275,
     range_miles_low: 150,
     battery_kwh: 565,
@@ -133,6 +136,7 @@ var OEM_DATA = [
     manufacturer: "Peterbilt",
     model: "579EV",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 250,
     range_miles_low: 150,
     battery_kwh: 396,
@@ -154,6 +158,7 @@ var OEM_DATA = [
     manufacturer: "Kenworth",
     model: "T680E",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 250,
     range_miles_low: 150,
     battery_kwh: 396,
@@ -175,6 +180,7 @@ var OEM_DATA = [
     manufacturer: "BYD",
     model: "8TT",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 200,
     range_miles_low: 125,
     battery_kwh: 409,
@@ -196,6 +202,7 @@ var OEM_DATA = [
     manufacturer: "Nikola",
     model: "Tre BEV",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 330,
     range_miles_low: 220,
     battery_kwh: 753,
@@ -217,6 +224,7 @@ var OEM_DATA = [
     manufacturer: "Mercedes-Benz",
     model: "eActros 600",
     class: "Class 8",
+    category: "heavy-duty",
     range_miles: 310,
     range_miles_low: 220,
     battery_kwh: 621,
@@ -235,13 +243,14 @@ var OEM_DATA = [
   }
 ];
 
-// ============ DATA: Medium Duty Trucks ============
+// ============ DATA: Medium Duty & Light Commercial Vehicles ============
 var MEDIUM_DUTY_DATA = [
   {
     id: "freightliner-em2",
     manufacturer: "Freightliner",
     model: "eM2",
     class: "Class 6",
+    category: "medium-duty",
     range_miles: 230,
     battery_kwh: 315,
     payload_lbs: 23500,
@@ -253,10 +262,23 @@ var MEDIUM_DUTY_DATA = [
     manufacturer: "Ford",
     model: "E-Transit",
     class: "Class 2-3",
-    range_miles: 159,
-    battery_kwh: 89,
+    category: "light-commercial",
+    range_miles: 126,
+    battery_kwh: 68,
     payload_lbs: 3800,
-    msrp_usd: 52000,
+    msrp_usd: 46000,
+    status: "Production"
+  },
+  {
+    id: "mercedes-esprinter",
+    manufacturer: "Mercedes-Benz",
+    model: "eSprinter",
+    class: "Class 2-3",
+    category: "light-commercial",
+    range_miles: 248,
+    battery_kwh: 113,
+    payload_lbs: 2932,
+    msrp_usd: 65000,
     status: "Production"
   },
   {
@@ -264,10 +286,35 @@ var MEDIUM_DUTY_DATA = [
     manufacturer: "Rivian",
     model: "EDV 700",
     class: "Class 2",
-    range_miles: 201,
-    battery_kwh: 135,
-    payload_lbs: 2600,
-    msrp_usd: 75000,
+    category: "light-commercial",
+    range_miles: 159,
+    battery_kwh: 100,
+    payload_lbs: 2200,
+    msrp_usd: 72000,
+    status: "Production"
+  },
+  {
+    id: "brightdrop-zevo",
+    manufacturer: "BrightDrop",
+    model: "Zevo 600",
+    class: "Class 2-3",
+    category: "light-commercial",
+    range_miles: 272,
+    battery_kwh: 150,
+    payload_lbs: 2500,
+    msrp_usd: 85000,
+    status: "Production"
+  },
+  {
+    id: "ram-promaster-ev",
+    manufacturer: "RAM",
+    model: "ProMaster EV",
+    class: "Class 2-3",
+    category: "light-commercial",
+    range_miles: 162,
+    battery_kwh: 100,
+    payload_lbs: 3200,
+    msrp_usd: 58000,
     status: "Production"
   },
   {
@@ -275,6 +322,7 @@ var MEDIUM_DUTY_DATA = [
     manufacturer: "Lightning eMotors",
     model: "ZEV4",
     class: "Class 4",
+    category: "medium-duty",
     range_miles: 150,
     battery_kwh: 140,
     payload_lbs: 6500,
@@ -286,10 +334,23 @@ var MEDIUM_DUTY_DATA = [
     manufacturer: "Hino",
     model: "XE Series",
     class: "Class 6-7",
+    category: "medium-duty",
     range_miles: 200,
     battery_kwh: 350,
     payload_lbs: 18000,
     msrp_usd: 200000,
+    status: "Production"
+  },
+  {
+    id: "canoo-ldv",
+    manufacturer: "Canoo",
+    model: "LDV 190",
+    class: "Class 1-2",
+    category: "light-commercial",
+    range_miles: 190,
+    battery_kwh: 80,
+    payload_lbs: 1760,
+    msrp_usd: 45000,
     status: "Production"
   }
 ];
@@ -2152,49 +2213,109 @@ function TCOAnalysisTab() {
 
 // ============ OEM COMPARISON TAB ============
 function OEMComparisonTab() {
-  var sortedByRange = OEM_DATA.slice().sort(function(a, b) { return b.range_miles - a.range_miles; });
-  var sortedByPrice = OEM_DATA.slice().sort(function(a, b) { return a.msrp_usd - b.msrp_usd; });
+  var categoryState = useState("all");
+  var selectedCategory = categoryState[0];
+  var setSelectedCategory = categoryState[1];
 
-  var radarData = OEM_DATA.slice(0, 5).map(function(truck) {
-    return {
-      name: truck.manufacturer,
-      range: truck.range_miles / 5,
-      payload: truck.payload_lbs / 520,
-      efficiency: (3 - truck.efficiency_kwh_mile) * 50,
-      battery: truck.battery_kwh / 9,
-      power: truck.motor_hp / 10
-    };
-  });
+  // Combine all vehicle data
+  var allVehicles = OEM_DATA.concat(MEDIUM_DUTY_DATA);
+
+  // Filter by category
+  var filteredVehicles = selectedCategory === "all"
+    ? allVehicles
+    : allVehicles.filter(function(v) { return v.category === selectedCategory; });
+
+  var sortedByRange = filteredVehicles.slice().sort(function(a, b) { return b.range_miles - a.range_miles; });
+
+  // Calculate metrics based on filtered data
+  var hdvCount = OEM_DATA.length;
+  var mdvCount = MEDIUM_DUTY_DATA.filter(function(v) { return v.category === "medium-duty"; }).length;
+  var lcvCount = MEDIUM_DUTY_DATA.filter(function(v) { return v.category === "light-commercial"; }).length;
+
+  var maxRange = Math.max.apply(null, filteredVehicles.map(function(v) { return v.range_miles; }));
+  var minPrice = Math.min.apply(null, filteredVehicles.map(function(v) { return v.msrp_usd; }));
+  var maxPrice = Math.max.apply(null, filteredVehicles.map(function(v) { return v.msrp_usd; }));
+
+  var categoryLabels = {
+    "all": "All Vehicles",
+    "heavy-duty": "Heavy-Duty (Class 8)",
+    "medium-duty": "Medium-Duty (Class 4-7)",
+    "light-commercial": "Light Commercial (Class 1-3)"
+  };
+
+  var categoryButtons = [
+    { id: "all", label: "All", icon: "📊", count: allVehicles.length },
+    { id: "heavy-duty", label: "Heavy-Duty", icon: "🚛", count: hdvCount },
+    { id: "medium-duty", label: "Medium-Duty", icon: "🚚", count: mdvCount },
+    { id: "light-commercial", label: "Light Commercial", icon: "🚐", count: lcvCount }
+  ];
 
   return createElement("div", null,
+    // Category Filter
+    createElement("div", { style: { marginBottom: "24px" } },
+      createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+        categoryButtons.map(function(cat) {
+          var isActive = selectedCategory === cat.id;
+          return createElement("button", {
+            key: cat.id,
+            onClick: function() { setSelectedCategory(cat.id); },
+            style: {
+              padding: "10px 16px",
+              borderRadius: "8px",
+              border: "1px solid " + (isActive ? COLORS.primary : COLORS.border),
+              backgroundColor: isActive ? COLORS.primary + "20" : COLORS.card,
+              color: isActive ? COLORS.primary : COLORS.text,
+              cursor: "pointer",
+              fontWeight: isActive ? 600 : 400,
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px"
+            }
+          },
+            createElement("span", null, cat.icon),
+            createElement("span", null, cat.label),
+            createElement("span", { style: {
+              backgroundColor: isActive ? COLORS.primary : COLORS.textDim,
+              color: isActive ? COLORS.background : COLORS.text,
+              padding: "2px 8px",
+              borderRadius: "12px",
+              fontSize: "12px",
+              fontWeight: 600
+            }}, cat.count)
+          );
+        })
+      )
+    ),
+
     // Key Stats
     createElement("div", { style: styles.grid },
       createElement(MetricCard, {
-        icon: "🚛",
-        title: "Class 8 EV Models",
-        value: OEM_DATA.length,
-        label: "Currently in production",
+        icon: categoryButtons.find(function(c) { return c.id === selectedCategory; }).icon,
+        title: categoryLabels[selectedCategory],
+        value: filteredVehicles.length,
+        label: "Models available",
         color: COLORS.primary
       }),
       createElement(MetricCard, {
         icon: "📏",
         title: "Max Range",
-        value: "500 mi",
-        label: "Tesla Semi (highest range)",
+        value: maxRange + " mi",
+        label: "In selected category",
         color: COLORS.success
       }),
       createElement(MetricCard, {
         icon: "💵",
         title: "Price Range",
-        value: "$180K-$400K",
-        label: "Class 8 electric trucks",
+        value: "$" + Math.round(minPrice/1000) + "K-$" + Math.round(maxPrice/1000) + "K",
+        label: "MSRP range",
         color: COLORS.accent
       }),
       createElement(MetricCard, {
-        icon: "🔋",
-        title: "Battery Range",
-        value: "396-900 kWh",
-        label: "Across all models",
+        icon: "⚡",
+        title: "EV Penetration",
+        value: selectedCategory === "light-commercial" ? "5.5%" : selectedCategory === "heavy-duty" ? "0.3%" : "1.2%",
+        label: "Of segment sales (2024)",
         color: COLORS.info
       })
     ),
@@ -2202,8 +2323,8 @@ function OEMComparisonTab() {
     // Range Comparison Chart
     createElement("div", { style: { marginTop: "32px" } },
       createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "📊 Range Comparison by Model"),
-        createElement(ResponsiveContainer, { width: "100%", height: 400 },
+        createElement("div", { style: styles.cardTitle }, "📊 Range Comparison — " + categoryLabels[selectedCategory]),
+        createElement(ResponsiveContainer, { width: "100%", height: Math.max(300, sortedByRange.length * 40) },
           createElement(BarChart, { data: sortedByRange, layout: "vertical", margin: { top: 20, right: 30, left: 120, bottom: 20 } },
             createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
             createElement(XAxis, { type: "number", stroke: COLORS.textMuted, unit: " mi" }),
@@ -2211,12 +2332,10 @@ function OEMComparisonTab() {
             createElement(Tooltip, {
               contentStyle: { background: COLORS.card, border: "1px solid " + COLORS.border, borderRadius: "8px" },
               formatter: function(value, name) {
-                return [value + " miles", name === "range_miles" ? "Max Range" : "Min Range"];
+                return [value + " miles", "Range"];
               }
             }),
-            createElement(Legend, null),
-            createElement(Bar, { dataKey: "range_miles", name: "Max Range", fill: COLORS.primary, radius: [0, 4, 4, 0] }),
-            createElement(Bar, { dataKey: "range_miles_low", name: "Min Range", fill: COLORS.secondary, radius: [0, 4, 4, 0] })
+            createElement(Bar, { dataKey: "range_miles", name: "Range", fill: COLORS.primary, radius: [0, 4, 4, 0] })
           )
         )
       )
@@ -2227,14 +2346,16 @@ function OEMComparisonTab() {
       createElement(Card, null,
         createElement("div", { style: styles.cardTitle }, "💰 Price vs Range Analysis"),
         createElement(ResponsiveContainer, { width: "100%", height: 400 },
-          createElement(ComposedChart, { data: OEM_DATA, margin: { top: 20, right: 30, left: 20, bottom: 60 } },
+          createElement(ComposedChart, { data: filteredVehicles, margin: { top: 20, right: 30, left: 20, bottom: 80 } },
             createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
             createElement(XAxis, {
               dataKey: "model",
               stroke: COLORS.textMuted,
               angle: -45,
               textAnchor: "end",
-              height: 80
+              height: 80,
+              interval: 0,
+              tick: { fontSize: 11 }
             }),
             createElement(YAxis, { yAxisId: "left", stroke: COLORS.textMuted, tickFormatter: function(v) { return "$" + (v/1000) + "K"; } }),
             createElement(YAxis, { yAxisId: "right", orientation: "right", stroke: COLORS.primary, unit: " mi" }),
@@ -2252,48 +2373,7 @@ function OEMComparisonTab() {
     // Detailed Specs Table
     createElement("div", { style: { marginTop: "24px" } },
       createElement(Card, null,
-        createElement("div", { style: styles.cardTitle }, "📋 Class 8 Electric Truck Specifications"),
-        createElement("div", { style: { overflowX: "auto" } },
-          createElement("table", { style: styles.table },
-            createElement("thead", null,
-              createElement("tr", null,
-                createElement("th", { style: styles.th }, "Manufacturer"),
-                createElement("th", { style: styles.th }, "Model"),
-                createElement("th", { style: styles.th }, "Range"),
-                createElement("th", { style: styles.th }, "Battery"),
-                createElement("th", { style: styles.th }, "Payload"),
-                createElement("th", { style: styles.th }, "Power"),
-                createElement("th", { style: styles.th }, "Charging"),
-                createElement("th", { style: styles.th }, "MSRP"),
-                createElement("th", { style: styles.th }, "Status")
-              )
-            ),
-            createElement("tbody", null,
-              OEM_DATA.map(function(truck) {
-                return createElement("tr", { key: truck.id },
-                  createElement("td", { style: Object.assign({}, styles.td, { fontWeight: "600" }) }, truck.manufacturer),
-                  createElement("td", { style: styles.td }, truck.model),
-                  createElement("td", { style: styles.td }, truck.range_miles_low + "-" + truck.range_miles + " mi"),
-                  createElement("td", { style: styles.td }, truck.battery_kwh + " kWh"),
-                  createElement("td", { style: styles.td }, formatNumber(truck.payload_lbs) + " lbs"),
-                  createElement("td", { style: styles.td }, truck.motor_hp + " HP"),
-                  createElement("td", { style: styles.td }, truck.charging_type),
-                  createElement("td", { style: Object.assign({}, styles.td, { color: COLORS.success }) }, formatCurrency(truck.msrp_usd)),
-                  createElement("td", { style: styles.td },
-                    createElement(Badge, { variant: "success" }, truck.status)
-                  )
-                );
-              })
-            )
-          )
-        )
-      )
-    ),
-
-    // Medium Duty Section
-    createElement("div", { style: { marginTop: "32px" } },
-      createElement("div", { style: styles.sectionTitle }, "🚚 Medium Duty Electric Trucks"),
-      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "📋 Electric Vehicle Specifications — " + categoryLabels[selectedCategory]),
         createElement("div", { style: { overflowX: "auto" } },
           createElement("table", { style: styles.table },
             createElement("thead", null,
@@ -2309,11 +2389,21 @@ function OEMComparisonTab() {
               )
             ),
             createElement("tbody", null,
-              MEDIUM_DUTY_DATA.map(function(truck) {
+              filteredVehicles.map(function(truck) {
                 return createElement("tr", { key: truck.id },
                   createElement("td", { style: Object.assign({}, styles.td, { fontWeight: "600" }) }, truck.manufacturer),
                   createElement("td", { style: styles.td }, truck.model),
-                  createElement("td", { style: styles.td }, truck.class),
+                  createElement("td", { style: styles.td },
+                    createElement("span", { style: {
+                      padding: "3px 8px",
+                      borderRadius: "4px",
+                      fontSize: "11px",
+                      backgroundColor: truck.category === "heavy-duty" ? COLORS.danger + "20" :
+                                      truck.category === "medium-duty" ? COLORS.accent + "20" : COLORS.primary + "20",
+                      color: truck.category === "heavy-duty" ? COLORS.danger :
+                             truck.category === "medium-duty" ? COLORS.accent : COLORS.primary
+                    }}, truck.class)
+                  ),
                   createElement("td", { style: styles.td }, truck.range_miles + " mi"),
                   createElement("td", { style: styles.td }, truck.battery_kwh + " kWh"),
                   createElement("td", { style: styles.td }, formatNumber(truck.payload_lbs) + " lbs"),
@@ -2328,6 +2418,34 @@ function OEMComparisonTab() {
         )
       )
     ),
+
+    // LCV Market Context (shown when light-commercial selected)
+    selectedCategory === "light-commercial" ? createElement("div", { style: { marginTop: "24px" } },
+      createElement(Card, null,
+        createElement("div", { style: styles.cardTitle }, "🚐 Light Commercial Vehicle Market Context"),
+        createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" } },
+          createElement("div", { style: { padding: "16px", backgroundColor: COLORS.background, borderRadius: "8px" } },
+            createElement("div", { style: { fontSize: "24px", fontWeight: 700, color: COLORS.primary } }, "920K"),
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Global EV LCV Sales (2024)")
+          ),
+          createElement("div", { style: { padding: "16px", backgroundColor: COLORS.background, borderRadius: "8px" } },
+            createElement("div", { style: { fontSize: "24px", fontWeight: 700, color: COLORS.success } }, "5.5%"),
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "EV Share of LCV Market")
+          ),
+          createElement("div", { style: { padding: "16px", backgroundColor: COLORS.background, borderRadius: "8px" } },
+            createElement("div", { style: { fontSize: "24px", fontWeight: 700, color: COLORS.accent } }, "22%"),
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Projected 2030 EV Share")
+          ),
+          createElement("div", { style: { padding: "16px", backgroundColor: COLORS.background, borderRadius: "8px" } },
+            createElement("div", { style: { fontSize: "24px", fontWeight: 700, color: COLORS.info } }, "3-4 yrs"),
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, "Typical TCO Payback")
+          )
+        ),
+        createElement("div", { style: { marginTop: "16px", padding: "12px", backgroundColor: COLORS.success + "10", borderRadius: "8px", fontSize: "13px", color: COLORS.success } },
+          "LCV electrification is 18x ahead of heavy-duty trucks — driven by Amazon (100K Rivian), UPS (10K+), and FedEx deployments"
+        )
+      )
+    ) : null,
 
     // OEM Sources Section
     createElement("div", { style: { marginTop: "32px" } },
@@ -2790,6 +2908,33 @@ function MarketOutlookTab() {
                 createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, trend.note)
               );
             })
+          )
+        )
+      ),
+
+      // EV Adoption by Vehicle Category
+      createElement("div", { style: { marginTop: "24px" } },
+        createElement(Card, null,
+          createElement("div", { style: styles.cardTitle }, "🚛 EV Penetration by Vehicle Category (2024)"),
+          createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" } },
+            createElement("div", { style: { padding: "20px", background: COLORS.primary + "15", borderRadius: "8px", textAlign: "center", border: "1px solid " + COLORS.primary + "30" } },
+              createElement("div", { style: { fontSize: "14px", color: COLORS.textMuted, marginBottom: "8px" } }, "🚐 Light Commercial"),
+              createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.primary } }, "5.5%"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginTop: "4px" } }, "920K units sold globally")
+            ),
+            createElement("div", { style: { padding: "20px", background: COLORS.accent + "15", borderRadius: "8px", textAlign: "center", border: "1px solid " + COLORS.accent + "30" } },
+              createElement("div", { style: { fontSize: "14px", color: COLORS.textMuted, marginBottom: "8px" } }, "🚚 Medium-Duty"),
+              createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.accent } }, "1.2%"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginTop: "4px" } }, "Class 4-7 trucks")
+            ),
+            createElement("div", { style: { padding: "20px", background: COLORS.info + "15", borderRadius: "8px", textAlign: "center", border: "1px solid " + COLORS.info + "30" } },
+              createElement("div", { style: { fontSize: "14px", color: COLORS.textMuted, marginBottom: "8px" } }, "🚛 Heavy-Duty"),
+              createElement("div", { style: { fontSize: "32px", fontWeight: "700", color: COLORS.info } }, "0.3%"),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginTop: "4px" } }, "~12K units (US+EU)")
+            )
+          ),
+          createElement("div", { style: { marginTop: "16px", padding: "12px", background: COLORS.background, borderRadius: "6px", fontSize: "13px", color: COLORS.textMuted } },
+            "Light commercial vehicles lead EV adoption at ", createElement("strong", { style: { color: COLORS.primary } }, "18x"), " the rate of heavy-duty trucks — driven by Amazon, FedEx, UPS fleet deployments and shorter range requirements."
           )
         )
       )
@@ -4258,239 +4403,6 @@ function SourcesTab() {
   );
 }
 
-// ============ LIGHT COMMERCIAL VEHICLES TAB ============
-function LightCommercialTab() {
-  var selectedRegion = useState("us");
-  var region = selectedRegion[0];
-  var setRegion = selectedRegion[1];
-
-  var models = region === "eu" ? LCV_DATA.euModels : LCV_DATA.models;
-
-  return createElement("div", { style: { display: "flex", flexDirection: "column", gap: "24px" } },
-    // Header with region toggle
-    createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" } },
-      createElement("div", null,
-        createElement("h2", { style: { fontSize: "24px", fontWeight: 600, color: COLORS.text, marginBottom: "8px" } }, "Light Commercial Vehicles"),
-        createElement("p", { style: { color: COLORS.textMuted, fontSize: "14px" } }, "Electric vans and delivery vehicles — higher EV adoption than heavy trucks")
-      ),
-      createElement("div", { style: { display: "flex", gap: "8px" } },
-        createElement("button", {
-          onClick: function() { setRegion("us"); },
-          style: {
-            padding: "8px 16px", borderRadius: "6px", border: "none", cursor: "pointer",
-            backgroundColor: region === "us" ? COLORS.primary : COLORS.card,
-            color: region === "us" ? COLORS.background : COLORS.text,
-            fontWeight: 500
-          }
-        }, "US Models"),
-        createElement("button", {
-          onClick: function() { setRegion("eu"); },
-          style: {
-            padding: "8px 16px", borderRadius: "6px", border: "none", cursor: "pointer",
-            backgroundColor: region === "eu" ? COLORS.primary : COLORS.card,
-            color: region === "eu" ? COLORS.background : COLORS.text,
-            fontWeight: 500
-          }
-        }, "EU Models")
-      )
-    ),
-
-    // Market Overview Cards
-    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" } },
-      createElement(MetricCard, { title: "Global EV LCV Sales (2024)", value: "920K", subtitle: "5.5% of LCV market", trend: "+35% CAGR" }),
-      createElement(MetricCard, { title: "LCV vs HDV Adoption", value: "18x", subtitle: "LCV EV share vs HDV", trend: "5.5% vs 0.3%" }),
-      createElement(MetricCard, { title: "Avg. Payback Period", value: "3-4 yrs", subtitle: "vs 5-7 years for HDV", trend: "Lower TCO" }),
-      createElement(MetricCard, { title: "2030 Projection", value: "22%", subtitle: "EV share of LCV sales", trend: "IEA STEPS" })
-    ),
-
-    // LCV vs HDV Comparison
-    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "24px" } },
-      // LCV vs HDV Table
-      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "LCV vs Heavy-Duty Electrification"),
-        createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px" } },
-          createElement("thead", null,
-            createElement("tr", null,
-              createElement("th", { style: { padding: "10px 8px", textAlign: "left", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, "Category"),
-              createElement("th", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary } }, "LCV"),
-              createElement("th", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.secondary } }, "HDV"),
-              createElement("th", { style: { padding: "10px 8px", textAlign: "left", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, "Note")
-            )
-          ),
-          createElement("tbody", null,
-            LCV_DATA.lcvVsHdv.map(function(row, i) {
-              return createElement("tr", { key: i },
-                createElement("td", { style: { padding: "10px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } }, row.category),
-                createElement("td", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary, fontWeight: 600 } }, row.lcv),
-                createElement("td", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.secondary } }, row.hdv),
-                createElement("td", { style: { padding: "10px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted, fontSize: "12px" } }, row.note)
-              );
-            })
-          )
-        )
-      ),
-      // Regional Penetration
-      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Regional EV Penetration (LCV)"),
-        createElement(ResponsiveContainer, { width: "100%", height: 220 },
-          createElement(BarChart, { data: LCV_DATA.regionalPenetration, layout: "vertical", margin: { left: 60, right: 40 } },
-            createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
-            createElement(XAxis, { type: "number", tick: { fill: COLORS.textMuted, fontSize: 11 }, domain: [0, 15], unit: "%" }),
-            createElement(YAxis, { dataKey: "region", type: "category", tick: { fill: COLORS.textMuted, fontSize: 11 }, width: 50 }),
-            createElement(Tooltip, { contentStyle: { backgroundColor: COLORS.card, border: "1px solid " + COLORS.border } }),
-            createElement(Bar, { dataKey: "evShare", fill: COLORS.primary, radius: [0, 4, 4, 0], name: "EV Share %" })
-          )
-        )
-      )
-    ),
-
-    // Sales Projection Chart
-    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Global LCV Sales Projection (thousands)"),
-      createElement(ResponsiveContainer, { width: "100%", height: 280 },
-        createElement(ComposedChart, { data: LCV_DATA.salesProjection, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
-          createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
-          createElement(XAxis, { dataKey: "year", tick: { fill: COLORS.textMuted, fontSize: 11 } }),
-          createElement(YAxis, { yAxisId: "left", tick: { fill: COLORS.textMuted, fontSize: 11 } }),
-          createElement(YAxis, { yAxisId: "right", orientation: "right", tick: { fill: COLORS.textMuted, fontSize: 11 }, domain: [0, 7000] }),
-          createElement(Tooltip, { contentStyle: { backgroundColor: COLORS.card, border: "1px solid " + COLORS.border } }),
-          createElement(Legend, null),
-          createElement(Bar, { yAxisId: "left", dataKey: "diesel", fill: COLORS.textDim, name: "Diesel LCVs (K)", radius: [4, 4, 0, 0] }),
-          createElement(Line, { yAxisId: "right", type: "monotone", dataKey: "ev", stroke: COLORS.primary, strokeWidth: 3, dot: { r: 4 }, name: "Electric LCVs (K)" })
-        )
-      )
-    ),
-
-    // Electric LCV Models
-    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } },
-        region === "eu" ? "European Electric LCV Models" : "US Electric LCV Models"
-      ),
-      createElement("div", { style: { overflowX: "auto" } },
-        createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px", minWidth: "700px" } },
-          createElement("thead", null,
-            createElement("tr", null,
-              createElement("th", { style: { padding: "12px 8px", textAlign: "left", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Manufacturer"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "left", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Model"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Range"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Battery"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Payload"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Price"),
-              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Status")
-            )
-          ),
-          createElement("tbody", null,
-            models.map(function(model, i) {
-              return createElement("tr", { key: model.id },
-                createElement("td", { style: { padding: "12px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary, fontWeight: 600 } }, model.manufacturer),
-                createElement("td", { style: { padding: "12px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } }, model.model),
-                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } },
-                  region === "eu" ? model.range_km + " km" : model.range_miles + " mi"
-                ),
-                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, model.battery_kwh + " kWh"),
-                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } },
-                  region === "eu" ? (model.payload_kg + " kg") : (model.payload_lbs + " lbs")
-                ),
-                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.accent, fontWeight: 500 } },
-                  region === "eu" ? ("€" + (model.price_eur / 1000).toFixed(0) + "K") : ("$" + (model.msrp_usd / 1000).toFixed(0) + "K")
-                ),
-                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border } },
-                  createElement("span", { style: {
-                    backgroundColor: model.status === "Production" ? COLORS.success + "20" : COLORS.accent + "20",
-                    color: model.status === "Production" ? COLORS.success : COLORS.accent,
-                    padding: "4px 8px", borderRadius: "4px", fontSize: "11px"
-                  }}, model.status)
-                )
-              );
-            })
-          )
-        )
-      )
-    ),
-
-    // TCO Comparison and Use Cases
-    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "24px" } },
-      // TCO Comparison
-      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "LCV TCO Comparison (per mile)"),
-        createElement("div", { style: { display: "flex", gap: "20px", marginBottom: "20px" } },
-          createElement("div", { style: { flex: 1, backgroundColor: COLORS.background, padding: "16px", borderRadius: "8px", textAlign: "center" } },
-            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "8px" } }, "Diesel Van"),
-            createElement("div", { style: { fontSize: "28px", fontWeight: 700, color: COLORS.textDim } }, "$0.34"),
-            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, "per mile")
-          ),
-          createElement("div", { style: { flex: 1, backgroundColor: COLORS.primary + "15", padding: "16px", borderRadius: "8px", textAlign: "center", border: "1px solid " + COLORS.primary + "40" } },
-            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "8px" } }, "Electric Van"),
-            createElement("div", { style: { fontSize: "28px", fontWeight: 700, color: COLORS.primary } }, "$0.15"),
-            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, "per mile")
-          )
-        ),
-        createElement("div", { style: { fontSize: "13px", color: COLORS.success, textAlign: "center", padding: "10px", backgroundColor: COLORS.success + "15", borderRadius: "6px" } },
-          "56% lower operating cost with electric"
-        )
-      ),
-      // Use Cases
-      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Use Case Suitability"),
-        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
-          LCV_DATA.useCases.map(function(uc, i) {
-            return createElement("div", { key: i, style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", backgroundColor: COLORS.background, borderRadius: "6px" } },
-              createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } },
-                createElement("span", { style: { fontSize: "16px" } }, uc.evReady ? "✅" : "⚠️"),
-                createElement("span", { style: { color: COLORS.text, fontSize: "13px" } }, uc.useCase)
-              ),
-              createElement("span", { style: {
-                color: uc.suitability === "Excellent" ? COLORS.success : uc.suitability === "Good" ? COLORS.primary : uc.suitability === "Moderate" ? COLORS.accent : COLORS.textMuted,
-                fontSize: "12px", fontWeight: 500
-              }}, uc.suitability)
-            );
-          })
-        )
-      )
-    ),
-
-    // Major Fleet Deployments
-    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
-      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Major Fleet Deployments"),
-      createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "12px" } },
-        LCV_DATA.fleetDeployments.map(function(fleet, i) {
-          return createElement("div", { key: i, style: {
-            backgroundColor: COLORS.background, padding: "16px", borderRadius: "8px",
-            display: "flex", justifyContent: "space-between", alignItems: "center"
-          }},
-            createElement("div", null,
-              createElement("div", { style: { fontSize: "15px", fontWeight: 600, color: COLORS.text, marginBottom: "4px" } }, fleet.company),
-              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, fleet.model),
-              createElement("div", { style: { fontSize: "11px", color: COLORS.textDim, marginTop: "4px" } }, fleet.note)
-            ),
-            createElement("div", { style: { textAlign: "right" } },
-              createElement("div", { style: { fontSize: "20px", fontWeight: 700, color: COLORS.primary } }, fleet.vehicles.toLocaleString()),
-              createElement("span", { style: {
-                fontSize: "10px", padding: "3px 6px", borderRadius: "4px",
-                backgroundColor: fleet.status === "Operating" ? COLORS.success + "20" : fleet.status === "Deploying" ? COLORS.accent + "20" : COLORS.info + "20",
-                color: fleet.status === "Operating" ? COLORS.success : fleet.status === "Deploying" ? COLORS.accent : COLORS.info
-              }}, fleet.status)
-            )
-          );
-        })
-      )
-    ),
-
-    // Sources
-    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "16px", border: "1px solid " + COLORS.border } },
-      createElement("h4", { style: { fontSize: "14px", fontWeight: 600, color: COLORS.textMuted, marginBottom: "12px" } }, "Data Sources"),
-      createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
-        LCV_DATA.sources.map(function(src, i) {
-          return createElement("a", {
-            key: i, href: src.url, target: "_blank", rel: "noopener noreferrer",
-            style: { fontSize: "12px", color: COLORS.info, textDecoration: "none" }
-          }, src.name);
-        })
-      )
-    )
-  );
-}
-
 // ============ MAIN APP ============
 function App() {
   var tabState = useState("tco");
@@ -4501,7 +4413,6 @@ function App() {
     { id: "tco", label: "💰 TCO Analysis", component: TCOAnalysisTab },
     { id: "replacement", label: "🔄 Replacement", component: FleetReplacementTab },
     { id: "oem", label: "🚛 OEM Comparison", component: OEMComparisonTab },
-    { id: "lcv", label: "🚐 Light Commercial", component: LightCommercialTab },
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
