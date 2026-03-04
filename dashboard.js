@@ -491,7 +491,7 @@ var REGIONAL_MARKET_DATA = {
   eu: {
     name: "European Union",
     flag: "🇪🇺",
-    totalTrucks: 6400000,  // ACEA: 6.4M medium/heavy trucks
+    totalTrucks: 6200000,  // ACEA 2026: 6.2M medium/heavy trucks
     evShare2024: 2.3,      // ACEA: 2.3% market share 2024
     evShare2030: 15,       // IEA projection
     evShare2035: 45,       // Based on EU CO2 targets
@@ -541,7 +541,7 @@ var DIESEL_VS_EV_DATA = {
   ],
   // Current market snapshot
   marketSnapshot: {
-    totalTrucksInUse: { us: 3910000, eu: 6400000 },  // ATA, ACEA
+    totalTrucksInUse: { us: 3910000, eu: 6200000 },  // ATA, ACEA 2026
     dieselShare: { us: 97, eu: 96.3 },               // ACEA: 96.3% diesel in EU
     evShare: { us: 0.1, eu: 0.3 },                   // ACEA: 0.3% ZEV in EU
     annualSales2024: { us: 280000, eu: 328000 },
@@ -922,7 +922,7 @@ var GEO_COMPARISON_DATA = {
     name: "European Union",
     flag: "🇪🇺",
     // Market Size (Sources: ACEA, IEA Global EV Outlook 2025)
-    totalFleet: 6400000,   // ACEA: 6.4M medium and heavy trucks on EU roads
+    totalFleet: 6200000,   // ACEA 2026: 6.2M medium and heavy trucks on EU roads
     annualSales: 328000,   // ACEA: 327,896 new truck registrations in 2024
     evUnits2024: 10000,    // IEA: 10,000+ electric trucks sold in Europe 2024
     evPenetration2024: 2.3,  // ACEA: 2.3% market share in 2024
@@ -1389,6 +1389,29 @@ var GREENBAY_POSITIONING = {
     description: "Fleet orchestration software for electric commercial vehicles"
   }
 };
+
+// ── CANONICAL DATA OVERLAY ──────────────────────────────────────────────────
+// Merge canonical values from shared.json over inline data.
+(function applyCanonical() {
+  var C = window.__GREENBAY_CANONICAL__;
+  if (!C) return;
+  if (C.fleet_stats && C.fleet_stats.total_fleet_context) {
+    var euTrucks = C.fleet_stats.total_fleet_context.eu_total_trucks_medium_heavy;
+    if (euTrucks) {
+      REGIONAL_MARKET_DATA.eu.totalTrucks = euTrucks;
+      if (DIESEL_VS_EV_DATA && DIESEL_VS_EV_DATA.marketSnapshot) {
+        DIESEL_VS_EV_DATA.marketSnapshot.totalTrucksInUse.eu = euTrucks;
+      }
+    }
+  }
+  if (C.greenbay_positioning && C.greenbay_positioning.market_opportunity) {
+    var mo = C.greenbay_positioning.market_opportunity;
+    if (mo.tam) GREENBAY_POSITIONING.marketOpportunity.tam = mo.tam;
+    if (mo.sam) GREENBAY_POSITIONING.marketOpportunity.sam = mo.sam;
+    if (mo.som) GREENBAY_POSITIONING.marketOpportunity.som = mo.som;
+  }
+  console.log('Canonical data applied (v' + (C._canonical_version || '?') + ')');
+})();
 
 // ============ DATA: Sources with Validity Scores ============
 var SOURCES_DATA = [
@@ -4447,7 +4470,10 @@ function App() {
     // Footer
     createElement("footer", { style: { textAlign: "center", padding: "24px", color: COLORS.textDim, fontSize: "12px", borderTop: "1px solid " + COLORS.border } },
       createElement("div", null, "Fleet Electrification Intelligence Dashboard • Data sources: IEA, ACEA, ATA, ACT Research, NACFE, RMI"),
-      createElement("div", { style: { marginTop: "8px", color: COLORS.textMuted } }, "© " + new Date().getFullYear() + " Greenbay. All rights reserved.")
+      createElement("div", { style: { marginTop: "8px", color: COLORS.textMuted } }, "© " + new Date().getFullYear() + " Greenbay. All rights reserved."),
+      createElement("div", { style: { marginTop: "4px", color: COLORS.textMuted, fontSize: "10px", opacity: 0.6 } },
+        "Data synced from canonical v" + ((window.__GREENBAY_CANONICAL__ && window.__GREENBAY_CANONICAL__._canonical_version) || "local")
+      )
     )
   );
 }
