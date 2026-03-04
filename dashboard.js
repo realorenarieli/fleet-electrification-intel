@@ -497,6 +497,233 @@ var DIESEL_VS_EV_DATA = {
   ]
 };
 
+// ============ DATA: Light Commercial Vehicles ============
+var LCV_DATA = {
+  // Key electric LCV models
+  models: [
+    {
+      id: "ford-e-transit",
+      manufacturer: "Ford",
+      model: "E-Transit",
+      type: "Van",
+      range_miles: 126,
+      battery_kwh: 68,
+      payload_lbs: 3800,
+      msrp_usd: 46000,
+      status: "Production",
+      availability: "2022",
+      cargo_cu_ft: 487,
+      charging_time_ac: "8 hrs (AC)",
+      charging_time_dc: "34 min (DC 115kW)"
+    },
+    {
+      id: "mercedes-esprinter",
+      manufacturer: "Mercedes-Benz",
+      model: "eSprinter",
+      type: "Van",
+      range_miles: 248,
+      battery_kwh: 113,
+      payload_lbs: 2932,
+      msrp_usd: 65000,
+      status: "Production",
+      availability: "2024",
+      cargo_cu_ft: 533,
+      charging_time_ac: "11 hrs (AC)",
+      charging_time_dc: "42 min (DC 115kW)"
+    },
+    {
+      id: "rivian-edv",
+      manufacturer: "Rivian",
+      model: "EDV 700",
+      type: "Delivery Van",
+      range_miles: 159,
+      battery_kwh: 100,
+      payload_lbs: 2200,
+      msrp_usd: 72000,
+      status: "Production",
+      availability: "2022",
+      cargo_cu_ft: 700,
+      charging_time_ac: "12 hrs (AC)",
+      charging_time_dc: "45 min (DC 150kW)"
+    },
+    {
+      id: "brightdrop-zevo",
+      manufacturer: "BrightDrop",
+      model: "Zevo 600",
+      type: "Delivery Van",
+      range_miles: 272,
+      battery_kwh: 150,
+      payload_lbs: 2500,
+      msrp_usd: 85000,
+      status: "Production",
+      availability: "2023",
+      cargo_cu_ft: 600,
+      charging_time_ac: "14 hrs (AC)",
+      charging_time_dc: "60 min (DC 120kW)"
+    },
+    {
+      id: "stellantis-ram-promaster",
+      manufacturer: "RAM",
+      model: "ProMaster EV",
+      type: "Van",
+      range_miles: 162,
+      battery_kwh: 100,
+      payload_lbs: 3200,
+      msrp_usd: 58000,
+      status: "Production",
+      availability: "2024",
+      cargo_cu_ft: 410,
+      charging_time_ac: "10 hrs (AC)",
+      charging_time_dc: "40 min (DC 100kW)"
+    },
+    {
+      id: "canoo-ldv",
+      manufacturer: "Canoo",
+      model: "LDV 190",
+      type: "Delivery Van",
+      range_miles: 190,
+      battery_kwh: 80,
+      payload_lbs: 1760,
+      msrp_usd: 45000,
+      status: "Production",
+      availability: "2024",
+      cargo_cu_ft: 200,
+      charging_time_ac: "9 hrs (AC)",
+      charging_time_dc: "30 min (DC 100kW)"
+    }
+  ],
+  // EU-specific LCV models
+  euModels: [
+    {
+      id: "vw-id-buzz-cargo",
+      manufacturer: "Volkswagen",
+      model: "ID.Buzz Cargo",
+      type: "Van",
+      range_km: 423,
+      battery_kwh: 77,
+      payload_kg: 650,
+      price_eur: 52000,
+      status: "Production",
+      availability: "2023"
+    },
+    {
+      id: "renault-master-e-tech",
+      manufacturer: "Renault",
+      model: "Master E-Tech",
+      type: "Van",
+      range_km: 460,
+      battery_kwh: 87,
+      payload_kg: 1400,
+      price_eur: 55000,
+      status: "Production",
+      availability: "2024"
+    },
+    {
+      id: "fiat-e-ducato",
+      manufacturer: "Fiat",
+      model: "E-Ducato",
+      type: "Van",
+      range_km: 370,
+      battery_kwh: 79,
+      payload_kg: 1150,
+      price_eur: 47000,
+      status: "Production",
+      availability: "2021"
+    },
+    {
+      id: "citroen-e-jumpy",
+      manufacturer: "Citroen",
+      model: "e-Jumpy",
+      type: "Van",
+      range_km: 330,
+      battery_kwh: 75,
+      payload_kg: 1000,
+      price_eur: 42000,
+      status: "Production",
+      availability: "2021"
+    }
+  ],
+  // Market data
+  marketData: {
+    globalLcvSales2024: 16800000,    // Total global LCV sales
+    evLcvSales2024: 920000,          // EV LCV sales globally
+    evPenetration2024: 5.5,          // % EV share of LCV market
+    evPenetration2030: 22,           // Projected % by 2030
+    usLcvFleet: 12500000,            // Total US LCV fleet
+    euLcvFleet: 28000000,            // Total EU LCV fleet
+    annualGrowthRate: 35             // EV LCV sales CAGR
+  },
+  // Regional penetration
+  regionalPenetration: [
+    { region: "China", evShare: 12.5, trend: "+4.2% YoY" },
+    { region: "EU", evShare: 8.2, trend: "+2.8% YoY" },
+    { region: "US", evShare: 3.1, trend: "+1.5% YoY" },
+    { region: "UK", evShare: 7.8, trend: "+2.4% YoY" },
+    { region: "Global", evShare: 5.5, trend: "+2.3% YoY" }
+  ],
+  // Comparison: LCV vs HDV electrification
+  lcvVsHdv: [
+    { category: "EV Penetration (2024)", lcv: "5.5%", hdv: "0.3%", note: "LCVs 18x ahead" },
+    { category: "Avg. Range", lcv: "170 mi", hdv: "250 mi", note: "HDVs need more range" },
+    { category: "Avg. Price Premium", lcv: "1.5x diesel", hdv: "2x diesel", note: "LCVs more affordable" },
+    { category: "Charging Infrastructure", lcv: "Standard DC", hdv: "Megachargers", note: "LCVs use existing infra" },
+    { category: "Fleet Adoption", lcv: "High", hdv: "Early stage", note: "Amazon, FedEx, UPS" },
+    { category: "Payback Period", lcv: "3-4 years", hdv: "5-7 years", note: "LCVs hit TCO faster" }
+  ],
+  // TCO comparison (per mile, LCV)
+  tcoComparison: {
+    dieselVan: {
+      fuelCost: 0.22,       // $/mile
+      maintenance: 0.08,    // $/mile
+      insurance: 0.04,      // $/mile
+      total: 0.34           // $/mile
+    },
+    electricVan: {
+      energyCost: 0.06,     // $/mile
+      maintenance: 0.04,    // $/mile
+      insurance: 0.05,      // $/mile
+      total: 0.15           // $/mile
+    }
+  },
+  // Use cases and suitability
+  useCases: [
+    { useCase: "Last-Mile Delivery", suitability: "Excellent", evReady: true, notes: "Fixed routes, depot charging, urban focus" },
+    { useCase: "Food/Grocery Delivery", suitability: "Excellent", evReady: true, notes: "Short routes, frequent stops benefit EV efficiency" },
+    { useCase: "Service Technicians", suitability: "Good", evReady: true, notes: "Predictable daily mileage, depot charging" },
+    { useCase: "Construction/Trades", suitability: "Moderate", evReady: false, notes: "Payload needs, mobile charging challenges" },
+    { useCase: "Long-Haul Courier", suitability: "Limited", evReady: false, notes: "Range limitations, en-route charging needed" },
+    { useCase: "Utility/Municipal", suitability: "Excellent", evReady: true, notes: "Fixed routes, predictable schedules" }
+  ],
+  // Fleet deployments
+  fleetDeployments: [
+    { company: "Amazon", vehicles: 100000, model: "Rivian EDV", status: "Deploying", year: 2022, note: "100K on order" },
+    { company: "FedEx", vehicles: 2000, model: "BrightDrop Zevo", status: "Deploying", year: 2023, note: "2,500 by 2026" },
+    { company: "UPS", vehicles: 10000, model: "Various", status: "Operating", year: 2022, note: "10K+ EVs globally" },
+    { company: "DHL", vehicles: 27000, model: "Various", status: "Operating", year: 2023, note: "In EU fleet" },
+    { company: "USPS", vehicles: 66000, model: "NGDV (EV)", status: "Ordered", year: 2024, note: "45% of order is EV" },
+    { company: "Walmart", vehicles: 4500, model: "BrightDrop", status: "Deploying", year: 2023, note: "Partnership deal" }
+  ],
+  // Sales projections
+  salesProjection: [
+    { year: 2022, ev: 520, diesel: 15800, total: 16320 },
+    { year: 2023, ev: 720, diesel: 15600, total: 16320 },
+    { year: 2024, ev: 920, diesel: 15880, total: 16800 },
+    { year: 2025, ev: 1300, diesel: 15900, total: 17200 },
+    { year: 2026, ev: 1850, diesel: 15750, total: 17600 },
+    { year: 2027, ev: 2600, diesel: 15400, total: 18000 },
+    { year: 2028, ev: 3500, diesel: 15000, total: 18500 },
+    { year: 2029, ev: 4600, diesel: 14400, total: 19000 },
+    { year: 2030, ev: 6000, diesel: 13600, total: 19600 }
+  ],
+  // Sources
+  sources: [
+    { name: "IEA Global EV Outlook 2025", url: "https://www.iea.org/reports/global-ev-outlook-2025", dataPoints: "LCV sales projections" },
+    { name: "BloombergNEF Electric Vehicle Outlook 2024", url: "https://about.bnef.com/electric-vehicle-outlook/", dataPoints: "LCV market sizing" },
+    { name: "ACEA Vehicles in Use Report 2024", url: "https://www.acea.auto/", dataPoints: "EU LCV fleet data" },
+    { name: "Amazon Climate Pledge", url: "https://sustainability.aboutamazon.com/", dataPoints: "Fleet deployment figures" }
+  ]
+};
+
 // ============ DATA: EU-Specific OEMs ============
 var EU_OEM_DATA = [
   {
@@ -4031,6 +4258,239 @@ function SourcesTab() {
   );
 }
 
+// ============ LIGHT COMMERCIAL VEHICLES TAB ============
+function LightCommercialTab() {
+  var selectedRegion = useState("us");
+  var region = selectedRegion[0];
+  var setRegion = selectedRegion[1];
+
+  var models = region === "eu" ? LCV_DATA.euModels : LCV_DATA.models;
+
+  return createElement("div", { style: { display: "flex", flexDirection: "column", gap: "24px" } },
+    // Header with region toggle
+    createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" } },
+      createElement("div", null,
+        createElement("h2", { style: { fontSize: "24px", fontWeight: 600, color: COLORS.text, marginBottom: "8px" } }, "Light Commercial Vehicles"),
+        createElement("p", { style: { color: COLORS.textMuted, fontSize: "14px" } }, "Electric vans and delivery vehicles — higher EV adoption than heavy trucks")
+      ),
+      createElement("div", { style: { display: "flex", gap: "8px" } },
+        createElement("button", {
+          onClick: function() { setRegion("us"); },
+          style: {
+            padding: "8px 16px", borderRadius: "6px", border: "none", cursor: "pointer",
+            backgroundColor: region === "us" ? COLORS.primary : COLORS.card,
+            color: region === "us" ? COLORS.background : COLORS.text,
+            fontWeight: 500
+          }
+        }, "US Models"),
+        createElement("button", {
+          onClick: function() { setRegion("eu"); },
+          style: {
+            padding: "8px 16px", borderRadius: "6px", border: "none", cursor: "pointer",
+            backgroundColor: region === "eu" ? COLORS.primary : COLORS.card,
+            color: region === "eu" ? COLORS.background : COLORS.text,
+            fontWeight: 500
+          }
+        }, "EU Models")
+      )
+    ),
+
+    // Market Overview Cards
+    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" } },
+      createElement(MetricCard, { title: "Global EV LCV Sales (2024)", value: "920K", subtitle: "5.5% of LCV market", trend: "+35% CAGR" }),
+      createElement(MetricCard, { title: "LCV vs HDV Adoption", value: "18x", subtitle: "LCV EV share vs HDV", trend: "5.5% vs 0.3%" }),
+      createElement(MetricCard, { title: "Avg. Payback Period", value: "3-4 yrs", subtitle: "vs 5-7 years for HDV", trend: "Lower TCO" }),
+      createElement(MetricCard, { title: "2030 Projection", value: "22%", subtitle: "EV share of LCV sales", trend: "IEA STEPS" })
+    ),
+
+    // LCV vs HDV Comparison
+    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "24px" } },
+      // LCV vs HDV Table
+      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "LCV vs Heavy-Duty Electrification"),
+        createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px" } },
+          createElement("thead", null,
+            createElement("tr", null,
+              createElement("th", { style: { padding: "10px 8px", textAlign: "left", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, "Category"),
+              createElement("th", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary } }, "LCV"),
+              createElement("th", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.secondary } }, "HDV"),
+              createElement("th", { style: { padding: "10px 8px", textAlign: "left", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, "Note")
+            )
+          ),
+          createElement("tbody", null,
+            LCV_DATA.lcvVsHdv.map(function(row, i) {
+              return createElement("tr", { key: i },
+                createElement("td", { style: { padding: "10px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } }, row.category),
+                createElement("td", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary, fontWeight: 600 } }, row.lcv),
+                createElement("td", { style: { padding: "10px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.secondary } }, row.hdv),
+                createElement("td", { style: { padding: "10px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted, fontSize: "12px" } }, row.note)
+              );
+            })
+          )
+        )
+      ),
+      // Regional Penetration
+      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Regional EV Penetration (LCV)"),
+        createElement(ResponsiveContainer, { width: "100%", height: 220 },
+          createElement(BarChart, { data: LCV_DATA.regionalPenetration, layout: "vertical", margin: { left: 60, right: 40 } },
+            createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
+            createElement(XAxis, { type: "number", tick: { fill: COLORS.textMuted, fontSize: 11 }, domain: [0, 15], unit: "%" }),
+            createElement(YAxis, { dataKey: "region", type: "category", tick: { fill: COLORS.textMuted, fontSize: 11 }, width: 50 }),
+            createElement(Tooltip, { contentStyle: { backgroundColor: COLORS.card, border: "1px solid " + COLORS.border } }),
+            createElement(Bar, { dataKey: "evShare", fill: COLORS.primary, radius: [0, 4, 4, 0], name: "EV Share %" })
+          )
+        )
+      )
+    ),
+
+    // Sales Projection Chart
+    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Global LCV Sales Projection (thousands)"),
+      createElement(ResponsiveContainer, { width: "100%", height: 280 },
+        createElement(ComposedChart, { data: LCV_DATA.salesProjection, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
+          createElement(CartesianGrid, { strokeDasharray: "3 3", stroke: COLORS.border }),
+          createElement(XAxis, { dataKey: "year", tick: { fill: COLORS.textMuted, fontSize: 11 } }),
+          createElement(YAxis, { yAxisId: "left", tick: { fill: COLORS.textMuted, fontSize: 11 } }),
+          createElement(YAxis, { yAxisId: "right", orientation: "right", tick: { fill: COLORS.textMuted, fontSize: 11 }, domain: [0, 7000] }),
+          createElement(Tooltip, { contentStyle: { backgroundColor: COLORS.card, border: "1px solid " + COLORS.border } }),
+          createElement(Legend, null),
+          createElement(Bar, { yAxisId: "left", dataKey: "diesel", fill: COLORS.textDim, name: "Diesel LCVs (K)", radius: [4, 4, 0, 0] }),
+          createElement(Line, { yAxisId: "right", type: "monotone", dataKey: "ev", stroke: COLORS.primary, strokeWidth: 3, dot: { r: 4 }, name: "Electric LCVs (K)" })
+        )
+      )
+    ),
+
+    // Electric LCV Models
+    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } },
+        region === "eu" ? "European Electric LCV Models" : "US Electric LCV Models"
+      ),
+      createElement("div", { style: { overflowX: "auto" } },
+        createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "13px", minWidth: "700px" } },
+          createElement("thead", null,
+            createElement("tr", null,
+              createElement("th", { style: { padding: "12px 8px", textAlign: "left", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Manufacturer"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "left", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Model"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Range"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Battery"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Payload"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Price"),
+              createElement("th", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "2px solid " + COLORS.border, color: COLORS.textMuted } }, "Status")
+            )
+          ),
+          createElement("tbody", null,
+            models.map(function(model, i) {
+              return createElement("tr", { key: model.id },
+                createElement("td", { style: { padding: "12px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.primary, fontWeight: 600 } }, model.manufacturer),
+                createElement("td", { style: { padding: "12px 8px", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } }, model.model),
+                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.text } },
+                  region === "eu" ? model.range_km + " km" : model.range_miles + " mi"
+                ),
+                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } }, model.battery_kwh + " kWh"),
+                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.textMuted } },
+                  region === "eu" ? (model.payload_kg + " kg") : (model.payload_lbs + " lbs")
+                ),
+                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border, color: COLORS.accent, fontWeight: 500 } },
+                  region === "eu" ? ("€" + (model.price_eur / 1000).toFixed(0) + "K") : ("$" + (model.msrp_usd / 1000).toFixed(0) + "K")
+                ),
+                createElement("td", { style: { padding: "12px 8px", textAlign: "center", borderBottom: "1px solid " + COLORS.border } },
+                  createElement("span", { style: {
+                    backgroundColor: model.status === "Production" ? COLORS.success + "20" : COLORS.accent + "20",
+                    color: model.status === "Production" ? COLORS.success : COLORS.accent,
+                    padding: "4px 8px", borderRadius: "4px", fontSize: "11px"
+                  }}, model.status)
+                )
+              );
+            })
+          )
+        )
+      )
+    ),
+
+    // TCO Comparison and Use Cases
+    createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "24px" } },
+      // TCO Comparison
+      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "LCV TCO Comparison (per mile)"),
+        createElement("div", { style: { display: "flex", gap: "20px", marginBottom: "20px" } },
+          createElement("div", { style: { flex: 1, backgroundColor: COLORS.background, padding: "16px", borderRadius: "8px", textAlign: "center" } },
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "8px" } }, "Diesel Van"),
+            createElement("div", { style: { fontSize: "28px", fontWeight: 700, color: COLORS.textDim } }, "$0.34"),
+            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, "per mile")
+          ),
+          createElement("div", { style: { flex: 1, backgroundColor: COLORS.primary + "15", padding: "16px", borderRadius: "8px", textAlign: "center", border: "1px solid " + COLORS.primary + "40" } },
+            createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted, marginBottom: "8px" } }, "Electric Van"),
+            createElement("div", { style: { fontSize: "28px", fontWeight: 700, color: COLORS.primary } }, "$0.15"),
+            createElement("div", { style: { fontSize: "11px", color: COLORS.textMuted } }, "per mile")
+          )
+        ),
+        createElement("div", { style: { fontSize: "13px", color: COLORS.success, textAlign: "center", padding: "10px", backgroundColor: COLORS.success + "15", borderRadius: "6px" } },
+          "56% lower operating cost with electric"
+        )
+      ),
+      // Use Cases
+      createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+        createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Use Case Suitability"),
+        createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+          LCV_DATA.useCases.map(function(uc, i) {
+            return createElement("div", { key: i, style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", backgroundColor: COLORS.background, borderRadius: "6px" } },
+              createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } },
+                createElement("span", { style: { fontSize: "16px" } }, uc.evReady ? "✅" : "⚠️"),
+                createElement("span", { style: { color: COLORS.text, fontSize: "13px" } }, uc.useCase)
+              ),
+              createElement("span", { style: {
+                color: uc.suitability === "Excellent" ? COLORS.success : uc.suitability === "Good" ? COLORS.primary : uc.suitability === "Moderate" ? COLORS.accent : COLORS.textMuted,
+                fontSize: "12px", fontWeight: 500
+              }}, uc.suitability)
+            );
+          })
+        )
+      )
+    ),
+
+    // Major Fleet Deployments
+    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "20px", border: "1px solid " + COLORS.border } },
+      createElement("h3", { style: { fontSize: "16px", fontWeight: 600, color: COLORS.text, marginBottom: "16px" } }, "Major Fleet Deployments"),
+      createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "12px" } },
+        LCV_DATA.fleetDeployments.map(function(fleet, i) {
+          return createElement("div", { key: i, style: {
+            backgroundColor: COLORS.background, padding: "16px", borderRadius: "8px",
+            display: "flex", justifyContent: "space-between", alignItems: "center"
+          }},
+            createElement("div", null,
+              createElement("div", { style: { fontSize: "15px", fontWeight: 600, color: COLORS.text, marginBottom: "4px" } }, fleet.company),
+              createElement("div", { style: { fontSize: "12px", color: COLORS.textMuted } }, fleet.model),
+              createElement("div", { style: { fontSize: "11px", color: COLORS.textDim, marginTop: "4px" } }, fleet.note)
+            ),
+            createElement("div", { style: { textAlign: "right" } },
+              createElement("div", { style: { fontSize: "20px", fontWeight: 700, color: COLORS.primary } }, fleet.vehicles.toLocaleString()),
+              createElement("span", { style: {
+                fontSize: "10px", padding: "3px 6px", borderRadius: "4px",
+                backgroundColor: fleet.status === "Operating" ? COLORS.success + "20" : fleet.status === "Deploying" ? COLORS.accent + "20" : COLORS.info + "20",
+                color: fleet.status === "Operating" ? COLORS.success : fleet.status === "Deploying" ? COLORS.accent : COLORS.info
+              }}, fleet.status)
+            )
+          );
+        })
+      )
+    ),
+
+    // Sources
+    createElement("div", { style: { backgroundColor: COLORS.card, borderRadius: "12px", padding: "16px", border: "1px solid " + COLORS.border } },
+      createElement("h4", { style: { fontSize: "14px", fontWeight: 600, color: COLORS.textMuted, marginBottom: "12px" } }, "Data Sources"),
+      createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px" } },
+        LCV_DATA.sources.map(function(src, i) {
+          return createElement("a", {
+            key: i, href: src.url, target: "_blank", rel: "noopener noreferrer",
+            style: { fontSize: "12px", color: COLORS.info, textDecoration: "none" }
+          }, src.name);
+        })
+      )
+    )
+  );
+}
+
 // ============ MAIN APP ============
 function App() {
   var tabState = useState("tco");
@@ -4041,6 +4501,7 @@ function App() {
     { id: "tco", label: "💰 TCO Analysis", component: TCOAnalysisTab },
     { id: "replacement", label: "🔄 Replacement", component: FleetReplacementTab },
     { id: "oem", label: "🚛 OEM Comparison", component: OEMComparisonTab },
+    { id: "lcv", label: "🚐 Light Commercial", component: LightCommercialTab },
     { id: "infrastructure", label: "🔌 Infrastructure", component: InfrastructureTab },
     { id: "market", label: "📈 Market Outlook", component: MarketOutlookTab },
     { id: "geo", label: "🌍 Geo Deep-Dive", component: GeoDeepDiveTab },
